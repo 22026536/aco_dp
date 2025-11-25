@@ -65,14 +65,7 @@ int main(int argc, const char *argv[])
     // Run ACO
     std::string instance_file = instance_path.substr(instance_path.find_last_of("/\\") + 1);
     ACOSolution best = ACO_tuned(instance, maxIter, termination_time, instance_file);
-
-    // Kiểm tra solution
-    if (!best.feasible)
-        cout << "Final solution is invalid.\n";
-    else
-        cout << "Final solution is valid.\n";
-
-    cout << "Final cost = " << best.cost << "\n";
+    
     return 0;
 }
 

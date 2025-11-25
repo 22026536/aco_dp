@@ -1178,7 +1178,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     // --- ACO parameters (tunable) ---
     int m = min(N / 2, 40); // number of ants per iteration
     double alpha = 1.0;     // pheromone importance
-    double beta = 3.0;      // desirability importance (larger => favor low delta cost)
+    double beta = 2.0;      // desirability importance (larger => favor low delta cost)
     double rho = 0.1;       // evaporation
     double Q = 5000.0;      // pheromone deposit scale
 
@@ -1274,10 +1274,8 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                     for (int t = 0; t < M_weights; ++t)
                     {
                         double newSum = clusterWeight[k][t] + Wmat[i][t];
-                        if (newSum < WLmat[k][t])
-                            penaltyDelta += WLmat[k][t] - newSum;
-                        else if (newSum > WUmat[k][t])
-                            penaltyDelta += newSum - WUmat[k][t];
+                        if (newSum > WUmat[k][t])
+                            penaltyDelta += (newSum - WUmat[k][t]) * PENALTY_SCALE;
                     }
 
                     // tính heuristic distance incremental (sumDist)
@@ -1512,9 +1510,6 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         }
     } // end while
 
-    // final reporting (same format as original)
-    cerr << "[FINAL] Best solution cost=" << best.cost << " feasible=" << (best.feasible ? "YES" : "NO") << "\n";
-
     vector<vector<int>> clusters(K);
     for (int i = 0; i < N; ++i)
     {
@@ -1528,6 +1523,13 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
             cerr << node << " ";
         cerr << "\n";
     }
+
+    if (!best.feasible)
+        cout << "Final solution is invalid.\n";
+    else
+        cout << "Final solution is valid.\n";
+
+    cout << "Final cost = " << format_cost_with_commas(best.cost, 0) << "\n";
 
     SaveLogs(best);
 
