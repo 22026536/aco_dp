@@ -13,6 +13,9 @@
 #include <fstream>
 #include <string>
 #include <queue>
+#include <iomanip>
+#include <sstream>
+#include <locale>
 
 using std::mt19937_64;
 using std::vector;
@@ -56,6 +59,32 @@ double PENALTY_SCALE = 10000.0;
 double OVERLOAD_PENALTY_FACTOR = 0.5;
 bool ALLOW_VIOLATIONS = true;
 const double VALID_EPS = 1e-6;
+
+// Format: fixed notation (no exponent), choose decimals (e.g. 0 => integer)
+static inline std::string format_cost_fixed(double v, int decimals = 0)
+{
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(decimals) << v;
+    return oss.str();
+}
+
+// Format: with thousands separators (comma or locale-specific).
+// Note: std::locale("") uses system locale; if not set, it may not insert separators.
+// This returns integer format if decimals==0, otherwise with decimals.
+static inline std::string format_cost_with_commas(double v, int decimals = 0)
+{
+    std::ostringstream oss;
+    try
+    {
+        oss.imbue(std::locale("")); // system locale, may enable grouping
+    }
+    catch (...)
+    {
+        // ignore if locale not supported
+    }
+    oss << std::fixed << std::setprecision(decimals) << v;
+    return oss.str();
+}
 
 // Kiểm tra tính hợp lệ của trọng số trong instance
 bool check_weights_validity(const Instance instance)
@@ -228,22 +257,30 @@ void local_search(vector<int> &assign, mt19937_64 &rng, int maxMoves)
     if (maxMoves <= 0)
         return;
 
+    // ---------------------------------------
+    // 0. Build members & sumW (multi-weights)
+    // ---------------------------------------
     vector<vector<int>> members(K);
-    vector<double> sum1(K, 0.0), sum2(K, 0.0);
+    vector<vector<double>> sumW(K, vector<double>(M_weights, 0.0));
+
     for (int i = 0; i < N; ++i)
     {
         int c = assign[i];
         members[c].push_back(i);
-        sum1[c] += w1[i];
-        sum2[c] += w2[i];
+        for (int t = 0; t < M_weights; ++t)
+            sumW[c][t] += Wmat[i][t];
     }
 
+    // ---------------------------------------
+    // 1. sumDist[i][k] = sum dist(i, members[k])
+    // ---------------------------------------
     vector<vector<double>> sumDist(N, vector<double>(K, 0.0));
     for (int k = 0; k < K; ++k)
         for (int j : members[k])
             for (int i = 0; i < N; ++i)
                 sumDist[i][k] += distmat[i][j];
 
+    // Shuffle nodes to avoid deterministic behavior
     vector<int> nodes(N);
     iota(nodes.begin(), nodes.end(), 0);
     shuffle(nodes.begin(), nodes.end(), rng);
@@ -251,65 +288,112 @@ void local_search(vector<int> &assign, mt19937_64 &rng, int maxMoves)
     int moves = 0;
     bool improved = true;
 
-    const int sampleClusterK = min(K, 6);
     const int sampleSwapK = min(30, max(10, N / 4));
-
     uniform_int_distribution<int> uniNode(0, N - 1);
-    uniform_int_distribution<int> uniCluster(0, K - 1);
+
+    // Helper: compute violation sum for cluster k
+    auto cluster_violation = [&](int k, const vector<double> &sw)
+    {
+        double over = 0, under = 0;
+        for (int t = 0; t < M_weights; ++t)
+        {
+            if (sw[t] > WUmat[k][t] + VALID_EPS)
+                over += sw[t] - WUmat[k][t];
+            if (sw[t] < WLmat[k][t] - VALID_EPS)
+                under += WLmat[k][t] - sw[t];
+        }
+        return over + under;
+    };
 
     while (improved && moves < maxMoves)
     {
         improved = false;
 
-        // 1. MULTI-NODE RELOCATE (overloaded / deficient clusters)
-        vector<int> overloadedClusters, deficientClusters;
+        // ---------------------------------------------------------
+        // 2. FIND OVERLOADED / DEFICIENT CLUSTERS (multi-weights)
+        // ---------------------------------------------------------
+        vector<int> overloaded, deficient;
+
         for (int k = 0; k < K; ++k)
         {
-            double over = max(0.0, sum1[k] - Wmax1[k]) + max(0.0, sum2[k] - Wmax2[k]);
-            double under = max(0.0, Wmin1[k] - sum1[k]) + max(0.0, Wmin2[k] - sum2[k]);
+            double over = 0, under = 0;
+            for (int t = 0; t < M_weights; ++t)
+            {
+                if (sumW[k][t] > WUmat[k][t] + VALID_EPS)
+                    over += sumW[k][t] - WUmat[k][t];
+                if (sumW[k][t] < WLmat[k][t] - VALID_EPS)
+                    under += WLmat[k][t] - sumW[k][t];
+            }
             if (over > 1e-9)
-                overloadedClusters.push_back(k);
+                overloaded.push_back(k);
             if (under > 1e-9)
-                deficientClusters.push_back(k);
+                deficient.push_back(k);
         }
 
-        for (int k_from : overloadedClusters)
+        // ---------------------------------------------------------
+        // 3. MULTI-DIMENSION RELOCATE FOR OVERLOADED → DEFICIENT
+        // ---------------------------------------------------------
+        for (int k_from : overloaded)
         {
             for (int u_idx = 0; u_idx < (int)members[k_from].size() && moves < maxMoves; ++u_idx)
             {
                 int u = members[k_from][u_idx];
+
                 int bestTo = k_from;
                 double bestGain = 0.0;
-                for (int k_to : deficientClusters)
+
+                for (int k_to : deficient)
                 {
                     if (k_to == k_from)
                         continue;
-                    double s1_new_from = sum1[k_from] - w1[u], s2_new_from = sum2[k_from] - w2[u];
-                    double s1_new_to = sum1[k_to] + w1[u], s2_new_to = sum2[k_to] + w2[u];
-                    double over_before = max(0.0, sum1[k_from] - Wmax1[k_from]) + max(0.0, sum2[k_from] - Wmax2[k_from]) + max(0.0, sum1[k_to] - Wmax1[k_to]) + max(0.0, sum2[k_to] - Wmax2[k_to]);
-                    double under_before = max(0.0, Wmin1[k_from] - sum1[k_from]) + max(0.0, Wmin2[k_from] - sum2[k_from]) + max(0.0, Wmin1[k_to] - sum1[k_to]) + max(0.0, Wmin2[k_to] - sum2[k_to]);
-                    double over_after = max(0.0, s1_new_from - Wmax1[k_from]) + max(0.0, s2_new_from - Wmax2[k_from]) + max(0.0, s1_new_to - Wmax1[k_to]) + max(0.0, s2_new_to - Wmax2[k_to]);
-                    double under_after = max(0.0, Wmin1[k_from] - s1_new_from) + max(0.0, Wmin2[k_from] - s2_new_from) + max(0.0, Wmin1[k_to] - s1_new_to) + max(0.0, Wmin2[k_to] - s2_new_to);
-                    double gain = (over_before + under_before) - (over_after + under_after);
+
+                    // Compute violation before move
+                    double viol_before =
+                        cluster_violation(k_from, sumW[k_from]) +
+                        cluster_violation(k_to, sumW[k_to]);
+
+                    // Compute hypothetical sums after move
+                    vector<double> new_from = sumW[k_from];
+                    vector<double> new_to = sumW[k_to];
+                    for (int t = 0; t < M_weights; ++t)
+                    {
+                        new_from[t] -= Wmat[u][t];
+                        new_to[t] += Wmat[u][t];
+                    }
+
+                    double viol_after =
+                        cluster_violation(k_from, new_from) +
+                        cluster_violation(k_to, new_to);
+
+                    double gain = viol_before - viol_after;
                     if (gain > bestGain)
                     {
                         bestGain = gain;
                         bestTo = k_to;
                     }
                 }
+
                 if (bestTo != k_from)
                 {
-                    // apply move
+                    // ------------------
+                    // APPLY the relocate
+                    // ------------------
                     auto it = find(members[k_from].begin(), members[k_from].end(), u);
                     if (it != members[k_from].end())
                         members[k_from].erase(it);
+
                     members[bestTo].push_back(u);
-                    sum1[k_from] -= w1[u];
-                    sum2[k_from] -= w2[u];
-                    sum1[bestTo] += w1[u];
-                    sum2[bestTo] += w2[u];
+
+                    // Update sumW
+                    for (int t = 0; t < M_weights; ++t)
+                    {
+                        sumW[k_from][t] -= Wmat[u][t];
+                        sumW[bestTo][t] += Wmat[u][t];
+                    }
+
                     assign[u] = bestTo;
 
+                    // Update sumDist incrementally
                     for (int v = 0; v < N; ++v)
                     {
                         if (v == u)
@@ -317,13 +401,16 @@ void local_search(vector<int> &assign, mt19937_64 &rng, int maxMoves)
                         sumDist[v][k_from] -= distmat[v][u];
                         sumDist[v][bestTo] += distmat[v][u];
                     }
+
+                    // Recompute row u
                     for (int kk = 0; kk < K; ++kk)
                     {
-                        double s = 0.0;
+                        double s = 0;
                         for (int j : members[kk])
                             s += distmat[u][j];
                         sumDist[u][kk] = s;
                     }
+
                     moves++;
                     improved = true;
                 }
@@ -333,49 +420,70 @@ void local_search(vector<int> &assign, mt19937_64 &rng, int maxMoves)
         if (improved)
             continue;
 
-        // 2. ENHANCED SWAP PASS
-        for (int uid = 0; uid < N && moves < maxMoves; ++uid)
+        // ---------------------------------------------------------
+        // 4. ENHANCED SWAP (MULTI-WEIGHTS)
+        // ---------------------------------------------------------
+        for (int ii = 0; ii < N && moves < maxMoves; ++ii)
         {
-            int i = nodes[uid], ci = assign[i];
+            int i = nodes[ii];
+            int ci = assign[i];
+
             for (int trial = 0; trial < sampleSwapK && moves < maxMoves; ++trial)
             {
                 int j = uniNode(rng);
                 if (j == i)
                     continue;
+
                 int cj = assign[j];
                 if (ci == cj)
                     continue;
 
-                double deltaSwap = (sumDist[i][cj] - sumDist[i][ci]) + (sumDist[j][ci] - sumDist[j][cj]) - 2.0 * distmat[i][j];
+                // Compute delta intra-distance
+                double deltaSwap =
+                    (sumDist[i][cj] - sumDist[i][ci]) +
+                    (sumDist[j][ci] - sumDist[j][cj]) -
+                    2.0 * distmat[i][j];
 
-                double s1_ci = sum1[ci], s2_ci = sum2[ci], s1_cj = sum1[cj], s2_cj = sum2[cj];
-                double ns1_ci = s1_ci - w1[i] + w1[j], ns2_ci = s2_ci - w2[i] + w2[j];
-                double ns1_cj = s1_cj - w1[j] + w1[i], ns2_cj = s2_cj - w2[j] + w2[i];
+                // Compute penalty change for multi-weights
+                double penBefore = cluster_violation(ci, sumW[ci]) +
+                                   cluster_violation(cj, sumW[cj]);
 
-                double penBefore = max(0.0, s1_ci - Wmax1[ci]) + max(0.0, s2_ci - Wmax2[ci]) + max(0.0, s1_cj - Wmax1[cj]) + max(0.0, s2_cj - Wmax2[cj]) + max(0.0, Wmin1[ci] - s1_ci) + max(0.0, Wmin2[ci] - s2_ci) + max(0.0, Wmin1[cj] - s1_cj) + max(0.0, Wmin2[cj] - s2_cj);
-                double penAfter = max(0.0, ns1_ci - Wmax1[ci]) + max(0.0, ns2_ci - Wmax2[ci]) + max(0.0, ns1_cj - Wmax1[cj]) + max(0.0, ns2_cj - Wmax2[cj]) + max(0.0, Wmin1[ci] - ns1_ci) + max(0.0, Wmin2[ci] - ns2_ci) + max(0.0, Wmin1[cj] - ns1_cj) + max(0.0, Wmin2[cj] - ns2_cj);
+                vector<double> ns_ci = sumW[ci];
+                vector<double> ns_cj = sumW[cj];
+
+                for (int t = 0; t < M_weights; ++t)
+                {
+                    ns_ci[t] = sumW[ci][t] - Wmat[i][t] + Wmat[j][t];
+                    ns_cj[t] = sumW[cj][t] - Wmat[j][t] + Wmat[i][t];
+                }
+
+                double penAfter = cluster_violation(ci, ns_ci) +
+                                  cluster_violation(cj, ns_cj);
+
                 double deltaPen = (penAfter - penBefore) * PENALTY_SCALE;
                 double deltaTotal = deltaSwap + deltaPen;
 
                 if (deltaTotal < -1e-6)
                 {
-                    // apply swap
+                    // ------------------
+                    // APPLY SWAP
+                    // ------------------
                     auto iti = find(members[ci].begin(), members[ci].end(), i);
                     if (iti != members[ci].end())
                         members[ci].erase(iti);
                     members[ci].push_back(j);
+
                     auto itj = find(members[cj].begin(), members[cj].end(), j);
                     if (itj != members[cj].end())
                         members[cj].erase(itj);
                     members[cj].push_back(i);
 
-                    sum1[ci] = ns1_ci;
-                    sum2[ci] = ns2_ci;
-                    sum1[cj] = ns1_cj;
-                    sum2[cj] = ns2_cj;
+                    sumW[ci] = ns_ci;
+                    sumW[cj] = ns_cj;
                     assign[i] = cj;
                     assign[j] = ci;
 
+                    // Update sumDist incrementally
                     for (int v = 0; v < N; ++v)
                     {
                         if (v == i || v == j)
@@ -383,24 +491,20 @@ void local_search(vector<int> &assign, mt19937_64 &rng, int maxMoves)
                         sumDist[v][ci] += distmat[v][j] - distmat[v][i];
                         sumDist[v][cj] += distmat[v][i] - distmat[v][j];
                     }
+
+                    // Rebuild rows i, j
                     for (int kk = 0; kk < K; ++kk)
                     {
-                        double si = 0.0, sj = 0.0;
-                        for (int member : members[kk])
+                        double si = 0, sj = 0;
+                        for (int m : members[kk])
                         {
-                            if (member == i)
-                                si += distmat[j][member] - distmat[i][member];
-                            else if (member == j)
-                                sj += distmat[i][member] - distmat[j][member];
-                            else
-                            {
-                                si += distmat[i][member];
-                                sj += distmat[j][member];
-                            }
+                            si += distmat[i][m];
+                            sj += distmat[j][m];
                         }
                         sumDist[i][kk] = si;
                         sumDist[j][kk] = sj;
                     }
+
                     moves++;
                     improved = true;
                     break;
@@ -409,7 +513,8 @@ void local_search(vector<int> &assign, mt19937_64 &rng, int maxMoves)
             if (improved)
                 break;
         }
-    }
+
+    } // end while
 }
 
 // Tunable parameters
@@ -986,17 +1091,18 @@ void SaveLogs(const ACOSolution &best)
     }
 }
 
-
 ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSeconds, const string &instance_name)
 {
     std::string base = parameters.LOGdir;
-    if(base.empty()) base = "results/logs/aco_logs";
-    if(base.back() == '/') base.pop_back();
+    if (base.empty())
+        base = "results/logs/aco_logs";
+    if (base.back() == '/')
+        base.pop_back();
 
     LOG_EVOL_FILENAME = base + "/evolution/" + instance_name;
     LOG_COST_FILENAME = base + "/objectives/" + instance_name;
     LOG_SOLU_FILENAME = base + "/solutions/" + instance_name;
-        // --- sanity checks ---
+    // --- sanity checks ---
     if (!check_weights_validity(instance))
     {
         cerr << "[ERROR] Instance weight bounds inconsistent. Aborting ACO.\n";
@@ -1070,11 +1176,11 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     }
 
     // --- ACO parameters (tunable) ---
-    int m = N / 2;      // number of ants per iteration
-    double alpha = 1.0; // pheromone importance
-    double beta = 3.0;  // desirability importance (larger => favor low delta cost)
-    double rho = 0.1;   // evaporation
-    double Q = 5000.0;  // pheromone deposit scale
+    int m = min(N / 2, 40); // number of ants per iteration
+    double alpha = 1.0;     // pheromone importance
+    double beta = 3.0;      // desirability importance (larger => favor low delta cost)
+    double rho = 0.1;       // evaporation
+    double Q = 5000.0;      // pheromone deposit scale
 
     // selection temperature and q0 (small exploitation)
     double T_max = 1.0, T_min = 0.05;
@@ -1255,14 +1361,42 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         for (int r = 0; r < m; ++r)
         {
             int ai = order[r];
-            if (ants[ai].cost + 1e-12 < best.cost || (ants[ai].feasible && !best.feasible))
+
+            bool curFeasible = ants[ai].feasible;
+            double curCost = ants[ai].cost;
+
+            bool bestFeasible = best.feasible;
+            double bestCost = best.cost;
+
+            bool accept = false;
+
+            if (curFeasible)
+            {
+                // (1) Nghiệm mới FEASIBLE:
+                //    - Chấp nhận nếu best chưa feasible
+                //    - Hoặc cost mới < cost hiện tại
+                if (!bestFeasible || curCost + 1e-12 < bestCost)
+                    accept = true;
+            }
+            else
+            {
+                // (2) Nghiệm mới INFEASIBLE:
+                //    - Chỉ chấp nhận nếu best cũng INFEASIBLE
+                //    - Và cost nhỏ hơn
+                if (!bestFeasible && curCost + 1e-12 < bestCost)
+                    accept = true;
+            }
+
+            if (accept)
             {
                 best = ants[ai];
                 improvedThisIter = true;
                 noImprove = 0;
+
                 auto now = Clock::now();
                 double elapsed = chrono::duration<double>(now - start).count();
-                cerr << "[ITER " << iter << "] New best cost=" << best.cost << " (feasible=" << (best.feasible ? "YES" : "NO") << ", time " << elapsed << "s)\n";
+                cerr << "[ITER " << iter << "] New best cost=" << format_cost_with_commas(best.cost, 0)
+                     << " (feasible=" << (best.feasible ? "YES" : "NO") << ", time " << elapsed << "s)\n";
             }
         }
         if (!improvedThisIter)
@@ -1348,7 +1482,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                 }
             }
             double elapsed = chrono::duration<double>(Clock::now() - start).count();
-            cerr << "[ITER " << iter << "] bestGlobalCost=" << best.cost
+            cerr << "[ITER " << iter << "] bestGlobalCost=" << format_cost_with_commas(best.cost, 0)
                  << " (feasible=" << (best.feasible ? "YES" : "NO") << ")"
                  << " bestThisIter=" << bestThis
                  << " feasibleAnts=" << feasCount
