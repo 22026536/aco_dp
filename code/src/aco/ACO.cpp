@@ -1175,22 +1175,42 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         return empty;
     }
 
+    // tính pelnaty scale
+    double BASE_COST = 0.0;
+    int pairCount = 0;
+    for (int i = 0; i < N; ++i)
+        for (int j = i + 1; j < N; ++j)
+        {
+            BASE_COST += distmat[i][j];
+            pairCount++;
+        }
+
+    double meanDist = BASE_COST / pairCount;
+
+    double sumW = 0.0;
+    for (int i = 0; i < N; ++i)
+        for (int t = 0; t < M_weights; ++t)
+            sumW += Wmat[i][t];
+
+    double meanWeight = sumW / (N * M_weights);
+
+    PENALTY_SCALE = 10.0 * (meanDist / meanWeight);
+
     // --- ACO parameters (tunable) ---
     int m = min(N / 2, 40); // number of ants per iteration
     double alpha = 1.0;     // pheromone importance
     double beta = 2.0;      // desirability importance (larger => favor low delta cost)
-    double rho = 0.1;       // evaporation
-    double Q = 5000.0;      // pheromone deposit scale
+    double rho = 0.3;       // evaporation
 
     // selection temperature and q0 (small exploitation)
-    double T_max = 1.0, T_min = 0.05;
+    double T_max = 0.2, T_min = 0.001;
     double Q0 = 0.05; // exploitation probability
-    double Q_max = 1.0, Q_min = 0.05, Q_decay = 0.995;
+    double Q_max = 0.85, Q_min = 0.05, Q_decay = 0.995;
 
     int L_candidates = min(K, 12);
 
     // repair configuration: choose topRepair ants (by pre-repair cost) to run local_search+repair
-    int repairTop = 10; // you can set to m if you want all ants repaired
+    int repairTop = 5; // you can set to m if you want all ants repaired
 
     mt19937_64 rng((unsigned)chrono::high_resolution_clock::now().time_since_epoch().count());
     uniform_real_distribution<double> uni01(0.0, 1.0);
@@ -1244,11 +1264,11 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         for (int a = 0; a < m; ++a)
         {
             ants[a].assign.assign(N, -1);
-            // random node order
             // giữ track tổng trọng số cluster hiện tại (từ 0 đến K-1)
             vector<vector<double>> clusterWeight(K, vector<double>(M_weights, 0.0));
-            // giữ track sumDist tương tự
-            vector<vector<double>> clusterSumDist(K, vector<double>(N, 0.0)); // optional nếu dùng heuristic
+            // lưu delta increment
+            vector<vector<int>> members(K);
+            vector<vector<double>> clusterSumDist(K, vector<double>(N, 0.0));
 
             // random node order
             vector<int> nodes(N);
@@ -1279,11 +1299,11 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                     }
 
                     // tính heuristic distance incremental (sumDist)
-                    double distHeur = clusterSumDist[k][i] + 1.0; // ví dụ: có thể + distmat[i][j] cho các j trong cluster
+                    double distHeur = clusterSumDist[k][i];
 
-                    double desir = 1.0 / (1.0 + penaltyDelta + distHeur);
+                    double desir = 1.0 / (1.0 + distHeur);
                     double tau = phi[i][k];
-                    double weight = pow(tau, alpha) * pow(desir, beta);
+                    double weight = pow(tau, alpha) * pow(desir, beta) * (1 / 1.0 + penaltyDelta);
                     weights[ci] = weight;
 
                     if (weight > bestWeight)
@@ -1318,11 +1338,9 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
 
                 ants[a].assign[i] = chosenK;
 
-                // cập nhật incremental cluster weight
-                for (int t = 0; t < M_weights; ++t)
-                    clusterWeight[chosenK][t] += Wmat[i][t];
+                members[chosenK].push_back(i);
 
-                // cập nhật sumDist nếu dùng
+                // add dist(i, j) only for j ∈ members[k] (before adding i itself)
                 for (int j = 0; j < N; ++j)
                     clusterSumDist[chosenK][j] += distmat[i][j];
             }
@@ -1343,7 +1361,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         {
             int ai = order[r];
             // local_search and repair operate in-place
-            improve_ant_solution(ants[ai].assign, rng, 1, 1);
+            improve_ant_solution(ants[ai].assign, rng, 2, 2);
             // recompute cost and feasibility
             ants[ai].cost = compute_cost(ants[ai].assign);
             ants[ai].feasible = is_feasible(ants[ai].assign);
