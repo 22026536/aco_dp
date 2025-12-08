@@ -41,6 +41,7 @@ Với Pelnaty trọng số = Hệ số phạt x Độ vi phạm từng trọng s
 Pelnaty trọng số sẽ giảm khả năng chọn cụm nếu quá tải nhưng nếu lựa chọn này đủ tốt thì vẫn có thể vi phạm được, đồng thời khuyến khích các nút chọn các cụm đang thiếu hụt trọng số dựa trên độ phù hợp về mặt trọng số của nút đó
 
 Cả hệt số phạt và hệ số khuyến khích đều được tự điều chỉnh dựa trên Tổng chi phí, số lượng cặp nút, tổng trọng số, số lượng trọng số...
+
 Công thức hiện tại: 50.0 * (Tổng tất cả cặp chi phí / Tổng số cặp nút) / [Tổng trọng số tất cả nút / (Số lượng nút * Số chiều trọng số)]
 
 # Sự lựa chọn của kiến
@@ -54,4 +55,5 @@ Với q > Q0: kiến chọn cụm theo tỉ lệ dựa trên weight[i][k]
 
 # Các tham số khác.
 tham số bay hơi rho: 0,3 : mức bay hơi vừa để khiến kiến ít stagnation hơn
+
 T_max = 0.2, T_min = 0.03 : T_max thấp để kiến ít đi theo lối mòn kiến trước để lại hơn.
