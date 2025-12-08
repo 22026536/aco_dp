@@ -1194,18 +1194,21 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
 
     double meanWeight = sumW / (N * M_weights);
 
-    PENALTY_SCALE = 10.0 * (meanDist / meanWeight);
+    PENALTY_SCALE = 50.0 * (meanDist / meanWeight);
+    cerr << PENALTY_SCALE << "\n";
 
     // --- ACO parameters (tunable) ---
     int m = min(N / 2, 40); // number of ants per iteration
     double alpha = 1.0;     // pheromone importance
     double beta = 2.0;      // desirability importance (larger => favor low delta cost)
-    double rho = 0.3;       // evaporation
+    double rho = 0.2;       // evaporation
 
     // selection temperature and q0 (small exploitation)
-    double T_max = 0.2, T_min = 0.001;
-    double Q0 = 0.05; // exploitation probability
-    double Q_max = 0.85, Q_min = 0.05, Q_decay = 0.995;
+    double T_max = 0.2, T_min = 0.03;
+    double Q0 = 0.8; // exploitation probability
+    double Q_max = 0.95, Q_min = 0.05;
+    int STAGNATE_DROP = 0.05; // mỗi iteration stagnate, giảm Q0 0.05
+    int STAGNATE_LIMIT = 20;
 
     int L_candidates = min(K, 12);
 
@@ -1256,7 +1259,6 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     while (iter < maxIter && chrono::duration<double>(Clock::now() - start).count() < timeLimitSeconds)
     {
         ++iter;
-        double Q_iter = max(Q_min, Q_max * pow(Q_decay, (double)iter));
 
         vector<ACOSolution> ants(m);
 
@@ -1296,14 +1298,17 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                         double newSum = clusterWeight[k][t] + Wmat[i][t];
                         if (newSum > WUmat[k][t])
                             penaltyDelta += (newSum - WUmat[k][t]) * PENALTY_SCALE;
+
+                        if (newSum < WLmat[k][t])
+                            penaltyDelta += (WLmat[k][t] - newSum) * PENALTY_SCALE * 0.3;
                     }
 
                     // tính heuristic distance incremental (sumDist)
                     double distHeur = clusterSumDist[k][i];
 
-                    double desir = 1.0 / (1.0 + distHeur);
+                    double desir = 1.0 / (1.0 + distHeur + penaltyDelta);
                     double tau = phi[i][k];
-                    double weight = pow(tau, alpha) * pow(desir, beta) * (1 / 1.0 + penaltyDelta);
+                    double weight = pow(tau, alpha) * pow(desir, beta);
                     weights[ci] = weight;
 
                     if (weight > bestWeight)
@@ -1407,6 +1412,9 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
             {
                 best = ants[ai];
                 improvedThisIter = true;
+
+                Q0 = Q_max;
+
                 noImprove = 0;
 
                 auto now = Clock::now();
@@ -1416,7 +1424,15 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
             }
         }
         if (!improvedThisIter)
+        {
             ++noImprove;
+            if (noImprove > STAGNATE_LIMIT)
+            {
+                Q0 -= STAGNATE_DROP;
+                if (Q0 < Q_min)
+                    Q0 = Q_min;
+            }
+        }
 
         // update sumDist/eta occasionally from current best (so candidates adapt)
         if (best.assign.size() == (size_t)N && best.feasible)
@@ -1517,7 +1533,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         }
 
         // stagnation reset
-        int noImproveReset = 200;
+        int noImproveReset = 400;
         if (noImprove >= noImproveReset)
         {
             cerr << "[RESET] no improvement for" << noImproveReset << "-> reset pheromones\n";
