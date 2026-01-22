@@ -518,7 +518,6 @@ void local_search(vector<int> &assign, mt19937_64 &rng, int maxMoves)
 }
 
 // Tunable parameters
-static const double REPAIR_VIOL_WEIGHT = 1e6; // large to prefer reducing violations over intra-cost
 static const double REPAIR_DIST_WEIGHT = 1.0; // weight for intra-distance in score
 static const int REPAIR_MAX_MOVES = 2000;
 static const int REPAIR_SAMPLE_PER_CLUSTER = 60;
@@ -805,7 +804,7 @@ void repair_solution(std::vector<int> &assign, std::mt19937_64 &rng)
 
                     double violGain = beforePair - afterPair;
                     double deltaIntra = (sumDist[u][to] - sumDist[u][from]);
-                    double score = REPAIR_VIOL_WEIGHT * violGain - REPAIR_DIST_WEIGHT * deltaIntra;
+                    double score = 10 * PENALTY_SCALE * violGain - REPAIR_DIST_WEIGHT * deltaIntra;
                     if (score > 1e-9)
                         pq.push(Move{score, u, from, to});
                 }
@@ -852,7 +851,7 @@ void repair_solution(std::vector<int> &assign, std::mt19937_64 &rng)
                 continue;
 
             double deltaIntra = (sumDist[mv.u][mv.to] - sumDist[mv.u][mv.from]);
-            double score = REPAIR_VIOL_WEIGHT * violGain - REPAIR_DIST_WEIGHT * deltaIntra;
+            double score = 10 * PENALTY_SCALE * violGain - REPAIR_DIST_WEIGHT * deltaIntra;
             if (score <= 1e-9)
                 continue;
 
@@ -943,7 +942,7 @@ void repair_solution(std::vector<int> &assign, std::mt19937_64 &rng)
                         continue;
 
                     double deltaSwap = (sumDist[i][cj] - sumDist[i][ci]) + (sumDist[j][ci] - sumDist[j][cj]) - 2.0 * distmat[i][j];
-                    double score = REPAIR_VIOL_WEIGHT * violGain - REPAIR_DIST_WEIGHT * deltaSwap;
+                    double score = 10 * PENALTY_SCALE * violGain - REPAIR_DIST_WEIGHT * deltaSwap;
                     if (score > 1e-9)
                     {
                         auto iti = std::find(members[ci].begin(), members[ci].end(), i);
@@ -1009,19 +1008,17 @@ void repair_solution(std::vector<int> &assign, std::mt19937_64 &rng)
 // ====================== MULTI-PASS REPAIR + LOCAL SEARCH ======================
 void improve_ant_solution(vector<int> &assign, mt19937_64 &rng, int repairPasses, int localPasses)
 {
-    for (int r = 0; r < repairPasses; ++r)
-    {
-        repair_solution(assign, rng); // cân bằng overload + underload
-    }
-
     for (int l = 0; l < localPasses; ++l)
     {
         local_search(assign, rng, 1000); // tối ưu chi phí giữ feasibility
     }
 
-    // cuối cùng một lượt repair để đảm bảo feasibility trước khi cập nhật pheromone
-    repair_solution(assign, rng); // cân bằng overload + underload
+    for (int r = 0; r < repairPasses; ++r)
+    {
+        repair_solution(assign, rng); // cân bằng overload + underload
+    }
 }
+
 
 void SaveLogs(const ACOSolution &best)
 {
@@ -1198,22 +1195,23 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     cerr << PENALTY_SCALE << "\n";
 
     // --- ACO parameters (tunable) ---
-    int m = min(N / 2, 40); // number of ants per iteration
+    int m = min(N / 2, 10); // number of ants per iteration
     double alpha = 1.0;     // pheromone importance
-    double beta = 2.0;      // desirability importance (larger => favor low delta cost)
+    double beta = 3.0;      // desirability importance (larger => favor low delta cost)
     double rho = 0.2;       // evaporation
 
     // selection temperature and q0 (small exploitation)
-    double T_max = 0.2, T_min = 0.03;
-    double Q0 = 0.8; // exploitation probability
-    double Q_max = 0.95, Q_min = 0.05;
+    double T_max = 0.2, T_min = 0.01;
+    double Q_start = 0.3;
+    double Q0 = Q_start;
+    double Q_max = 0.8, Q_min = 0.05;
     int STAGNATE_DROP = 0.05; // mỗi iteration stagnate, giảm Q0 0.05
-    int STAGNATE_LIMIT = 20;
+    int STAGNATE_LIMIT = 15;
 
     int L_candidates = min(K, 12);
 
     // repair configuration: choose topRepair ants (by pre-repair cost) to run local_search+repair
-    int repairTop = 5; // you can set to m if you want all ants repaired
+    int repairTop = 10; // you can set to m if you want all ants repaired
 
     mt19937_64 rng((unsigned)chrono::high_resolution_clock::now().time_since_epoch().count());
     uniform_real_distribution<double> uni01(0.0, 1.0);
@@ -1259,7 +1257,6 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     while (iter < maxIter && chrono::duration<double>(Clock::now() - start).count() < timeLimitSeconds)
     {
         ++iter;
-
         vector<ACOSolution> ants(m);
 
         // construct each ant solution
@@ -1283,6 +1280,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                 const vector<int> &cand = candidates[i];
                 double bestWeight = -1.0;
                 int chosenK = cand[0];
+                bool violate = false;
 
                 vector<double> weights(cand.size(), 0.0);
 
@@ -1296,12 +1294,20 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                     for (int t = 0; t < M_weights; ++t)
                     {
                         double newSum = clusterWeight[k][t] + Wmat[i][t];
-                        if (newSum > WUmat[k][t])
-                            penaltyDelta += (newSum - WUmat[k][t]) * PENALTY_SCALE;
-
-                        if (newSum < WLmat[k][t])
-                            penaltyDelta += (WLmat[k][t] - newSum) * PENALTY_SCALE * 0.3;
+                        if (newSum > WUmat[k][t]) {
+                            // violate = true;
+                            // break;
+                            penaltyDelta += (WLmat[k][t] - newSum) / WLmat[k][t] * PENALTY_SCALE * 0.3;
+                        }
+                        // if (newSum < WLmat[k][t])
+                        //     penaltyDelta += (WLmat[k][t] - newSum) * PENALTY_SCALE * 1.0;
                     }
+
+                    if (violate)
+                        {
+                            weights[ci] = 0.0;
+                            continue;
+                        }
 
                     // tính heuristic distance incremental (sumDist)
                     double distHeur = clusterSumDist[k][i];
@@ -1361,15 +1367,30 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         sort(order.begin(), order.end(), [&](int a1, int a2)
              { return ants[a1].cost < ants[a2].cost; });
 
-        // pick top repairTop ants to local_search + repair
-        for (int r = 0; r < min(repairTop, m); ++r)
+        // local search for each x loops
+        if (iter % 10 == 1)
         {
-            int ai = order[r];
-            // local_search and repair operate in-place
-            improve_ant_solution(ants[ai].assign, rng, 2, 2);
-            // recompute cost and feasibility
-            ants[ai].cost = compute_cost(ants[ai].assign);
-            ants[ai].feasible = is_feasible(ants[ai].assign);
+            for (int r = 0; r < min(repairTop, m); ++r)
+            {
+                int ai = order[r];
+
+                improve_ant_solution(ants[ai].assign, rng, 0, 1);
+
+                ants[ai].cost = compute_cost(ants[ai].assign);
+                ants[ai].feasible = is_feasible(ants[ai].assign);
+            }
+        }
+        else
+        {
+            for (int r = 0; r < min(repairTop, m); ++r)
+            {
+                int ai = order[r];
+
+                improve_ant_solution(ants[ai].assign, rng, 1, 0);
+
+                ants[ai].cost = compute_cost(ants[ai].assign);
+                ants[ai].feasible = is_feasible(ants[ai].assign);
+            }
         }
 
         // after repairs, resort by feasibility then cost
@@ -1449,7 +1470,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                     sumDist[i][c] += distmat[i][j];
             }
             update_eta();
-            if (iter % 20 == 0)
+            if (iter % 10 == 0)
             {
                 for (int i = 0; i < N; ++i)
                 {
@@ -1469,11 +1490,12 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         }
 
         // --- PHEROMONE UPDATE ---
+        // Evaporation
         for (int i = 0; i < N; ++i)
             for (int k = 0; k < K; ++k)
                 phi[i][k] *= (1.0 - rho);
 
-        // deposit Tmax for best ant only
+        // Best ant
         for (int i = 0; i < N; ++i)
         {
             int c = best.assign[i];
@@ -1481,21 +1503,41 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                 phi[i][c] += T_max;
         }
 
-        // optionally, deposit Tmin for remaining ants
-        for (int a = 0; a < m; ++a)
+        // Best local
+        int bestLocal = order[0];
+        double T_local = 0.3 * T_max;
+
+        for (int i = 0; i < N; ++i)
         {
-            if (ants[a].assign == best.assign)
-                continue; // skip best
-            for (int i = 0; i < N; ++i)
-            {
-                int c = ants[a].assign[i];
-                if (c >= 0 && c < K)
-                    phi[i][c] += T_min;
-            }
+            int c = ants[bestLocal].assign[i];
+            if (c >= 0 && c < K)
+                phi[i][c] += T_local;
         }
 
+        // // hệ số deposit
+        // double T_repair = 0.02;   // cho repairTop ants
+
+        // // 2. Deposit theo thứ hạng ant
+        // for (int r = 0; r < repairTop && r < m; ++r)
+        // {
+        //     int ai = order[r];
+        //     double w = (double)(repairTop - r) / repairTop;
+
+        //     for (int i = 0; i < N; ++i)
+        //     {
+        //         int c = ants[ai].assign[i];
+        //         if (c >= 0 && c < K)
+        //             phi[i][c] += T_repair * w;
+        //     }
+        // }
+
+        // optionally, deposit Tmin for all ants
+        for (int i = 0; i < N; ++i)
+            for (int k = 0; k < K; ++k)
+                phi[i][k] = max(phi[i][k], T_min);
+
         // clamp phi to avoid extremes
-        const double PHI_MIN = 1e-6, PHI_MAX = 1e9;
+        const double PHI_MIN = 1e-6, PHI_MAX = 5;
         for (int i = 0; i < N; ++i)
             for (int k = 0; k < K; ++k)
                 phi[i][k] = max(PHI_MIN, min(PHI_MAX, phi[i][k]));
@@ -1516,7 +1558,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
             double elapsed = chrono::duration<double>(Clock::now() - start).count();
             cerr << "[ITER " << iter << "] bestGlobalCost=" << format_cost_with_commas(best.cost, 0)
                  << " (feasible=" << (best.feasible ? "YES" : "NO") << ")"
-                 << " bestThisIter=" << bestThis
+                 << " bestThisIter=" << format_cost_with_commas(bestThis, 0)
                  << " feasibleAnts=" << feasCount
                  << " noImprove=" << noImprove
                  << " (elapsed " << elapsed << "s)\n";
@@ -1533,7 +1575,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         }
 
         // stagnation reset
-        int noImproveReset = 400;
+        int noImproveReset = 300;
         if (noImprove >= noImproveReset)
         {
             cerr << "[RESET] no improvement for" << noImproveReset << "-> reset pheromones\n";
@@ -1541,6 +1583,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                 for (int k = 0; k < K; ++k)
                     phi[i][k] = 1.0;
             noImprove = 0;
+            Q0 = Q_start;
         }
     } // end while
 
