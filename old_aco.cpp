@@ -21,31 +21,47 @@ using std::mt19937_64;
 using std::vector;
 using Clock = chrono::steady_clock;
 
-// ===== GLOBAL DEFINITIONS =====
-vector<int> log_iter;
-vector<double> log_time;
-vector<LogRow> log_rows;
+// ================== GLOBALS ==================
+int N = 0, K = 0, M_weights = 0;
+static std::vector<int> log_iter;
+static std::vector<double> log_time; // elapsed time at snapshot
+struct LogRow
+{
+    int iter;
+    double time;
+    double bestCost;
+    bool bestFeasible;
+    double bestThisIter;
+    int feasibleAnts;
+    int noImprove;
+};
+static std::vector<LogRow> log_rows;
 
-Parameters parameters;
+extern Parameters parameters;
 
-string LOG_EVOL_FILENAME;
-string LOG_COST_FILENAME;
-string LOG_SOLU_FILENAME;
+static std::string LOG_EVOL_FILENAME;
+static std::string LOG_COST_FILENAME;
+static std::string LOG_SOLU_FILENAME;
 
-int N = 0;
-int K = 0;
-int M_weights = 0;
+// New unified weight matrices (you already have these)
+vector<vector<double>> Wmat;  // Wmat[i][t] : weight t of vertex i
+vector<vector<double>> WLmat; // WLmat[k][t] : lower bound cluster k attribute t
+vector<vector<double>> WUmat; // WUmat[k][t] : upper bound cluster k attribute t
 
-vector<vector<double>> Wmat;
-vector<vector<double>> WLmat;
-vector<vector<double>> WUmat;
-vector<vector<double>> distmat;
+// ===== Backwards-compatible globals (restore for existing code) =====
+// Many places in your code still reference these old names.
+// Define them here and keep them synchronized with the matrices above.
+vector<double> w1, w2;                     // per-node weights (first two dims)
+vector<vector<double>> distmat;            // distance matrix
+vector<double> Wmin1, Wmax1, Wmin2, Wmax2; // per-cluster bounds for first two dims
 
 double PENALTY_SCALE = 10000.0;
-double VALID_EPS = 1e-6;
+double OVERLOAD_PENALTY_FACTOR = 0.5;
+bool ALLOW_VIOLATIONS = true;
+const double VALID_EPS = 1e-6;
 
 // Format: fixed notation (no exponent), choose decimals (e.g. 0 => integer)
-static inline std::string format_cost_fixed(double v, int decimals)
+static inline std::string format_cost_fixed(double v, int decimals = 0)
 {
     std::ostringstream oss;
     oss << std::fixed << std::setprecision(decimals) << v;
@@ -55,7 +71,7 @@ static inline std::string format_cost_fixed(double v, int decimals)
 // Format: with thousands separators (comma or locale-specific).
 // Note: std::locale("") uses system locale; if not set, it may not insert separators.
 // This returns integer format if decimals==0, otherwise with decimals.
-static inline std::string format_cost_with_commas(double v, int decimals)
+static inline std::string format_cost_with_commas(double v, int decimals = 0)
 {
     std::ostringstream oss;
     try
@@ -234,7 +250,8 @@ bool is_feasible(const std::vector<int> &assign)
     return true;
 }
 
-// local search
+// ----------------------- repair_solution (with MCF subproblem) -----------------------
+// ---------- LIGHTWEIGHT local_search (same as before) ----------
 void local_search(vector<int> &assign, mt19937_64 &rng, int maxMoves)
 {
     if (maxMoves <= 0)
@@ -500,6 +517,11 @@ void local_search(vector<int> &assign, mt19937_64 &rng, int maxMoves)
     } // end while
 }
 
+// Tunable parameters
+static const double REPAIR_DIST_WEIGHT = 1.0; // weight for intra-distance in score
+static const int REPAIR_MAX_MOVES = 2000;
+static const int REPAIR_SAMPLE_PER_CLUSTER = 60;
+static const int REPAIR_MAX_SWAPS = 800;
 
 // Forward declarations if needed (these exist in original file)
 // extern int N, K, M_weights;
@@ -678,218 +700,325 @@ void multi_relocate_for_deficit(vector<int> &assign,
     }
 }
 
-// large search
-void large_search(std::vector<int> &assign, std::mt19937_64 &rng, int MAX_MOVES)
+// Main replacement for repair_solution (C++14-compatible)
+void repair_solution(std::vector<int> &assign, std::mt19937_64 &rng)
 {
-    // ------------------------------
-    // Build members & sumW
-    // ------------------------------
+    // Build members and sumW
     vector<vector<int>> members(K);
     vector<vector<double>> sumW(K, vector<double>(M_weights, 0.0));
     for (int i = 0; i < N; ++i)
     {
         int c = assign[i];
+        if (c < 0 || c >= K)
+            continue;
         members[c].push_back(i);
         for (int t = 0; t < M_weights; ++t)
             sumW[c][t] += Wmat[i][t];
     }
 
-    // ------------------------------
-    // Precompute sumDist
-    // ------------------------------
+    // precompute sumDist
     vector<vector<double>> sumDist(N, vector<double>(K, 0.0));
     for (int k = 0; k < K; ++k)
+    {
         for (int j : members[k])
+        {
             for (int i = 0; i < N; ++i)
                 sumDist[i][k] += distmat[i][j];
+        }
+    }
 
     int moves = 0;
-    bool improved = true;
+    bool didSomething = true;
 
-    // ==============================
-    // MAIN LOOP – giống local_search
-    // ==============================
-    while (improved && moves < MAX_MOVES)
+    while (didSomething && moves < REPAIR_MAX_MOVES)
     {
-        improved = false;
+        didSomething = false;
 
-        // Check feasibility
-        double total_violation = 0.0;
-        for (int k = 0; k < K; ++k)
-            total_violation += cluster_violation_from_sums(sumW, k);
+        std::pair<vector<int>, vector<int>> tmp_pair = compute_over_under_from_sums(sumW);
+        vector<int> overloaded = tmp_pair.first;
+        vector<int> deficient = tmp_pair.second;
 
-        bool feasible = (total_violation <= VALID_EPS);
+        if (overloaded.empty() && deficient.empty())
+            break;
 
-        // --------------------------------
-        // 1. RELOCATE MOVES
-        // --------------------------------
-        auto [overloaded, deficient] = compute_over_under_from_sums(sumW);
-
-        for (int from = 0; from < K && moves < MAX_MOVES; ++from)
+        // Priority queue of candidate relocations
+        struct Move
         {
-            for (int idx = 0; idx < (int)members[from].size() && moves < MAX_MOVES; ++idx)
+            double score;
+            int u, from, to;
+        };
+        struct Cmp
+        {
+            bool operator()(Move const &a, Move const &b) const { return a.score < b.score; }
+        };
+        std::priority_queue<Move, vector<Move>, Cmp> pq;
+
+        for (size_t idx_from = 0; idx_from < overloaded.size(); ++idx_from)
+        {
+            int from = overloaded[idx_from];
+            vector<int> candNodes = members[from];
+            if ((int)candNodes.size() > REPAIR_SAMPLE_PER_CLUSTER)
             {
-                int u = members[from][idx];
-
-                int bestTo = from;
-                double bestDeltaCost = 0.0;
-                double bestViolGain = 0.0;
-
-                for (int to = 0; to < K; ++to)
+                std::shuffle(candNodes.begin(), candNodes.end(), rng);
+                candNodes.resize(REPAIR_SAMPLE_PER_CLUSTER);
+            }
+            for (size_t ii = 0; ii < candNodes.size(); ++ii)
+            {
+                int u = candNodes[ii];
+                for (size_t idx_to = 0; idx_to < deficient.size(); ++idx_to)
                 {
+                    int to = deficient[idx_to];
                     if (to == from)
                         continue;
 
-                    // ---- compute violation gain ----
-                    double before = cluster_violation_from_sums(sumW, from) +
-                                    cluster_violation_from_sums(sumW, to);
-
-                    vector<double> nf = sumW[from], nt = sumW[to];
+                    double beforePair = 0.0, afterPair = 0.0;
                     for (int t = 0; t < M_weights; ++t)
                     {
-                        nf[t] -= Wmat[u][t];
-                        nt[t] += Wmat[u][t];
+                        double s_from = sumW[from][t];
+                        double s_to = sumW[to][t];
+
+                        double before_from = 0.0, before_to = 0.0;
+                        if (s_from < WLmat[from][t] - VALID_EPS)
+                            before_from += WLmat[from][t] - s_from;
+                        if (s_from > WUmat[from][t] + VALID_EPS)
+                            before_from += s_from - WUmat[from][t];
+                        if (s_to < WLmat[to][t] - VALID_EPS)
+                            before_to += WLmat[to][t] - s_to;
+                        if (s_to > WUmat[to][t] + VALID_EPS)
+                            before_to += s_to - WUmat[to][t];
+                        beforePair += before_from + before_to;
+
+                        double ns_from = s_from - Wmat[u][t];
+                        double ns_to = s_to + Wmat[u][t];
+                        double after_from = 0.0, after_to = 0.0;
+                        if (ns_from < WLmat[from][t] - VALID_EPS)
+                            after_from += WLmat[from][t] - ns_from;
+                        if (ns_from > WUmat[from][t] + VALID_EPS)
+                            after_from += ns_from - WUmat[from][t];
+                        if (ns_to < WLmat[to][t] - VALID_EPS)
+                            after_to += WLmat[to][t] - ns_to;
+                        if (ns_to > WUmat[to][t] + VALID_EPS)
+                            after_to += ns_to - WUmat[to][t];
+                        afterPair += after_from + after_to;
                     }
 
-                    double after = 0.0;
-                    for (int t = 0; t < M_weights; ++t)
-                    {
-                        if (nf[t] < WLmat[from][t] - VALID_EPS)
-                            after += WLmat[from][t] - nf[t];
-                        if (nf[t] > WUmat[from][t] + VALID_EPS)
-                            after += nf[t] - WUmat[from][t];
-                        if (nt[t] < WLmat[to][t] - VALID_EPS)
-                            after += WLmat[to][t] - nt[t];
-                        if (nt[t] > WUmat[to][t] + VALID_EPS)
-                            after += nt[t] - WUmat[to][t];
-                    }
-
-                    double violGain = before - after;
-                    double deltaCost = sumDist[u][to] - sumDist[u][from];
-
-                    bool accept = false;
-                    if (!feasible)
-                        accept = (violGain > bestViolGain + 1e-9);
-                    else
-                        accept = (violGain >= -1e-9 && deltaCost < bestDeltaCost - 1e-9);
-
-                    if (accept)
-                    {
-                        bestViolGain = violGain;
-                        bestDeltaCost = deltaCost;
-                        bestTo = to;
-                    }
-                }
-
-                if (bestTo != from)
-                {
-                    // APPLY
-                    auto it = find(members[from].begin(), members[from].end(), u);
-                    members[from].erase(it);
-                    members[bestTo].push_back(u);
-
-                    for (int t = 0; t < M_weights; ++t)
-                    {
-                        sumW[from][t] -= Wmat[u][t];
-                        sumW[bestTo][t] += Wmat[u][t];
-                    }
-
-                    assign[u] = bestTo;
-
-                    for (int v = 0; v < N; ++v)
-                    {
-                        if (v == u)
-                            continue;
-                        sumDist[v][from] -= distmat[v][u];
-                        sumDist[v][bestTo] += distmat[v][u];
-                    }
-
-                    for (int k = 0; k < K; ++k)
-                    {
-                        double s = 0.0;
-                        for (int j : members[k])
-                            s += distmat[u][j];
-                        sumDist[u][k] = s;
-                    }
-
-                    moves++;
-                    improved = true;
+                    double violGain = beforePair - afterPair;
+                    double deltaIntra = (sumDist[u][to] - sumDist[u][from]);
+                    double score = 10 * PENALTY_SCALE * violGain - REPAIR_DIST_WEIGHT * deltaIntra;
+                    if (score > 1e-9)
+                        pq.push(Move{score, u, from, to});
                 }
             }
         }
 
-        // --------------------------------
-        // 2. SWAP MOVES (feasible focus)
-        // --------------------------------
-        if (feasible && !improved)
+        int appliedThisRound = 0;
+        while (!pq.empty() && moves < REPAIR_MAX_MOVES && appliedThisRound < 30)
         {
-            vector<int> nodes(N);
-            iota(nodes.begin(), nodes.end(), 0);
-            shuffle(nodes.begin(), nodes.end(), rng);
+            Move mv = pq.top();
+            pq.pop();
+            if (assign[mv.u] != mv.from)
+                continue;
 
-            for (int ii = 0; ii < N && moves < MAX_MOVES; ++ii)
+            double beforePair = 0.0, afterPair = 0.0;
+            for (int t = 0; t < M_weights; ++t)
             {
-                int i = nodes[ii];
-                int ci = assign[i];
+                double s_from = sumW[mv.from][t];
+                double s_to = sumW[mv.to][t];
 
-                for (int trial = 0; trial < 10 && moves < MAX_MOVES; ++trial)
+                if (s_from < WLmat[mv.from][t] - VALID_EPS)
+                    beforePair += WLmat[mv.from][t] - s_from;
+                if (s_from > WUmat[mv.from][t] + VALID_EPS)
+                    beforePair += s_from - WUmat[mv.from][t];
+                if (s_to < WLmat[mv.to][t] - VALID_EPS)
+                    beforePair += WLmat[mv.to][t] - s_to;
+                if (s_to > WUmat[mv.to][t] + VALID_EPS)
+                    beforePair += s_to - WUmat[mv.to][t];
+
+                double ns_from = s_from - Wmat[mv.u][t];
+                double ns_to = s_to + Wmat[mv.u][t];
+                if (ns_from < WLmat[mv.from][t] - VALID_EPS)
+                    afterPair += WLmat[mv.from][t] - ns_from;
+                if (ns_from > WUmat[mv.from][t] + VALID_EPS)
+                    afterPair += ns_from - WUmat[mv.from][t];
+                if (ns_to < WLmat[mv.to][t] - VALID_EPS)
+                    afterPair += WLmat[mv.to][t] - ns_to;
+                if (ns_to > WUmat[mv.to][t] + VALID_EPS)
+                    afterPair += ns_to - WUmat[mv.to][t];
+            }
+
+            double violGain = beforePair - afterPair;
+            if (violGain <= 1e-9)
+                continue;
+
+            double deltaIntra = (sumDist[mv.u][mv.to] - sumDist[mv.u][mv.from]);
+            double score = 10 * PENALTY_SCALE * violGain - REPAIR_DIST_WEIGHT * deltaIntra;
+            if (score <= 1e-9)
+                continue;
+
+            auto it = std::find(members[mv.from].begin(), members[mv.from].end(), mv.u);
+            if (it != members[mv.from].end())
+                members[mv.from].erase(it);
+            members[mv.to].push_back(mv.u);
+            for (int t = 0; t < M_weights; ++t)
+            {
+                sumW[mv.from][t] -= Wmat[mv.u][t];
+                sumW[mv.to][t] += Wmat[mv.u][t];
+            }
+            assign[mv.u] = mv.to;
+
+            for (int v = 0; v < N; ++v)
+            {
+                if (v == mv.u)
+                    continue;
+                sumDist[v][mv.from] -= distmat[v][mv.u];
+                sumDist[v][mv.to] += distmat[v][mv.u];
+            }
+            for (int kk = 0; kk < K; ++kk)
+            {
+                double s = 0.0;
+                for (int member : members[kk])
+                    if (member != mv.u)
+                        s += distmat[mv.u][member];
+                sumDist[mv.u][kk] = s;
+            }
+
+            moves++;
+            appliedThisRound++;
+            didSomething = true;
+        }
+
+        // If relocations did not resolve, try multi-node relocation
+        if (!didSomething)
+        {
+            multi_relocate_for_deficit(assign, members, sumW, sumDist, rng);
+            // after multi relocation, recompute overloaded/deficient in next loop
+            // also try sampled swaps
+            int swapsTried = 0;
+            vector<int> nodes(N);
+            for (int i = 0; i < N; ++i)
+                nodes[i] = i;
+            std::shuffle(nodes.begin(), nodes.end(), rng);
+
+            for (int idx = 0; idx < N && swapsTried < REPAIR_MAX_SWAPS; ++idx)
+            {
+                int i = nodes[idx];
+                int ci = assign[i];
+                for (int trial = 0; trial < 8 && swapsTried < REPAIR_MAX_SWAPS; ++trial)
                 {
-                    int j = rng() % N;
+                    int j = (int)(rng() % (uint64_t)N);
                     if (j == i)
                         continue;
-
                     int cj = assign[j];
                     if (ci == cj)
                         continue;
 
-                    double delta =
-                        (sumDist[i][cj] - sumDist[i][ci]) +
-                        (sumDist[j][ci] - sumDist[j][cj]) -
-                        2.0 * distmat[i][j];
-
-                    if (delta >= -1e-9)
-                        continue;
-
-                    // check violation safety
-                    bool ok = true;
+                    double before = 0.0, after = 0.0;
                     for (int t = 0; t < M_weights; ++t)
                     {
-                        double nci = sumW[ci][t] - Wmat[i][t] + Wmat[j][t];
-                        double ncj = sumW[cj][t] - Wmat[j][t] + Wmat[i][t];
-                        if (nci < WLmat[ci][t] - VALID_EPS || nci > WUmat[ci][t] + VALID_EPS)
-                            ok = false;
-                        if (ncj < WLmat[cj][t] - VALID_EPS || ncj > WUmat[cj][t] + VALID_EPS)
-                            ok = false;
+                        double s_ci = sumW[ci][t], s_cj = sumW[cj][t];
+                        if (s_ci < WLmat[ci][t] - VALID_EPS)
+                            before += WLmat[ci][t] - s_ci;
+                        if (s_ci > WUmat[ci][t] + VALID_EPS)
+                            before += s_ci - WUmat[ci][t];
+                        if (s_cj < WLmat[cj][t] - VALID_EPS)
+                            before += WLmat[cj][t] - s_cj;
+                        if (s_cj > WUmat[cj][t] + VALID_EPS)
+                            before += s_cj - WUmat[cj][t];
+
+                        double ns_ci = s_ci - Wmat[i][t] + Wmat[j][t];
+                        double ns_cj = s_cj - Wmat[j][t] + Wmat[i][t];
+                        if (ns_ci < WLmat[ci][t] - VALID_EPS)
+                            after += WLmat[ci][t] - ns_ci;
+                        if (ns_ci > WUmat[ci][t] + VALID_EPS)
+                            after += ns_ci - WUmat[ci][t];
+                        if (ns_cj < WLmat[cj][t] - VALID_EPS)
+                            after += WLmat[cj][t] - ns_cj;
+                        if (ns_cj > WUmat[cj][t] + VALID_EPS)
+                            after += ns_cj - WUmat[cj][t];
                     }
-                    if (!ok)
+                    double violGain = before - after;
+                    swapsTried++;
+                    if (violGain <= 1e-9)
                         continue;
 
-                    // APPLY SWAP
-                    swap(assign[i], assign[j]);
-                    for (int t = 0; t < M_weights; ++t)
+                    double deltaSwap = (sumDist[i][cj] - sumDist[i][ci]) + (sumDist[j][ci] - sumDist[j][cj]) - 2.0 * distmat[i][j];
+                    double score = 10 * PENALTY_SCALE * violGain - REPAIR_DIST_WEIGHT * deltaSwap;
+                    if (score > 1e-9)
                     {
-                        sumW[ci][t] = sumW[ci][t] - Wmat[i][t] + Wmat[j][t];
-                        sumW[cj][t] = sumW[cj][t] - Wmat[j][t] + Wmat[i][t];
+                        auto iti = std::find(members[ci].begin(), members[ci].end(), i);
+                        if (iti != members[ci].end())
+                            *iti = j;
+                        auto itj = std::find(members[cj].begin(), members[cj].end(), j);
+                        if (itj != members[cj].end())
+                            *itj = i;
+                        for (int t = 0; t < M_weights; ++t)
+                        {
+                            sumW[ci][t] = sumW[ci][t] - Wmat[i][t] + Wmat[j][t];
+                            sumW[cj][t] = sumW[cj][t] - Wmat[j][t] + Wmat[i][t];
+                        }
+                        assign[i] = cj;
+                        assign[j] = ci;
+                        for (int v = 0; v < N; ++v)
+                        {
+                            if (v == i || v == j)
+                                continue;
+                            sumDist[v][ci] += distmat[v][j] - distmat[v][i];
+                            sumDist[v][cj] += distmat[v][i] - distmat[v][j];
+                        }
+                        for (int kk = 0; kk < K; ++kk)
+                        {
+                            double si = 0.0, sj = 0.0;
+                            for (int member : members[kk])
+                            {
+                                if (member == i)
+                                    si += distmat[j][member];
+                                else if (member == j)
+                                    sj += distmat[i][member];
+                                else
+                                {
+                                    si += distmat[i][member];
+                                    sj += distmat[j][member];
+                                }
+                            }
+                            sumDist[i][kk] = si;
+                            sumDist[j][kk] = sj;
+                        }
+                        moves++;
+                        didSomething = true;
+                        break;
                     }
-
-                    improved = true;
-                    moves++;
-                    break;
                 }
-                if (improved)
+                if (didSomething)
                     break;
             }
         }
     }
+
+    // final: small-tolerance check to accept near-feasible
+    double total_violation = 0.0;
+    for (int k = 0; k < K; ++k)
+        total_violation += cluster_violation_from_sums(sumW, k);
+    if (total_violation <= 1e-6)
+    {
+        // accept as feasible within tolerance
+        // (the calling code can check feasibility more strictly if desired)
+    }
 }
 
-int hamming_distance(const vector<int>& a, const vector<int>& b)
+// ====================== MULTI-PASS REPAIR + LOCAL SEARCH ======================
+void improve_ant_solution(vector<int> &assign, mt19937_64 &rng, int repairPasses, int localPasses)
 {
-    int diff = 0;
-    for (int i = 0; i < a.size(); ++i)
-        if (a[i] != b[i]) diff++;
-    return diff;
+    for (int l = 0; l < localPasses; ++l)
+    {
+        local_search(assign, rng, 1000); // tối ưu chi phí giữ feasibility
+    }
+
+    for (int r = 0; r < repairPasses; ++r)
+    {
+        repair_solution(assign, rng); // cân bằng overload + underload
+    }
 }
+
 
 void SaveLogs(const ACOSolution &best)
 {
@@ -981,42 +1110,61 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         return empty;
     }
 
-    // --- Initialize globals from instance (MULTI-DIMENSION VERSION) ---
+    // --- Initialize globals from instance ---
+    N = instance.nV;
+    K = instance.nK;
+    M_weights = instance.nT;
 
-    N = instance.nV;                 // số node
-    K = instance.nK;                 // số cụm
-    M_weights = instance.nT;         // số chiều trọng số (resource dimensions)
-
-    // ================= NODE WEIGHTS =================
-    Wmat.assign(N, vector<double>(M_weights, 0.0));   // Wmat[i][t] = weight của node i tại chiều t
+    Wmat.assign(N, vector<double>(M_weights, 0.0));
     for (int i = 0; i < N; ++i)
         for (int t = 0; t < M_weights; ++t)
-            Wmat[i][t] = instance.W[i][t];            // copy từ instance
+            Wmat[i][t] = instance.W[i][t];
 
-
-    // ================= CLUSTER CAPACITY BOUNDS =================
-    WLmat.assign(K, vector<double>(M_weights, 0.0));  // lower bound mỗi cụm, mỗi chiều
-    WUmat.assign(K, vector<double>(M_weights, 0.0));  // upper bound mỗi cụm, mỗi chiều
-
+    WLmat.assign(K, vector<double>(M_weights, 0.0));
+    WUmat.assign(K, vector<double>(M_weights, 0.0));
     for (int k = 0; k < K; ++k)
         for (int t = 0; t < M_weights; ++t)
         {
-            WLmat[k][t] = instance.WL[k][t];          // min capacity cụm k tại chiều t
-            WUmat[k][t] = instance.WU[k][t];          // max capacity cụm k tại chiều t
+            WLmat[k][t] = instance.WL[k][t];
+            WUmat[k][t] = instance.WU[k][t];
         }
 
-
-    // ================= DISTANCE MATRIX =================
-    distmat.assign(N, vector<double>(N, 0.0));        // ma trận khoảng cách giữa các node
+    distmat.assign(N, vector<double>(N, 0.0));
     for (int i = 0; i < N; ++i)
         for (int j = 0; j < N; ++j)
             distmat[i][j] = instance.D[i][j];
 
-
-    // ================= VALIDITY CHECK =================
-    if (K <= 0 || N <= 0 || M_weights <= 0)           // kiểm tra dữ liệu hợp lệ
+    w1.assign(N, 0.0);
+    w2.assign(N, 0.0);
+    for (int i = 0; i < N; ++i)
     {
-        cerr << "[ERROR] invalid N, K, or number of weight dimensions\n";
+        if (M_weights >= 1)
+            w1[i] = Wmat[i][0];
+        if (M_weights >= 2)
+            w2[i] = Wmat[i][1];
+    }
+
+    Wmin1.assign(K, 0.0);
+    Wmax1.assign(K, 0.0);
+    Wmin2.assign(K, 0.0);
+    Wmax2.assign(K, 0.0);
+    for (int k = 0; k < K; ++k)
+    {
+        if (M_weights >= 1)
+        {
+            Wmin1[k] = WLmat[k][0];
+            Wmax1[k] = WUmat[k][0];
+        }
+        if (M_weights >= 2)
+        {
+            Wmin2[k] = WLmat[k][1];
+            Wmax2[k] = WUmat[k][1];
+        }
+    }
+
+    if (K <= 0 || N <= 0)
+    {
+        cerr << "[ERROR] invalid N or K\n";
         ACOSolution empty;
         empty.assign.clear();
         empty.cost = 1e300;
@@ -1036,16 +1184,6 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
 
     double meanDist = BASE_COST / pairCount;
 
-    // ===== AUTO DIST SCALE (instance-dependent) =====
-
-    // kích thước cụm trung bình khi xây nghiệm
-    double avgClusterSize = max(1.0, (double)N / K);
-
-    // distHeur ~ sum distance from node i to cluster k
-    // kỳ vọng ≈ avgClusterSize * meanDist
-    double DIST_SCALE = avgClusterSize * meanDist;
-    
-    // tính pelnalty scale
     double sumW = 0.0;
     for (int i = 0; i < N; ++i)
         for (int t = 0; t < M_weights; ++t)
@@ -1054,21 +1192,26 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     double meanWeight = sumW / (N * M_weights);
 
     PENALTY_SCALE = 50.0 * (meanDist / meanWeight);
+    cerr << PENALTY_SCALE << "\n";
+
     // --- ACO parameters (tunable) ---
-    int m = min(N / 2, 40); // number of ants per iteration
-    double alpha = 1.25;     // pheromone importance
-    double beta = 1.0;      // desirability importance (larger => favor low delta cost)
+    int m = min(N / 2, 10); // number of ants per iteration
+    double alpha = 1.0;     // pheromone importance
+    double beta = 3.0;      // desirability importance (larger => favor low delta cost)
     double rho = 0.2;       // evaporation
 
     // selection temperature and q0 (small exploitation)
-    double T_max = 0.5, T_min = 0.03;
-    double Q_max = 0.8, Q_min = 0.1;
-    double Q0 = Q_max;
+    double T_max = 0.2, T_min = 0.01;
+    double Q_start = 0.3;
+    double Q0 = Q_start;
+    double Q_max = 0.8, Q_min = 0.05;
     int STAGNATE_DROP = 0.05; // mỗi iteration stagnate, giảm Q0 0.05
     int STAGNATE_LIMIT = 15;
 
+    int L_candidates = min(K, 12);
+
     // repair configuration: choose topRepair ants (by pre-repair cost) to run local_search+repair
-    int repairTop = 5;
+    int repairTop = 10; // you can set to m if you want all ants repaired
 
     mt19937_64 rng((unsigned)chrono::high_resolution_clock::now().time_since_epoch().count());
     uniform_real_distribution<double> uni01(0.0, 1.0);
@@ -1077,7 +1220,35 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     ACOSolution best;
 
     // initialize pheromone matrix phi[i][k]
-    vector<vector<double>> phi(N, vector<double>(K, T_min));
+    vector<vector<double>> phi(N, vector<double>(K, 1.0));
+
+    // prepare eta (distance-based) to build candidate lists quickly (cheap heuristic to limit K)
+    vector<vector<double>> sumDist(N, vector<double>(K, 1.0));
+
+    vector<vector<double>> eta(N, vector<double>(K, 0.0));
+    auto update_eta = [&]()
+    {
+        for (int i = 0; i < N; ++i)
+            for (int k = 0; k < K; ++k)
+                eta[i][k] = 1.0 / (1.0 + sumDist[i][k]);
+    };
+
+    // candidate lists per node (top-L by eta)
+    vector<vector<int>> candidates(N);
+    for (int i = 0; i < N; ++i)
+    {
+        vector<pair<double, int>> tmp;
+        tmp.reserve(K);
+        for (int k = 0; k < K; ++k)
+            tmp.emplace_back(eta[i][k], k);
+        sort(tmp.rbegin(), tmp.rend());
+        int L = min((int)tmp.size(), L_candidates);
+        candidates[i].clear();
+        for (int x = 0; x < L; ++x)
+            candidates[i].push_back(tmp[x].second);
+        if (candidates[i].empty())
+            candidates[i].push_back(0);
+    }
 
     auto start = Clock::now();
     int iter = 0, noImprove = 0;
@@ -1095,6 +1266,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
             // giữ track tổng trọng số cluster hiện tại (từ 0 đến K-1)
             vector<vector<double>> clusterWeight(K, vector<double>(M_weights, 0.0));
             // lưu delta increment
+            vector<vector<int>> members(K);
             vector<vector<double>> clusterSumDist(K, vector<double>(N, 0.0));
 
             // random node order
@@ -1105,71 +1277,45 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
             for (int idx = 0; idx < N; ++idx)
             {
                 int i = nodes[idx];
+                const vector<int> &cand = candidates[i];
                 double bestWeight = -1.0;
-                int chosenK = 0;
-                vector<double> weights(K, 0.0);
+                int chosenK = cand[0];
+                bool violate = false;
 
-                for (int k = 0; k < K; ++k)
+                vector<double> weights(cand.size(), 0.0);
+
+                for (int ci = 0; ci < (int)cand.size(); ++ci)
                 {
-                    bool violate = false;
+                    int k = cand[ci];
 
-                    double dot = 0.0;
-                    double normNeed = 0.0;
-                    double normNode = 0.0;
-                    double emptiness = 0.0;
-
+                    // --- incremental cost estimation ---
+                    // tính delta trọng số nếu gán node i vào cluster k
+                    double penaltyDelta = 0.0;
                     for (int t = 0; t < M_weights; ++t)
                     {
-                        double need = max(0.0, WLmat[k][t] - clusterWeight[k][t]);
-                        double w = Wmat[i][t];
-
-                        // ---- capacity upper bound ----
-                        if (clusterWeight[k][t] + w > WUmat[k][t])
-                        {
-                            violate = true;
-                            break;
+                        double newSum = clusterWeight[k][t] + Wmat[i][t];
+                        if (newSum > WUmat[k][t]) {
+                            // violate = true;
+                            // break;
+                            penaltyDelta += (WLmat[k][t] - newSum) / WLmat[k][t] * PENALTY_SCALE * 0.3;
                         }
-
-                        // ---- vector fit (cosine on missing part) ----
-                        dot      += need * w;
-                        normNeed += need * need;
-                        normNode += w * w;
-
-                        // ---- emptiness magnitude ----
-                        if (WLmat[k][t] > 0.0)
-                            emptiness += need / WLmat[k][t];
+                        // if (newSum < WLmat[k][t])
+                        //     penaltyDelta += (WLmat[k][t] - newSum) * PENALTY_SCALE * 1.0;
                     }
 
                     if (violate)
-                    {
-                        weights[k] = 1e-19;
-                        continue;
-                    }
+                        {
+                            weights[ci] = 0.0;
+                            continue;
+                        }
 
-                    // ---- normalize ----
-                    double vectorFit = 0.0;
-                    if (normNeed > 1e-12 && normNode > 1e-12)
-                        vectorFit = dot / (sqrt(normNeed) * sqrt(normNode)); // [0,1]
+                    // tính heuristic distance incremental (sumDist)
+                    double distHeur = clusterSumDist[k][i];
 
-                    emptiness /= M_weights; // [0,1]
-
-                    // ---- combine capacity info ----
-                    double capacityGain =
-                        1.0 * vectorFit +        // hợp hình
-                        0.7 * emptiness;          // cụm đang đói
-
-                    // ---- distance heuristic ----
-                    double distTerm = clusterSumDist[k][i] / DIST_SCALE;
-
-                    double desir =
-                        (1.0 / (1.0 + distTerm)) *
-                        (1.0 + capacityGain);
-
-                    desir = max(desir, 1e-6);
-
+                    double desir = 1.0 / (1.0 + distHeur + penaltyDelta);
                     double tau = phi[i][k];
                     double weight = pow(tau, alpha) * pow(desir, beta);
-                    weights[k] = weight;
+                    weights[ci] = weight;
 
                     if (weight > bestWeight)
                     {
@@ -1180,32 +1326,32 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
 
                 // --- selection (exploitation / roulette) ---
                 double q = uni01(rng);
-                if (q >= Q0)
+                if (q < Q0)
                 {
+                    // exploitation: dùng chosenK
+                }
+                else
+                {
+                    // roulette / softmax
                     double sumW = accumulate(weights.begin(), weights.end(), 0.0);
-                    if (sumW > 0)
+                    double pick = uni01(rng) * sumW;
+                    double acc = 0.0;
+                    for (int ci = 0; ci < (int)cand.size(); ++ci)
                     {
-                        double pick = uni01(rng) * sumW;
-                        double acc = 0.0;
-                        for (int k = 0; k < K; ++k)
+                        acc += weights[ci];
+                        if (pick <= acc)
                         {
-                            acc += weights[k];
-                            if (pick <= acc)
-                            {
-                                chosenK = k;
-                                break;
-                            }
+                            chosenK = cand[ci];
+                            break;
                         }
                     }
                 }
 
                 ants[a].assign[i] = chosenK;
 
-                // cập nhật trọng số
-                for (int t = 0; t < M_weights; ++t)
-                clusterWeight[chosenK][t] += Wmat[i][t];
+                members[chosenK].push_back(i);
 
-                // cập nhật chi phí
+                // add dist(i, j) only for j ∈ members[k] (before adding i itself)
                 for (int j = 0; j < N; ++j)
                     clusterSumDist[chosenK][j] += distmat[i][j];
             }
@@ -1221,41 +1367,30 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         sort(order.begin(), order.end(), [&](int a1, int a2)
              { return ants[a1].cost < ants[a2].cost; });
 
-        vector<int> selected;  // index các ant được repair
-        int MIN_DIFF = 0.01 * N;
-        for (int idx = 0; idx < m && selected.size() < repairTop; ++idx)
+        // local search for each x loops
+        if (iter % 10 == 1)
         {
-            int ai = order[idx];
-            bool diverse = true;
-
-            for (int sj : selected)
+            for (int r = 0; r < min(repairTop, m); ++r)
             {
-                if (hamming_distance(ants[ai].assign, ants[sj].assign) < MIN_DIFF)
-                {
-                    diverse = false;
-                    break;
-                }
+                int ai = order[r];
+
+                improve_ant_solution(ants[ai].assign, rng, 0, 1);
+
+                ants[ai].cost = compute_cost(ants[ai].assign);
+                ants[ai].feasible = is_feasible(ants[ai].assign);
             }
-
-            if (diverse)
-                selected.push_back(ai);
         }
-
-        // nếu thiếu (trường hợp ants quá giống nhau)
-        for (int idx = 0; idx < m && selected.size() < repairTop; ++idx)
+        else
         {
-            int ai = order[idx];
-            if (find(selected.begin(), selected.end(), ai) == selected.end())
-                selected.push_back(ai);
-        }
+            for (int r = 0; r < min(repairTop, m); ++r)
+            {
+                int ai = order[r];
 
-        // chạy local search
-        for (int ai : selected)
-        {
-            local_search(ants[ai].assign, rng, 1000);
-            large_search(ants[ai].assign, rng, 1000);
-            ants[ai].cost = compute_cost(ants[ai].assign);
-            ants[ai].feasible = is_feasible(ants[ai].assign);
+                improve_ant_solution(ants[ai].assign, rng, 1, 0);
+
+                ants[ai].cost = compute_cost(ants[ai].assign);
+                ants[ai].feasible = is_feasible(ants[ai].assign);
+            }
         }
 
         // after repairs, resort by feasibility then cost
@@ -1320,6 +1455,40 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
             }
         }
 
+        // update sumDist/eta occasionally from current best (so candidates adapt)
+        if (best.assign.size() == (size_t)N && best.feasible)
+        {
+            for (int k = 0; k < K; ++k)
+                for (int i = 0; i < N; ++i)
+                    sumDist[i][k] = 0.0;
+            for (int j = 0; j < N; ++j)
+            {
+                int c = best.assign[j];
+                if (c < 0 || c >= K)
+                    continue;
+                for (int i = 0; i < N; ++i)
+                    sumDist[i][c] += distmat[i][j];
+            }
+            update_eta();
+            if (iter % 10 == 0)
+            {
+                for (int i = 0; i < N; ++i)
+                {
+                    vector<pair<double, int>> tmp;
+                    tmp.reserve(K);
+                    for (int k = 0; k < K; ++k)
+                        tmp.emplace_back(eta[i][k], k);
+                    sort(tmp.rbegin(), tmp.rend());
+                    int L = min((int)tmp.size(), L_candidates);
+                    candidates[i].clear();
+                    for (int x = 0; x < L; ++x)
+                        candidates[i].push_back(tmp[x].second);
+                    if (candidates[i].empty())
+                        candidates[i].push_back(0);
+                }
+            }
+        }
+
         // --- PHEROMONE UPDATE ---
         // Evaporation
         for (int i = 0; i < N; ++i)
@@ -1345,6 +1514,23 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                 phi[i][c] += T_local;
         }
 
+        // // hệ số deposit
+        // double T_repair = 0.02;   // cho repairTop ants
+
+        // // 2. Deposit theo thứ hạng ant
+        // for (int r = 0; r < repairTop && r < m; ++r)
+        // {
+        //     int ai = order[r];
+        //     double w = (double)(repairTop - r) / repairTop;
+
+        //     for (int i = 0; i < N; ++i)
+        //     {
+        //         int c = ants[ai].assign[i];
+        //         if (c >= 0 && c < K)
+        //             phi[i][c] += T_repair * w;
+        //     }
+        // }
+
         // optionally, deposit Tmin for all ants
         for (int i = 0; i < N; ++i)
             for (int k = 0; k < K; ++k)
@@ -1359,13 +1545,14 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         // logging
         if (iter % 10 == 0)
         {
-            double bestThis = ants[order[0]].cost;
+            double bestThis = 1e300;
             int feasCount = 0;
             for (int a = 0; a < m; ++a)
             {
                 if (ants[a].feasible)
                 {
                     feasCount++;
+                    bestThis = min(bestThis, ants[a].cost);
                 }
             }
             double elapsed = chrono::duration<double>(Clock::now() - start).count();
@@ -1388,15 +1575,15 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         }
 
         // stagnation reset
-        int noImproveReset = 400;
+        int noImproveReset = 300;
         if (noImprove >= noImproveReset)
         {
             cerr << "[RESET] no improvement for" << noImproveReset << "-> reset pheromones\n";
             for (int i = 0; i < N; ++i)
                 for (int k = 0; k < K; ++k)
-                    phi[i][k] = T_min;
+                    phi[i][k] = 1.0;
             noImprove = 0;
-            Q0 = Q_max;
+            Q0 = Q_start;
         }
     } // end while
 

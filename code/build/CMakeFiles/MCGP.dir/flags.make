@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/g++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/mnt/d/khoa_luan/grasp-dp/code/src
+CXX_INCLUDES = -I/mnt/d/khoa_luan/aco-dp/code/src
 
 CXX_FLAGS =  -fopenmp -O3
 

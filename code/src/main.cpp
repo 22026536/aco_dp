@@ -19,7 +19,6 @@ vector<Tengine> vengine;
 
 // Global instance and parameters
 Instance instance;
-Parameters parameters;
 double termination_time = 300.0;
 int maxIter = 50000;
 string instance_path;

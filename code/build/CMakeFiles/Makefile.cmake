@@ -7,7 +7,7 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/mnt/d/khoa_luan/grasp-dp/code/CMakeLists.txt"
+  "/mnt/d/khoa_luan/aco-dp/code/CMakeLists.txt"
   "CMakeFiles/4.1.2/CMakeCCompiler.cmake"
   "CMakeFiles/4.1.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/4.1.2/CMakeSystem.cmake"
