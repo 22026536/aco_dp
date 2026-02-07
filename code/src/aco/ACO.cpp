@@ -1056,7 +1056,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     PENALTY_SCALE = 50.0 * (meanDist / meanWeight);
     // --- ACO parameters (tunable) ---
     int m = min(N / 2, 40); // number of ants per iteration
-    double alpha = 1.2;    // pheromone importance
+    double alpha = 1.25;    // pheromone importance
     double beta = 1.0;      // desirability importance (larger => favor low delta cost)
     double rho = 0.2;       // evaporation
 
@@ -1065,7 +1065,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     double Q_max = 0.8, Q_min = 0.1;
     double Q0 = Q_max;
     int STAGNATE_DROP = 0.05; // mỗi iteration stagnate, giảm Q0 0.05
-    int STAGNATE_LIMIT = 15;
+    int STAGNATE_LIMIT = 10;
 
     // repair configuration: choose topRepair ants (by pre-repair cost) to run local_search+repair
     int repairTop = 5;
@@ -1154,8 +1154,8 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
 
                     // ---- combine capacity info ----
                     double capacityGain =
-                        0.5 * vectorFit +        // hợp hình
-                        1.0 * emptiness;          // cụm đang đói
+                        0.8 * vectorFit +        // hợp hình
+                        0.5 * emptiness;          // cụm đang đói
 
                     // ---- distance heuristic ----
                     double distTerm = clusterSumDist[k][i] / DIST_SCALE;
