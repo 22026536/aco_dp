@@ -679,207 +679,236 @@ void multi_relocate_for_deficit(vector<int> &assign,
 }
 
 // large search
+// large search
+static const int SEARCH_SAMPLE_PER_CLUSTER = 60;
 void large_search(std::vector<int> &assign, std::mt19937_64 &rng, int MAX_MOVES)
 {
-    // ------------------------------
-    // Build members & sumW
-    // ------------------------------
+    // Build members and sumW
     vector<vector<int>> members(K);
     vector<vector<double>> sumW(K, vector<double>(M_weights, 0.0));
     for (int i = 0; i < N; ++i)
     {
         int c = assign[i];
+        if (c < 0 || c >= K)
+            continue;
         members[c].push_back(i);
         for (int t = 0; t < M_weights; ++t)
             sumW[c][t] += Wmat[i][t];
     }
 
-    // ------------------------------
-    // Precompute sumDist
-    // ------------------------------
+    // precompute sumDist
     vector<vector<double>> sumDist(N, vector<double>(K, 0.0));
     for (int k = 0; k < K; ++k)
+    {
         for (int j : members[k])
+        {
             for (int i = 0; i < N; ++i)
                 sumDist[i][k] += distmat[i][j];
+        }
+    }
 
     int moves = 0;
-    bool improved = true;
 
-    // ==============================
-    // MAIN LOOP – giống local_search
-    // ==============================
-    while (improved && moves < MAX_MOVES)
+    while (moves < MAX_MOVES)
     {
-        improved = false;
+        bool didSomething = false;
 
-        // Check feasibility
-        double total_violation = 0.0;
-        for (int k = 0; k < K; ++k)
-            total_violation += cluster_violation_from_sums(sumW, k);
+        std::pair<vector<int>, vector<int>> tmp_pair = compute_over_under_from_sums(sumW);
+        vector<int> overloaded = tmp_pair.first;
+        vector<int> deficient = tmp_pair.second;
 
-        bool feasible = (total_violation <= VALID_EPS);
+        bool feasibleNow = overloaded.empty() && deficient.empty();
 
-        // --------------------------------
-        // 1. RELOCATE MOVES
-        // --------------------------------
-        auto [overloaded, deficient] = compute_over_under_from_sums(sumW);
-
-        for (int from = 0; from < K && moves < MAX_MOVES; ++from)
+        // If already feasible → allow optimization among all clusters
+        if (feasibleNow)
         {
-            for (int idx = 0; idx < (int)members[from].size() && moves < MAX_MOVES; ++idx)
+            overloaded.clear();
+            deficient.clear();
+            for (int k = 0; k < K; ++k)
             {
-                int u = members[from][idx];
+                overloaded.push_back(k);
+                deficient.push_back(k);
+            }
+        }
 
-                int bestTo = from;
-                double bestDeltaCost = 0.0;
-                double bestViolGain = 0.0;
+        // ------------------ Relocation phase ------------------
+        struct Move
+        {
+            double score;
+            int u, from, to;
+        };
+        struct Cmp
+        {
+            bool operator()(Move const &a, Move const &b) const
+            {
+                return a.score < b.score;
+            }
+        };
+        std::priority_queue<Move, vector<Move>, Cmp> pq;
 
-                for (int to = 0; to < K; ++to)
+        for (int from : overloaded)
+        {
+            vector<int> candNodes = members[from];
+            if ((int)candNodes.size() > SEARCH_SAMPLE_PER_CLUSTER)
+            {
+                std::shuffle(candNodes.begin(), candNodes.end(), rng);
+                candNodes.resize(SEARCH_SAMPLE_PER_CLUSTER);
+            }
+
+            for (int u : candNodes)
+            {
+                for (int to : deficient)
                 {
                     if (to == from)
                         continue;
 
-                    // ---- compute violation gain ----
-                    double before = cluster_violation_from_sums(sumW, from) +
-                                    cluster_violation_from_sums(sumW, to);
-
-                    vector<double> nf = sumW[from], nt = sumW[to];
-                    for (int t = 0; t < M_weights; ++t)
-                    {
-                        nf[t] -= Wmat[u][t];
-                        nt[t] += Wmat[u][t];
-                    }
-
-                    double after = 0.0;
-                    for (int t = 0; t < M_weights; ++t)
-                    {
-                        if (nf[t] < WLmat[from][t] - VALID_EPS)
-                            after += WLmat[from][t] - nf[t];
-                        if (nf[t] > WUmat[from][t] + VALID_EPS)
-                            after += nf[t] - WUmat[from][t];
-                        if (nt[t] < WLmat[to][t] - VALID_EPS)
-                            after += WLmat[to][t] - nt[t];
-                        if (nt[t] > WUmat[to][t] + VALID_EPS)
-                            after += nt[t] - WUmat[to][t];
-                    }
-
-                    double violGain = before - after;
-                    double deltaCost = sumDist[u][to] - sumDist[u][from];
-
-                    bool accept = false;
-                    if (!feasible)
-                        accept = (violGain > bestViolGain + 1e-9);
-                    else
-                        accept = (violGain >= -1e-9 && deltaCost < bestDeltaCost - 1e-9);
-
-                    if (accept)
-                    {
-                        bestViolGain = violGain;
-                        bestDeltaCost = deltaCost;
-                        bestTo = to;
-                    }
-                }
-
-                if (bestTo != from)
-                {
-                    // APPLY
-                    auto it = find(members[from].begin(), members[from].end(), u);
-                    members[from].erase(it);
-                    members[bestTo].push_back(u);
+                    double beforePair = 0.0, afterPair = 0.0;
 
                     for (int t = 0; t < M_weights; ++t)
                     {
-                        sumW[from][t] -= Wmat[u][t];
-                        sumW[bestTo][t] += Wmat[u][t];
+                        double s_from = sumW[from][t];
+                        double s_to = sumW[to][t];
+
+                        // violation before
+                        if (s_from < WLmat[from][t] - VALID_EPS)
+                            beforePair += WLmat[from][t] - s_from;
+                        if (s_from > WUmat[from][t] + VALID_EPS)
+                            beforePair += s_from - WUmat[from][t];
+
+                        if (s_to < WLmat[to][t] - VALID_EPS)
+                            beforePair += WLmat[to][t] - s_to;
+                        if (s_to > WUmat[to][t] + VALID_EPS)
+                            beforePair += s_to - WUmat[to][t];
+
+                        double ns_from = s_from - Wmat[u][t];
+                        double ns_to = s_to + Wmat[u][t];
+
+                        // violation after
+                        if (ns_from < WLmat[from][t] - VALID_EPS)
+                            afterPair += WLmat[from][t] - ns_from;
+                        if (ns_from > WUmat[from][t] + VALID_EPS)
+                            afterPair += ns_from - WUmat[from][t];
+
+                        if (ns_to < WLmat[to][t] - VALID_EPS)
+                            afterPair += WLmat[to][t] - ns_to;
+                        if (ns_to > WUmat[to][t] + VALID_EPS)
+                            afterPair += ns_to - WUmat[to][t];
                     }
 
-                    assign[u] = bestTo;
+                    double violGain = beforePair - afterPair;
+                    double deltaIntra = sumDist[u][to] - sumDist[u][from];
 
-                    for (int v = 0; v < N; ++v)
-                    {
-                        if (v == u)
-                            continue;
-                        sumDist[v][from] -= distmat[v][u];
-                        sumDist[v][bestTo] += distmat[v][u];
-                    }
+                    double score = 5 * PENALTY_SCALE * violGain
+                                   - deltaIntra;
 
-                    for (int k = 0; k < K; ++k)
-                    {
-                        double s = 0.0;
-                        for (int j : members[k])
-                            s += distmat[u][j];
-                        sumDist[u][k] = s;
-                    }
-
-                    moves++;
-                    improved = true;
+                    if (score > 1e-9)
+                        pq.push(Move{score, u, from, to});
                 }
             }
         }
 
-        // --------------------------------
-        // 2. SWAP MOVES (feasible focus)
-        // --------------------------------
-        if (feasible && !improved)
+        int appliedThisRound = 0;
+
+        while (!pq.empty() &&
+               moves < MAX_MOVES &&
+               appliedThisRound < 30)
         {
-            vector<int> nodes(N);
-            iota(nodes.begin(), nodes.end(), 0);
-            shuffle(nodes.begin(), nodes.end(), rng);
+            Move mv = pq.top();
+            pq.pop();
 
-            for (int ii = 0; ii < N && moves < MAX_MOVES; ++ii)
+            if (assign[mv.u] != mv.from)
+                continue;
+
+            double beforePair = 0.0, afterPair = 0.0;
+
+            for (int t = 0; t < M_weights; ++t)
             {
-                int i = nodes[ii];
-                int ci = assign[i];
+                double s_from = sumW[mv.from][t];
+                double s_to = sumW[mv.to][t];
 
-                for (int trial = 0; trial < 10 && moves < MAX_MOVES; ++trial)
-                {
-                    int j = rng() % N;
-                    if (j == i)
-                        continue;
+                if (s_from < WLmat[mv.from][t] - VALID_EPS)
+                    beforePair += WLmat[mv.from][t] - s_from;
+                if (s_from > WUmat[mv.from][t] + VALID_EPS)
+                    beforePair += s_from - WUmat[mv.from][t];
 
-                    int cj = assign[j];
-                    if (ci == cj)
-                        continue;
+                if (s_to < WLmat[mv.to][t] - VALID_EPS)
+                    beforePair += WLmat[mv.to][t] - s_to;
+                if (s_to > WUmat[mv.to][t] + VALID_EPS)
+                    beforePair += s_to - WUmat[mv.to][t];
 
-                    double delta =
-                        (sumDist[i][cj] - sumDist[i][ci]) +
-                        (sumDist[j][ci] - sumDist[j][cj]) -
-                        2.0 * distmat[i][j];
+                double ns_from = s_from - Wmat[mv.u][t];
+                double ns_to = s_to + Wmat[mv.u][t];
 
-                    if (delta >= -1e-9)
-                        continue;
+                if (ns_from < WLmat[mv.from][t] - VALID_EPS)
+                    afterPair += WLmat[mv.from][t] - ns_from;
+                if (ns_from > WUmat[mv.from][t] + VALID_EPS)
+                    afterPair += ns_from - WUmat[mv.from][t];
 
-                    // check violation safety
-                    bool ok = true;
-                    for (int t = 0; t < M_weights; ++t)
-                    {
-                        double nci = sumW[ci][t] - Wmat[i][t] + Wmat[j][t];
-                        double ncj = sumW[cj][t] - Wmat[j][t] + Wmat[i][t];
-                        if (nci < WLmat[ci][t] - VALID_EPS || nci > WUmat[ci][t] + VALID_EPS)
-                            ok = false;
-                        if (ncj < WLmat[cj][t] - VALID_EPS || ncj > WUmat[cj][t] + VALID_EPS)
-                            ok = false;
-                    }
-                    if (!ok)
-                        continue;
-
-                    // APPLY SWAP
-                    swap(assign[i], assign[j]);
-                    for (int t = 0; t < M_weights; ++t)
-                    {
-                        sumW[ci][t] = sumW[ci][t] - Wmat[i][t] + Wmat[j][t];
-                        sumW[cj][t] = sumW[cj][t] - Wmat[j][t] + Wmat[i][t];
-                    }
-
-                    improved = true;
-                    moves++;
-                    break;
-                }
-                if (improved)
-                    break;
+                if (ns_to < WLmat[mv.to][t] - VALID_EPS)
+                    afterPair += WLmat[mv.to][t] - ns_to;
+                if (ns_to > WUmat[mv.to][t] + VALID_EPS)
+                    afterPair += ns_to - WUmat[mv.to][t];
             }
+
+            double violGain = beforePair - afterPair;
+            double deltaIntra = sumDist[mv.u][mv.to] - sumDist[mv.u][mv.from];
+
+            double score = 5 * PENALTY_SCALE * violGain
+                           - deltaIntra;
+
+            if (score <= 1e-9)
+                continue;
+
+            // Apply move
+            auto it = std::find(members[mv.from].begin(), members[mv.from].end(), mv.u);
+            if (it != members[mv.from].end())
+                members[mv.from].erase(it);
+
+            members[mv.to].push_back(mv.u);
+
+            for (int t = 0; t < M_weights; ++t)
+            {
+                sumW[mv.from][t] -= Wmat[mv.u][t];
+                sumW[mv.to][t] += Wmat[mv.u][t];
+            }
+
+            assign[mv.u] = mv.to;
+
+            for (int v = 0; v < N; ++v)
+            {
+                if (v == mv.u)
+                    continue;
+                sumDist[v][mv.from] -= distmat[v][mv.u];
+                sumDist[v][mv.to] += distmat[v][mv.u];
+            }
+
+            for (int kk = 0; kk < K; ++kk)
+            {
+                double s = 0.0;
+                for (int member : members[kk])
+                    if (member != mv.u)
+                        s += distmat[mv.u][member];
+                sumDist[mv.u][kk] = s;
+            }
+
+            moves++;
+            appliedThisRound++;
+            didSomething = true;
         }
+
+        // If nothing improved → stop
+        if (!didSomething)
+            break;
+    }
+
+    // final tolerance check
+    double total_violation = 0.0;
+    for (int k = 0; k < K; ++k)
+        total_violation += cluster_violation_from_sums(sumW, k);
+
+    if (total_violation <= 1e-6)
+    {
+        // acceptable feasible
     }
 }
 
