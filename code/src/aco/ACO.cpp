@@ -1056,12 +1056,12 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     PENALTY_SCALE = 50.0 * (meanDist / meanWeight);
     // --- ACO parameters (tunable) ---
     int m = min(N / 2, 40); // number of ants per iteration
-    double alpha = 1.25;     // pheromone importance
+    double alpha = 1.2;    // pheromone importance
     double beta = 1.0;      // desirability importance (larger => favor low delta cost)
     double rho = 0.2;       // evaporation
 
     // selection temperature and q0 (small exploitation)
-    double T_max = 0.5, T_min = 0.03;
+    double T_max = 0.3, T_min = 0.03;
     double Q_max = 0.8, Q_min = 0.1;
     double Q0 = Q_max;
     int STAGNATE_DROP = 0.05; // mỗi iteration stagnate, giảm Q0 0.05
@@ -1136,8 +1136,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                         normNode += w * w;
 
                         // ---- emptiness magnitude ----
-                        if (WLmat[k][t] > 0.0)
-                            emptiness += need / WLmat[k][t];
+                        emptiness += need / WLmat[k][t];
                     }
 
                     if (violate)
@@ -1155,8 +1154,8 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
 
                     // ---- combine capacity info ----
                     double capacityGain =
-                        1.0 * vectorFit +        // hợp hình
-                        0.7 * emptiness;          // cụm đang đói
+                        0.5 * vectorFit +        // hợp hình
+                        1.0 * emptiness;          // cụm đang đói
 
                     // ---- distance heuristic ----
                     double distTerm = clusterSumDist[k][i] / DIST_SCALE;
@@ -1164,8 +1163,6 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                     double desir =
                         (1.0 / (1.0 + distTerm)) *
                         (1.0 + capacityGain);
-
-                    desir = max(desir, 1e-6);
 
                     double tau = phi[i][k];
                     double weight = pow(tau, alpha) * pow(desir, beta);
@@ -1222,7 +1219,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
              { return ants[a1].cost < ants[a2].cost; });
 
         vector<int> selected;  // index các ant được repair
-        int MIN_DIFF = 0.01 * N;
+        int MIN_DIFF = 1;
         for (int idx = 0; idx < m && selected.size() < repairTop; ++idx)
         {
             int ai = order[idx];
@@ -1258,7 +1255,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
             ants[ai].feasible = is_feasible(ants[ai].assign);
         }
 
-        // after repairs, resort by feasibility then cost
+        // after local search, resort by feasibility then cost
         iota(order.begin(), order.end(), 0);
         sort(order.begin(), order.end(), [&](int a1, int a2)
              { return ants[a1].cost < ants[a2].cost; });
@@ -1334,16 +1331,34 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                 phi[i][c] += T_max;
         }
 
-        // Best local
-        int bestLocal = order[0];
-        double T_local = 0.3 * T_max;
+        // // Find BEST LOCAL khác best global theo Hamming
+        // int bestLocal = -1;
 
-        for (int i = 0; i < N; ++i)
-        {
-            int c = ants[bestLocal].assign[i];
-            if (c >= 0 && c < K)
-                phi[i][c] += T_local;
-        }
+        // for (int r = 0; r < m; ++r)
+        // {
+        //     int ai = order[r];
+
+        //     // nếu giống best global thì bỏ
+        //     if (hamming_distance(ants[ai].assign, best.assign) < MIN_DIFF)
+        //         continue;
+
+        //     bestLocal = ai;
+        //     break;
+        // }
+
+
+        // // Deposit BEST LOCAL nếu tìm được
+        // if (bestLocal != -1)
+        // {
+        //     double T_local = 0.3 * T_max;
+
+        //     for (int i = 0; i < N; ++i)
+        //     {
+        //         int c = ants[bestLocal].assign[i];
+        //         if (c >= 0 && c < K)
+        //             phi[i][c] += T_local;
+        //     }
+        // }
 
         // optionally, deposit Tmin for all ants
         for (int i = 0; i < N; ++i)
@@ -1375,6 +1390,9 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                  << " feasibleAnts=" << feasCount
                  << " noImprove=" << noImprove
                  << " (elapsed " << elapsed << "s)\n";
+            // for (int r = 0; r < repairTop; ++r) {
+            //     cerr << "ant" << r << " cost = " << ants[selected[r]].cost << endl;
+            // }
             // append snapshot to in-memory log
             LogRow r;
             r.iter = iter;
