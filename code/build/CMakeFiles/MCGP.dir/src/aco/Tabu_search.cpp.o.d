@@ -1,6 +1,6 @@
-CMakeFiles/MCGP.dir/src/aco/ACO.cpp.o: \
- /mnt/d/khoa_luan/aco-dp/code/src/aco/ACO.cpp /usr/include/stdc-predef.h \
- /mnt/d/khoa_luan/aco-dp/code/src/aco/ACO.h \
+CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.o: \
+ /mnt/d/khoa_luan/aco-dp/code/src/aco/Tabu_search.cpp \
+ /usr/include/stdc-predef.h /mnt/d/khoa_luan/aco-dp/code/src/aco/ACO.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/stdc++.h \
  /usr/include/c++/9/cassert \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++config.h \
@@ -294,6 +294,4 @@ CMakeFiles/MCGP.dir/src/aco/ACO.cpp.o: \
  /mnt/d/khoa_luan/aco-dp/code/src/solution/../includes.h \
  /usr/include/c++/9/filesystem \
  /usr/lib/gcc/x86_64-linux-gnu/9/include/omp.h \
- /mnt/d/khoa_luan/aco-dp/code/src/aco/Local_search.h \
- /mnt/d/khoa_luan/aco-dp/code/src/aco/Large_search.h \
  /mnt/d/khoa_luan/aco-dp/code/src/aco/Tabu_search.h

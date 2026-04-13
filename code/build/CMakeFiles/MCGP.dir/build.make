@@ -86,10 +86,52 @@ CMakeFiles/MCGP.dir/src/aco/ACO.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MCGP.dir/src/aco/ACO.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/d/khoa_luan/aco-dp/code/src/aco/ACO.cpp -o CMakeFiles/MCGP.dir/src/aco/ACO.cpp.s
 
+CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.o: CMakeFiles/MCGP.dir/flags.make
+CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.o: /mnt/d/khoa_luan/aco-dp/code/src/aco/Large_search.cpp
+CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.o: CMakeFiles/MCGP.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.o -MF CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.o.d -o CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/src/aco/Large_search.cpp
+
+CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/d/khoa_luan/aco-dp/code/src/aco/Large_search.cpp > CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.i
+
+CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/d/khoa_luan/aco-dp/code/src/aco/Large_search.cpp -o CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.s
+
+CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.o: CMakeFiles/MCGP.dir/flags.make
+CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.o: /mnt/d/khoa_luan/aco-dp/code/src/aco/Local_search.cpp
+CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.o: CMakeFiles/MCGP.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.o -MF CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.o.d -o CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/src/aco/Local_search.cpp
+
+CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/d/khoa_luan/aco-dp/code/src/aco/Local_search.cpp > CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.i
+
+CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/d/khoa_luan/aco-dp/code/src/aco/Local_search.cpp -o CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.s
+
+CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.o: CMakeFiles/MCGP.dir/flags.make
+CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.o: /mnt/d/khoa_luan/aco-dp/code/src/aco/Tabu_search.cpp
+CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.o: CMakeFiles/MCGP.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.o -MF CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.o.d -o CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/src/aco/Tabu_search.cpp
+
+CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/d/khoa_luan/aco-dp/code/src/aco/Tabu_search.cpp > CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.i
+
+CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/d/khoa_luan/aco-dp/code/src/aco/Tabu_search.cpp -o CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.s
+
 CMakeFiles/MCGP.dir/src/algorithm/Algorithm.cpp.o: CMakeFiles/MCGP.dir/flags.make
 CMakeFiles/MCGP.dir/src/algorithm/Algorithm.cpp.o: /mnt/d/khoa_luan/aco-dp/code/src/algorithm/Algorithm.cpp
 CMakeFiles/MCGP.dir/src/algorithm/Algorithm.cpp.o: CMakeFiles/MCGP.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MCGP.dir/src/algorithm/Algorithm.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/MCGP.dir/src/algorithm/Algorithm.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MCGP.dir/src/algorithm/Algorithm.cpp.o -MF CMakeFiles/MCGP.dir/src/algorithm/Algorithm.cpp.o.d -o CMakeFiles/MCGP.dir/src/algorithm/Algorithm.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/src/algorithm/Algorithm.cpp
 
 CMakeFiles/MCGP.dir/src/algorithm/Algorithm.cpp.i: cmake_force
@@ -103,7 +145,7 @@ CMakeFiles/MCGP.dir/src/algorithm/Algorithm.cpp.s: cmake_force
 CMakeFiles/MCGP.dir/src/algorithm/Island.cpp.o: CMakeFiles/MCGP.dir/flags.make
 CMakeFiles/MCGP.dir/src/algorithm/Island.cpp.o: /mnt/d/khoa_luan/aco-dp/code/src/algorithm/Island.cpp
 CMakeFiles/MCGP.dir/src/algorithm/Island.cpp.o: CMakeFiles/MCGP.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MCGP.dir/src/algorithm/Island.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/MCGP.dir/src/algorithm/Island.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MCGP.dir/src/algorithm/Island.cpp.o -MF CMakeFiles/MCGP.dir/src/algorithm/Island.cpp.o.d -o CMakeFiles/MCGP.dir/src/algorithm/Island.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/src/algorithm/Island.cpp
 
 CMakeFiles/MCGP.dir/src/algorithm/Island.cpp.i: cmake_force
@@ -117,7 +159,7 @@ CMakeFiles/MCGP.dir/src/algorithm/Island.cpp.s: cmake_force
 CMakeFiles/MCGP.dir/src/algorithm/Metaheuristic.cpp.o: CMakeFiles/MCGP.dir/flags.make
 CMakeFiles/MCGP.dir/src/algorithm/Metaheuristic.cpp.o: /mnt/d/khoa_luan/aco-dp/code/src/algorithm/Metaheuristic.cpp
 CMakeFiles/MCGP.dir/src/algorithm/Metaheuristic.cpp.o: CMakeFiles/MCGP.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/MCGP.dir/src/algorithm/Metaheuristic.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/MCGP.dir/src/algorithm/Metaheuristic.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MCGP.dir/src/algorithm/Metaheuristic.cpp.o -MF CMakeFiles/MCGP.dir/src/algorithm/Metaheuristic.cpp.o.d -o CMakeFiles/MCGP.dir/src/algorithm/Metaheuristic.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/src/algorithm/Metaheuristic.cpp
 
 CMakeFiles/MCGP.dir/src/algorithm/Metaheuristic.cpp.i: cmake_force
@@ -131,7 +173,7 @@ CMakeFiles/MCGP.dir/src/algorithm/Metaheuristic.cpp.s: cmake_force
 CMakeFiles/MCGP.dir/src/main.cpp.o: CMakeFiles/MCGP.dir/flags.make
 CMakeFiles/MCGP.dir/src/main.cpp.o: /mnt/d/khoa_luan/aco-dp/code/src/main.cpp
 CMakeFiles/MCGP.dir/src/main.cpp.o: CMakeFiles/MCGP.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/MCGP.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/MCGP.dir/src/main.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MCGP.dir/src/main.cpp.o -MF CMakeFiles/MCGP.dir/src/main.cpp.o.d -o CMakeFiles/MCGP.dir/src/main.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/src/main.cpp
 
 CMakeFiles/MCGP.dir/src/main.cpp.i: cmake_force
@@ -145,7 +187,7 @@ CMakeFiles/MCGP.dir/src/main.cpp.s: cmake_force
 CMakeFiles/MCGP.dir/src/metaheuristics/GRASP.cpp.o: CMakeFiles/MCGP.dir/flags.make
 CMakeFiles/MCGP.dir/src/metaheuristics/GRASP.cpp.o: /mnt/d/khoa_luan/aco-dp/code/src/metaheuristics/GRASP.cpp
 CMakeFiles/MCGP.dir/src/metaheuristics/GRASP.cpp.o: CMakeFiles/MCGP.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/MCGP.dir/src/metaheuristics/GRASP.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/MCGP.dir/src/metaheuristics/GRASP.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MCGP.dir/src/metaheuristics/GRASP.cpp.o -MF CMakeFiles/MCGP.dir/src/metaheuristics/GRASP.cpp.o.d -o CMakeFiles/MCGP.dir/src/metaheuristics/GRASP.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/src/metaheuristics/GRASP.cpp
 
 CMakeFiles/MCGP.dir/src/metaheuristics/GRASP.cpp.i: cmake_force
@@ -159,7 +201,7 @@ CMakeFiles/MCGP.dir/src/metaheuristics/GRASP.cpp.s: cmake_force
 CMakeFiles/MCGP.dir/src/solution/Solution.cpp.o: CMakeFiles/MCGP.dir/flags.make
 CMakeFiles/MCGP.dir/src/solution/Solution.cpp.o: /mnt/d/khoa_luan/aco-dp/code/src/solution/Solution.cpp
 CMakeFiles/MCGP.dir/src/solution/Solution.cpp.o: CMakeFiles/MCGP.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/MCGP.dir/src/solution/Solution.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/MCGP.dir/src/solution/Solution.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MCGP.dir/src/solution/Solution.cpp.o -MF CMakeFiles/MCGP.dir/src/solution/Solution.cpp.o.d -o CMakeFiles/MCGP.dir/src/solution/Solution.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/src/solution/Solution.cpp
 
 CMakeFiles/MCGP.dir/src/solution/Solution.cpp.i: cmake_force
@@ -173,7 +215,7 @@ CMakeFiles/MCGP.dir/src/solution/Solution.cpp.s: cmake_force
 CMakeFiles/MCGP.dir/src/solution/constructives.cpp.o: CMakeFiles/MCGP.dir/flags.make
 CMakeFiles/MCGP.dir/src/solution/constructives.cpp.o: /mnt/d/khoa_luan/aco-dp/code/src/solution/constructives.cpp
 CMakeFiles/MCGP.dir/src/solution/constructives.cpp.o: CMakeFiles/MCGP.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/MCGP.dir/src/solution/constructives.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/MCGP.dir/src/solution/constructives.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MCGP.dir/src/solution/constructives.cpp.o -MF CMakeFiles/MCGP.dir/src/solution/constructives.cpp.o.d -o CMakeFiles/MCGP.dir/src/solution/constructives.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/src/solution/constructives.cpp
 
 CMakeFiles/MCGP.dir/src/solution/constructives.cpp.i: cmake_force
@@ -187,7 +229,7 @@ CMakeFiles/MCGP.dir/src/solution/constructives.cpp.s: cmake_force
 CMakeFiles/MCGP.dir/src/solution/dp_explore.cpp.o: CMakeFiles/MCGP.dir/flags.make
 CMakeFiles/MCGP.dir/src/solution/dp_explore.cpp.o: /mnt/d/khoa_luan/aco-dp/code/src/solution/dp_explore.cpp
 CMakeFiles/MCGP.dir/src/solution/dp_explore.cpp.o: CMakeFiles/MCGP.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/MCGP.dir/src/solution/dp_explore.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/MCGP.dir/src/solution/dp_explore.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MCGP.dir/src/solution/dp_explore.cpp.o -MF CMakeFiles/MCGP.dir/src/solution/dp_explore.cpp.o.d -o CMakeFiles/MCGP.dir/src/solution/dp_explore.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/src/solution/dp_explore.cpp
 
 CMakeFiles/MCGP.dir/src/solution/dp_explore.cpp.i: cmake_force
@@ -201,7 +243,7 @@ CMakeFiles/MCGP.dir/src/solution/dp_explore.cpp.s: cmake_force
 CMakeFiles/MCGP.dir/src/solution/exchange.cpp.o: CMakeFiles/MCGP.dir/flags.make
 CMakeFiles/MCGP.dir/src/solution/exchange.cpp.o: /mnt/d/khoa_luan/aco-dp/code/src/solution/exchange.cpp
 CMakeFiles/MCGP.dir/src/solution/exchange.cpp.o: CMakeFiles/MCGP.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/MCGP.dir/src/solution/exchange.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/MCGP.dir/src/solution/exchange.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MCGP.dir/src/solution/exchange.cpp.o -MF CMakeFiles/MCGP.dir/src/solution/exchange.cpp.o.d -o CMakeFiles/MCGP.dir/src/solution/exchange.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/src/solution/exchange.cpp
 
 CMakeFiles/MCGP.dir/src/solution/exchange.cpp.i: cmake_force
@@ -215,7 +257,7 @@ CMakeFiles/MCGP.dir/src/solution/exchange.cpp.s: cmake_force
 CMakeFiles/MCGP.dir/src/solution/extended.cpp.o: CMakeFiles/MCGP.dir/flags.make
 CMakeFiles/MCGP.dir/src/solution/extended.cpp.o: /mnt/d/khoa_luan/aco-dp/code/src/solution/extended.cpp
 CMakeFiles/MCGP.dir/src/solution/extended.cpp.o: CMakeFiles/MCGP.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/MCGP.dir/src/solution/extended.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/MCGP.dir/src/solution/extended.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MCGP.dir/src/solution/extended.cpp.o -MF CMakeFiles/MCGP.dir/src/solution/extended.cpp.o.d -o CMakeFiles/MCGP.dir/src/solution/extended.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/src/solution/extended.cpp
 
 CMakeFiles/MCGP.dir/src/solution/extended.cpp.i: cmake_force
@@ -229,7 +271,7 @@ CMakeFiles/MCGP.dir/src/solution/extended.cpp.s: cmake_force
 CMakeFiles/MCGP.dir/src/solution/insert.cpp.o: CMakeFiles/MCGP.dir/flags.make
 CMakeFiles/MCGP.dir/src/solution/insert.cpp.o: /mnt/d/khoa_luan/aco-dp/code/src/solution/insert.cpp
 CMakeFiles/MCGP.dir/src/solution/insert.cpp.o: CMakeFiles/MCGP.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/MCGP.dir/src/solution/insert.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/MCGP.dir/src/solution/insert.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MCGP.dir/src/solution/insert.cpp.o -MF CMakeFiles/MCGP.dir/src/solution/insert.cpp.o.d -o CMakeFiles/MCGP.dir/src/solution/insert.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/src/solution/insert.cpp
 
 CMakeFiles/MCGP.dir/src/solution/insert.cpp.i: cmake_force
@@ -243,6 +285,9 @@ CMakeFiles/MCGP.dir/src/solution/insert.cpp.s: cmake_force
 # Object files for target MCGP
 MCGP_OBJECTS = \
 "CMakeFiles/MCGP.dir/src/aco/ACO.cpp.o" \
+"CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.o" \
+"CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.o" \
+"CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.o" \
 "CMakeFiles/MCGP.dir/src/algorithm/Algorithm.cpp.o" \
 "CMakeFiles/MCGP.dir/src/algorithm/Island.cpp.o" \
 "CMakeFiles/MCGP.dir/src/algorithm/Metaheuristic.cpp.o" \
@@ -259,6 +304,9 @@ MCGP_OBJECTS = \
 MCGP_EXTERNAL_OBJECTS =
 
 /mnt/d/khoa_luan/aco-dp/MCGP: CMakeFiles/MCGP.dir/src/aco/ACO.cpp.o
+/mnt/d/khoa_luan/aco-dp/MCGP: CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.o
+/mnt/d/khoa_luan/aco-dp/MCGP: CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.o
+/mnt/d/khoa_luan/aco-dp/MCGP: CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.o
 /mnt/d/khoa_luan/aco-dp/MCGP: CMakeFiles/MCGP.dir/src/algorithm/Algorithm.cpp.o
 /mnt/d/khoa_luan/aco-dp/MCGP: CMakeFiles/MCGP.dir/src/algorithm/Island.cpp.o
 /mnt/d/khoa_luan/aco-dp/MCGP: CMakeFiles/MCGP.dir/src/algorithm/Metaheuristic.cpp.o
@@ -272,7 +320,7 @@ MCGP_EXTERNAL_OBJECTS =
 /mnt/d/khoa_luan/aco-dp/MCGP: CMakeFiles/MCGP.dir/src/solution/insert.cpp.o
 /mnt/d/khoa_luan/aco-dp/MCGP: CMakeFiles/MCGP.dir/build.make
 /mnt/d/khoa_luan/aco-dp/MCGP: CMakeFiles/MCGP.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable /mnt/d/khoa_luan/aco-dp/MCGP"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking CXX executable /mnt/d/khoa_luan/aco-dp/MCGP"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MCGP.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

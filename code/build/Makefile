@@ -153,6 +153,78 @@ src/aco/ACO.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/ACO.cpp.s
 .PHONY : src/aco/ACO.cpp.s
 
+src/aco/Large_search.o: src/aco/Large_search.cpp.o
+.PHONY : src/aco/Large_search.o
+
+# target to build an object file
+src/aco/Large_search.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.o
+.PHONY : src/aco/Large_search.cpp.o
+
+src/aco/Large_search.i: src/aco/Large_search.cpp.i
+.PHONY : src/aco/Large_search.i
+
+# target to preprocess a source file
+src/aco/Large_search.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.i
+.PHONY : src/aco/Large_search.cpp.i
+
+src/aco/Large_search.s: src/aco/Large_search.cpp.s
+.PHONY : src/aco/Large_search.s
+
+# target to generate assembly for a file
+src/aco/Large_search.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.s
+.PHONY : src/aco/Large_search.cpp.s
+
+src/aco/Local_search.o: src/aco/Local_search.cpp.o
+.PHONY : src/aco/Local_search.o
+
+# target to build an object file
+src/aco/Local_search.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.o
+.PHONY : src/aco/Local_search.cpp.o
+
+src/aco/Local_search.i: src/aco/Local_search.cpp.i
+.PHONY : src/aco/Local_search.i
+
+# target to preprocess a source file
+src/aco/Local_search.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.i
+.PHONY : src/aco/Local_search.cpp.i
+
+src/aco/Local_search.s: src/aco/Local_search.cpp.s
+.PHONY : src/aco/Local_search.s
+
+# target to generate assembly for a file
+src/aco/Local_search.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/Local_search.cpp.s
+.PHONY : src/aco/Local_search.cpp.s
+
+src/aco/Tabu_search.o: src/aco/Tabu_search.cpp.o
+.PHONY : src/aco/Tabu_search.o
+
+# target to build an object file
+src/aco/Tabu_search.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.o
+.PHONY : src/aco/Tabu_search.cpp.o
+
+src/aco/Tabu_search.i: src/aco/Tabu_search.cpp.i
+.PHONY : src/aco/Tabu_search.i
+
+# target to preprocess a source file
+src/aco/Tabu_search.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.i
+.PHONY : src/aco/Tabu_search.cpp.i
+
+src/aco/Tabu_search.s: src/aco/Tabu_search.cpp.s
+.PHONY : src/aco/Tabu_search.s
+
+# target to generate assembly for a file
+src/aco/Tabu_search.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.s
+.PHONY : src/aco/Tabu_search.cpp.s
+
 src/algorithm/Algorithm.o: src/algorithm/Algorithm.cpp.o
 .PHONY : src/algorithm/Algorithm.o
 
@@ -429,6 +501,15 @@ help:
 	@echo "... src/aco/ACO.o"
 	@echo "... src/aco/ACO.i"
 	@echo "... src/aco/ACO.s"
+	@echo "... src/aco/Large_search.o"
+	@echo "... src/aco/Large_search.i"
+	@echo "... src/aco/Large_search.s"
+	@echo "... src/aco/Local_search.o"
+	@echo "... src/aco/Local_search.i"
+	@echo "... src/aco/Local_search.s"
+	@echo "... src/aco/Tabu_search.o"
+	@echo "... src/aco/Tabu_search.i"
+	@echo "... src/aco/Tabu_search.s"
 	@echo "... src/algorithm/Algorithm.o"
 	@echo "... src/algorithm/Algorithm.i"
 	@echo "... src/algorithm/Algorithm.s"

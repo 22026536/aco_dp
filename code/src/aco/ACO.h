@@ -4,9 +4,12 @@
 using namespace std;
 
 struct ACOSolution {
-    vector<int> assign;
     double cost = 1e300;
     bool feasible = false;
+    vector<int> assign;
+    vector<vector<int>> members;
+    vector<vector<double>> clusterWeight;
+    vector<vector<double>> clusterSumDist;
 };
 
 // ================== GLOBALS ==================
@@ -54,20 +57,6 @@ bool check_weights_validity(const Instance instance);
 double compute_cost(const vector<int> &assign);
 
 bool is_feasible(const std::vector<int> &assign);
-
-void local_search(vector<int> &assign, mt19937_64 &rng, int maxMoves);
-
-double cluster_violation_from_sums(const vector<vector<double>> &sumW, int k);
-
-pair<vector<int>, vector<int>> compute_over_under_from_sums(const vector<vector<double>> &sumW);
-
-void multi_relocate_for_deficit(vector<int> &assign,
-                                vector<vector<int>> &members,
-                                vector<vector<double>> &sumW,
-                                vector<vector<double>> &sumDist,
-                                mt19937_64 &rng);
-
-void large_search(std::vector<int> &assign, std::mt19937_64 &rng, int MAX_MOVES);
 
 int hamming_distance(const vector<int>& a, const vector<int>& b);
 
