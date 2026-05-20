@@ -1,0 +1,59 @@
+[ITER 1] New best cost=5126.97 (feasible=YES, time 1.14576s)
+[ITER 2] New best cost=4849.23 (feasible=YES, time 1.38321s)
+[ITER 3] New best cost=4718.39 (feasible=YES, time 1.60589s)
+[ITER 4] New best cost=4693.11 (feasible=YES, time 1.81982s)
+[ITER 6] New best cost=4678.20 (feasible=YES, time 2.19275s)
+[ITER 10] bestGlobalCost=4678.20 (feasible=YES) bestThisIter=4808.89 feasibleAnts=4 noImprove=4 (elapsed 2.92623s)
+[ITER 20] bestGlobalCost=4678.20 (feasible=YES) bestThisIter=4643.05 feasibleAnts=6 noImprove=14 (elapsed 5.35072s)
+[ITER 22] New best cost=4585.84 (feasible=YES, time 6.59031s)
+[ITER 28] New best cost=4513.46 (feasible=YES, time 7.71174s)
+[ITER 30] bestGlobalCost=4513.46 (feasible=YES) bestThisIter=4570.94 feasibleAnts=6 noImprove=2 (elapsed 8.03273s)
+[ITER 37] New best cost=4478.60 (feasible=YES, time 10.4779s)
+[ITER 40] New best cost=4472.49 (feasible=YES, time 10.9794s)
+[ITER 40] bestGlobalCost=4472.49 (feasible=YES) bestThisIter=4659.14 feasibleAnts=6 noImprove=0 (elapsed 10.9839s)
+[ITER 50] bestGlobalCost=4472.49 (feasible=YES) bestThisIter=4481.26 feasibleAnts=6 noImprove=10 (elapsed 13.352s)
+[ITER 60] bestGlobalCost=4472.49 (feasible=YES) bestThisIter=4567.05 feasibleAnts=4 noImprove=20 (elapsed 16.005s)
+[ITER 64] New best cost=4458.87 (feasible=YES, time 17.9292s)
+[ITER 70] bestGlobalCost=4458.87 (feasible=YES) bestThisIter=4636.76 feasibleAnts=5 noImprove=6 (elapsed 19.0212s)
+[ITER 77] New best cost=4454.89 (feasible=YES, time 20.9555s)
+[ITER 80] bestGlobalCost=4454.89 (feasible=YES) bestThisIter=4500.99 feasibleAnts=3 noImprove=3 (elapsed 21.4302s)
+[ITER 90] bestGlobalCost=4454.89 (feasible=YES) bestThisIter=4681.20 feasibleAnts=6 noImprove=13 (elapsed 24.0098s)
+[ITER 100] bestGlobalCost=4454.89 (feasible=YES) bestThisIter=4625.40 feasibleAnts=7 noImprove=23 (elapsed 27.0601s)
+[ITER 110] bestGlobalCost=4454.89 (feasible=YES) bestThisIter=4693.13 feasibleAnts=8 noImprove=33 (elapsed 29.8088s)
+[ITER 120] bestGlobalCost=4454.89 (feasible=YES) bestThisIter=4884.06 feasibleAnts=6 noImprove=43 (elapsed 33.0591s)
+[ITER 121] New best cost=4454.61 (feasible=YES, time 34.3882s)
+[ITER 126] New best cost=4439.90 (feasible=YES, time 35.3011s)
+[ITER 130] bestGlobalCost=4439.90 (feasible=YES) bestThisIter=4486.82 feasibleAnts=6 noImprove=4 (elapsed 35.9694s)
+[ITER 140] bestGlobalCost=4439.90 (feasible=YES) bestThisIter=4598.33 feasibleAnts=7 noImprove=14 (elapsed 38.4936s)
+[ITER 141] New best cost=4411.43 (feasible=YES, time 39.675s)
+[ITER 150] bestGlobalCost=4411.43 (feasible=YES) bestThisIter=4580.95 feasibleAnts=6 noImprove=9 (elapsed 41.3382s)
+[ITER 160] bestGlobalCost=4411.43 (feasible=YES) bestThisIter=4667.24 feasibleAnts=4 noImprove=19 (elapsed 44.3107s)
+[ITER 166] New best cost=4366.73 (feasible=YES, time 46.6334s)
+[ITER 170] bestGlobalCost=4366.73 (feasible=YES) bestThisIter=4588.21 feasibleAnts=4 noImprove=4 (elapsed 47.3944s)
+[ITER 180] bestGlobalCost=4366.73 (feasible=YES) bestThisIter=4656.73 feasibleAnts=5 noImprove=14 (elapsed 50.4784s)
+[ITER 190] bestGlobalCost=4366.73 (feasible=YES) bestThisIter=4519.65 feasibleAnts=3 noImprove=24 (elapsed 53.0529s)
+[ITER 200] bestGlobalCost=4366.73 (feasible=YES) bestThisIter=4599.72 feasibleAnts=5 noImprove=34 (elapsed 55.9415s)
+[ITER 210] bestGlobalCost=4366.73 (feasible=YES) bestThisIter=4691.32 feasibleAnts=10 noImprove=44 (elapsed 59.383s)
+104 105 106 107 108 115 116 
+6 7 8 9 10 11 31 
+98 100 101 102 103 125 137 
+13 14 15 16 17 46 47 
+72 74 75 77 82 87 88 
+76 78 79 80 81 86 136 
+12 39 41 42 43 45 48 
+18 21 22 23 24 25 26 
+117 118 120 121 122 124 
+109 110 111 112 113 114 119 
+40 44 49 50 51 65 73 
+28 34 35 54 55 58 
+90 91 92 93 95 96 97 
+123 126 128 129 130 131 132 
+59 62 63 64 66 67 
+83 84 85 127 133 134 135 
+27 52 53 56 57 60 61 
+68 69 70 71 89 94 99 
+29 30 32 33 36 37 38 
+1 2 3 4 5 19 20 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/gr137_20_5.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/gr137_20_5.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/gr137_20_5.txt

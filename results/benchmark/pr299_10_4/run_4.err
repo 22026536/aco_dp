@@ -1,0 +1,30 @@
+[ITER 1] New best cost=3165737.86 (feasible=YES, time 5.13571s)
+[ITER 2] New best cost=3105020.01 (feasible=YES, time 9.67619s)
+[ITER 6] New best cost=3091544.29 (feasible=YES, time 23.2487s)
+[ITER 7] New best cost=3074433.26 (feasible=YES, time 27.2488s)
+[ITER 10] [TS] New best cost=3073480.04 (feasible=YES, time 40.5261s)
+[ITER 10] [TS] New best cost=3073278.33 (feasible=YES, time 41.5088s)
+[ITER 10] bestGlobalCost=3073278.33 (feasible=YES) bestThisIter=3073480.04 feasibleAnts=10 noImprove=1 (elapsed 44.5699s)
+[ITER 13] New best cost=3055657.74 (feasible=YES, time 57.0439s)
+[ITER 20] bestGlobalCost=3055657.74 (feasible=YES) bestThisIter=3091985.37 feasibleAnts=10 noImprove=7 (elapsed 87.478s)
+[ITER 29] New best cost=3043818.98 (feasible=YES, time 119.535s)
+[ITER 30] bestGlobalCost=3043818.98 (feasible=YES) bestThisIter=3108985.86 feasibleAnts=10 noImprove=1 (elapsed 127.982s)
+[ITER 33] New best cost=3037582.31 (feasible=YES, time 139.7s)
+[ITER 40] bestGlobalCost=3037582.31 (feasible=YES) bestThisIter=3051657.62 feasibleAnts=10 noImprove=7 (elapsed 169.803s)
+[ITER 50] bestGlobalCost=3037582.31 (feasible=YES) bestThisIter=3037582.31 feasibleAnts=10 noImprove=17 (elapsed 210.249s)
+[ITER 60] bestGlobalCost=3037582.31 (feasible=YES) bestThisIter=3043690.04 feasibleAnts=10 noImprove=27 (elapsed 253.551s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 70] bestGlobalCost=3037582.31 (feasible=YES) bestThisIter=3055095.68 feasibleAnts=10 noImprove=7 (elapsed 295.169s)
+7 8 9 10 11 12 13 14 16 19 84 85 86 88 89 90 91 92 94 95 96 97 99 139 140 141 142 143 161 
+51 52 53 54 55 56 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 171 173 174 175 176 177 181 
+30 31 32 33 34 64 66 67 68 69 70 71 74 104 106 129 130 131 132 133 134 135 137 165 167 168 197 198 201 237 240 
+62 169 170 172 179 189 190 191 192 193 194 195 196 236 238 239 241 242 243 244 245 246 247 249 251 269 270 271 272 273 
+15 17 18 20 21 22 23 24 25 26 27 28 29 72 73 75 76 77 78 79 80 81 82 83 87 98 100 101 102 103 136 
+178 180 182 183 184 185 186 187 188 248 250 252 253 254 255 256 257 258 259 260 261 262 263 264 265 266 267 268 
+162 163 164 166 199 200 202 203 225 226 227 228 229 230 231 232 233 234 235 274 275 276 277 278 279 280 281 282 283 284 299 
+35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 57 58 59 60 61 63 65 105 107 108 109 110 111 112 113 
+138 157 158 159 160 204 205 206 207 208 209 210 211 212 213 216 217 218 219 220 221 222 223 224 285 286 287 288 289 290 291 
+1 2 3 4 5 6 93 144 145 146 147 148 149 150 151 152 153 154 155 156 214 215 292 293 294 295 296 297 298 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/pr299_10_4.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/pr299_10_4.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/pr299_10_4.txt

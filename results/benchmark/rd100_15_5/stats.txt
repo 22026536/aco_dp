@@ -1,0 +1,17 @@
+Instance:           rd100_15_5
+Instance path:      normalized_instances/tsplib/rd100_15_5.txt
+Num runs:           10
+Time limit (s):     60
+Date:               2026-04-18 22:13:32
+---
+Valid runs:         10 / 10
+Feasible runs:      10
+Infeasible runs:    0
+---
+Best cost:          50024.060000
+Worst cost:         52551.450000
+Avg cost:           51170.790000
+Std dev cost:       939.978062
+---
+Avg time-to-best:   29.6983 s
+Best time-to-best:  46.8364 s

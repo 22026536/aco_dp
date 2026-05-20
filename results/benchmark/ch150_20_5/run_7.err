@@ -1,0 +1,41 @@
+[ITER 1] New best cost=59493.33 (feasible=YES, time 0.42153s)
+[ITER 2] New best cost=56820.11 (feasible=YES, time 1.19451s)
+[ITER 3] New best cost=55825.52 (feasible=YES, time 1.97482s)
+[ITER 5] New best cost=54865.50 (feasible=YES, time 3.60229s)
+[ITER 8] New best cost=52884.05 (feasible=YES, time 6.19106s)
+[ITER 10] bestGlobalCost=52884.05 (feasible=YES) bestThisIter=56589.73 feasibleAnts=9 noImprove=2 (elapsed 9.50364s)
+[ITER 15] New best cost=52663.22 (feasible=YES, time 13.447s)
+[ITER 18] New best cost=52513.13 (feasible=YES, time 15.4159s)
+[ITER 20] bestGlobalCost=52513.13 (feasible=YES) bestThisIter=52513.13 feasibleAnts=10 noImprove=2 (elapsed 18.539s)
+[ITER 30] bestGlobalCost=52513.13 (feasible=YES) bestThisIter=52513.13 feasibleAnts=13 noImprove=12 (elapsed 26.7496s)
+[ITER 37] New best cost=52413.18 (feasible=YES, time 30.7439s)
+[TS] New best cost=52162.73 (feasible=YES, time 32.8956s)
+[ITER 40] bestGlobalCost=52162.73 (feasible=YES) bestThisIter=52162.73 feasibleAnts=12 noImprove=1 (elapsed 34.0615s)
+[ITER 42] New best cost=51797.04 (feasible=YES, time 35.2644s)
+[ITER 50] bestGlobalCost=51797.04 (feasible=YES) bestThisIter=51797.04 feasibleAnts=12 noImprove=8 (elapsed 41.8956s)
+[ITER 60] bestGlobalCost=51797.04 (feasible=YES) bestThisIter=52605.12 feasibleAnts=10 noImprove=18 (elapsed 49.1005s)
+[ITER 64] New best cost=51645.28 (feasible=YES, time 51.8497s)
+[ITER 70] bestGlobalCost=51645.28 (feasible=YES) bestThisIter=51645.28 feasibleAnts=12 noImprove=6 (elapsed 57.4471s)
+29 70 85 102 108 132 135 
+12 24 41 43 67 116 118 127 
+31 49 72 112 123 145 147 
+46 51 54 92 105 109 134 138 
+2 6 19 37 42 86 99 114 
+1 7 8 34 87 89 98 103 
+23 27 32 38 77 129 144 
+9 20 28 40 47 53 61 120 139 
+4 64 68 91 115 119 150 
+11 17 36 66 69 140 148 
+13 44 45 71 74 106 136 
+18 56 75 81 83 141 142 146 
+25 50 55 58 65 90 110 137 
+3 22 62 104 125 128 149 
+35 82 84 93 96 113 124 126 
+16 33 52 59 79 94 111 121 
+10 30 48 63 73 76 88 
+39 57 60 101 117 130 
+5 26 95 97 100 107 143 
+14 15 21 78 80 122 131 133 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/ch150_20_5.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/ch150_20_5.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/ch150_20_5.txt

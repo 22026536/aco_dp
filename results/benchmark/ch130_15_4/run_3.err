@@ -1,0 +1,53 @@
+[ITER 1] New best cost=61412.24 (feasible=YES, time 0.0952754s)
+[ITER 2] New best cost=57585.74 (feasible=YES, time 0.457093s)
+[ITER 3] New best cost=54873.68 (feasible=YES, time 0.720656s)
+[ITER 4] New best cost=54862.63 (feasible=YES, time 1.01723s)
+[ITER 6] New best cost=54515.17 (feasible=YES, time 1.47786s)
+[ITER 10] New best cost=54467.70 (feasible=YES, time 3.05728s)
+[ITER 10] bestGlobalCost=54467.70 (feasible=YES) bestThisIter=54515.17 feasibleAnts=20 noImprove=0 (elapsed 3.06231s)
+[ITER 16] New best cost=54040.24 (feasible=YES, time 4.44332s)
+[ITER 20] bestGlobalCost=54040.24 (feasible=YES) bestThisIter=54467.70 feasibleAnts=10 noImprove=4 (elapsed 5.90935s)
+[ITER 22] New best cost=53985.16 (feasible=YES, time 6.36981s)
+[ITER 23] New best cost=53890.59 (feasible=YES, time 6.58448s)
+[ITER 30] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=55548.77 feasibleAnts=12 noImprove=7 (elapsed 9.49046s)
+[ITER 40] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=54437.29 feasibleAnts=10 noImprove=17 (elapsed 13.2595s)
+[ITER 50] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=54298.63 feasibleAnts=7 noImprove=27 (elapsed 16.1728s)
+[ITER 60] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=57865.62 feasibleAnts=7 noImprove=37 (elapsed 19.2143s)
+[ITER 70] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=59583.07 feasibleAnts=5 noImprove=47 (elapsed 21.4131s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 80] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=54178.30 feasibleAnts=9 noImprove=7 (elapsed 24.3638s)
+[ITER 90] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=54821.08 feasibleAnts=9 noImprove=17 (elapsed 27.5001s)
+[ITER 100] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=54460.26 feasibleAnts=10 noImprove=27 (elapsed 31.357s)
+[ITER 110] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=55514.68 feasibleAnts=8 noImprove=37 (elapsed 34.084s)
+[ITER 120] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=57728.51 feasibleAnts=3 noImprove=47 (elapsed 36.0424s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 130] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=55309.28 feasibleAnts=14 noImprove=7 (elapsed 38.4596s)
+[ITER 140] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=53962.91 feasibleAnts=10 noImprove=17 (elapsed 41.3104s)
+[ITER 150] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=54380.84 feasibleAnts=8 noImprove=27 (elapsed 43.9241s)
+[ITER 160] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=56665.81 feasibleAnts=5 noImprove=37 (elapsed 46.5157s)
+[ITER 170] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=58921.04 feasibleAnts=5 noImprove=47 (elapsed 48.2622s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 180] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=54178.30 feasibleAnts=10 noImprove=7 (elapsed 50.4417s)
+[ITER 190] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=54917.11 feasibleAnts=9 noImprove=17 (elapsed 53.11s)
+[ITER 200] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=55943.27 feasibleAnts=7 noImprove=27 (elapsed 55.5214s)
+[ITER 210] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=59949.55 feasibleAnts=3 noImprove=37 (elapsed 57.8015s)
+[ITER 220] bestGlobalCost=53890.59 (feasible=YES) bestThisIter=60963.25 feasibleAnts=3 noImprove=47 (elapsed 59.7145s)
+[RESET] no improvement for50-> reset pheromones
+25 48 63 68 70 107 110 113 
+5 11 61 76 109 124 127 129 
+9 56 57 65 74 82 111 123 
+49 52 58 72 73 75 91 92 99 
+8 59 66 78 85 90 121 125 
+7 26 64 69 86 88 97 104 
+32 36 77 81 84 94 98 101 119 
+16 28 45 62 112 115 117 128 
+40 42 44 47 51 53 60 102 120 
+15 17 19 27 31 34 43 89 100 
+4 20 22 23 35 46 54 80 93 106 
+12 24 29 38 79 87 95 103 116 
+6 10 13 14 37 55 67 96 122 
+3 18 21 30 33 83 108 114 126 
+1 2 39 41 50 71 105 118 130 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/ch130_15_4.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/ch130_15_4.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/ch130_15_4.txt

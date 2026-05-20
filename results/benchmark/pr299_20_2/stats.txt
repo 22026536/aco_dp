@@ -1,0 +1,17 @@
+Instance:           pr299_20_2
+Instance path:      normalized_instances/tsplib/pr299_20_2.txt
+Num runs:           10
+Time limit (s):     300
+Date:               2026-04-24 00:33:50
+---
+Valid runs:         10 / 10
+Feasible runs:      10
+Infeasible runs:    0
+---
+Best cost:          984624.280000
+Worst cost:         1008489.200000
+Avg cost:           994932.901000
+Std dev cost:       8022.744468
+---
+Avg time-to-best:   218.1907 s
+Best time-to-best:  85.7463 s

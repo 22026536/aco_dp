@@ -1,0 +1,46 @@
+[ITER 1] New best cost=91999.06 (feasible=YES, time 2.43502s)
+[ITER 2] New best cost=88815.68 (feasible=YES, time 2.64754s)
+[ITER 3] New best cost=86124.61 (feasible=YES, time 2.82743s)
+[ITER 6] New best cost=85647.39 (feasible=YES, time 3.31386s)
+[ITER 10] bestGlobalCost=85647.39 (feasible=YES) bestThisIter=81652.30 feasibleAnts=0 noImprove=4 (elapsed 3.91726s)
+[ITER 12] New best cost=85355.66 (feasible=YES, time 5.94825s)
+[ITER 16] New best cost=83213.51 (feasible=YES, time 6.42242s)
+[ITER 20] bestGlobalCost=83213.51 (feasible=YES) bestThisIter=78454.30 feasibleAnts=0 noImprove=4 (elapsed 6.85703s)
+[ITER 23] New best cost=82187.56 (feasible=YES, time 8.91733s)
+[ITER 30] bestGlobalCost=82187.56 (feasible=YES) bestThisIter=78846.34 feasibleAnts=0 noImprove=7 (elapsed 9.69904s)
+[ITER 32] New best cost=80795.19 (feasible=YES, time 11.6984s)
+[ITER 38] New best cost=79423.69 (feasible=YES, time 12.3113s)
+[ITER 40] bestGlobalCost=79423.69 (feasible=YES) bestThisIter=79072.87 feasibleAnts=0 noImprove=2 (elapsed 12.5695s)
+[ITER 50] bestGlobalCost=79423.69 (feasible=YES) bestThisIter=76303.29 feasibleAnts=0 noImprove=12 (elapsed 15.7154s)
+[ITER 60] bestGlobalCost=79423.69 (feasible=YES) bestThisIter=77078.12 feasibleAnts=0 noImprove=22 (elapsed 18.8625s)
+[ITER 70] bestGlobalCost=79423.69 (feasible=YES) bestThisIter=77217.67 feasibleAnts=1 noImprove=32 (elapsed 21.7466s)
+[ITER 80] bestGlobalCost=79423.69 (feasible=YES) bestThisIter=77201.35 feasibleAnts=0 noImprove=42 (elapsed 24.7593s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 90] bestGlobalCost=79423.69 (feasible=YES) bestThisIter=80598.73 feasibleAnts=0 noImprove=2 (elapsed 28.4369s)
+[ITER 100] bestGlobalCost=79423.69 (feasible=YES) bestThisIter=78218.95 feasibleAnts=1 noImprove=12 (elapsed 31.0781s)
+[ITER 101] New best cost=78907.65 (feasible=YES, time 32.6982s)
+[ITER 110] bestGlobalCost=78907.65 (feasible=YES) bestThisIter=77008.12 feasibleAnts=1 noImprove=9 (elapsed 33.5542s)
+[ITER 120] bestGlobalCost=78907.65 (feasible=YES) bestThisIter=76964.70 feasibleAnts=1 noImprove=19 (elapsed 37.2283s)
+[ITER 130] bestGlobalCost=78907.65 (feasible=YES) bestThisIter=76986.95 feasibleAnts=0 noImprove=29 (elapsed 40.4851s)
+[ITER 140] bestGlobalCost=78907.65 (feasible=YES) bestThisIter=79401.99 feasibleAnts=2 noImprove=39 (elapsed 42.9742s)
+[ITER 150] bestGlobalCost=78907.65 (feasible=YES) bestThisIter=78791.32 feasibleAnts=1 noImprove=49 (elapsed 45.6024s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 160] bestGlobalCost=78907.65 (feasible=YES) bestThisIter=76112.87 feasibleAnts=1 noImprove=9 (elapsed 48.2191s)
+[ITER 162] New best cost=78750.74 (feasible=YES, time 49.8419s)
+[ITER 170] bestGlobalCost=78750.74 (feasible=YES) bestThisIter=76327.27 feasibleAnts=1 noImprove=8 (elapsed 50.5744s)
+[ITER 180] bestGlobalCost=78750.74 (feasible=YES) bestThisIter=78905.78 feasibleAnts=2 noImprove=18 (elapsed 52.9458s)
+[ITER 190] bestGlobalCost=78750.74 (feasible=YES) bestThisIter=77546.69 feasibleAnts=1 noImprove=28 (elapsed 55.3953s)
+[ITER 200] bestGlobalCost=78750.74 (feasible=YES) bestThisIter=77760.28 feasibleAnts=1 noImprove=38 (elapsed 57.8203s)
+41 61 66 68 80 81 82 83 85 93 94 96 97 98 105 107 108 122 123 
+48 62 86 87 90 91 99 100 101 102 103 112 113 114 115 117 124 126 128 130 
+111 125 127 129 138 139 140 141 142 143 150 151 153 154 155 164 165 166 168 
+26 36 38 39 50 51 52 59 63 64 65 73 74 75 76 77 78 88 104 116 
+84 92 95 106 109 110 118 119 121 131 132 133 134 135 136 137 144 145 149 157 
+2 3 6 7 8 9 10 11 12 13 19 21 23 24 25 35 37 49 89 
+1 4 5 14 15 16 17 18 20 22 27 28 29 30 31 32 34 47 60 
+33 40 42 43 44 45 46 53 54 55 56 57 58 67 69 70 71 72 79 
+120 146 147 148 158 159 160 161 162 170 171 172 173 174 183 184 185 186 188 
+152 156 163 167 169 175 176 177 178 179 180 181 182 187 189 190 191 192 193 194 195 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/rat195_10_5.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/rat195_10_5.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/rat195_10_5.txt

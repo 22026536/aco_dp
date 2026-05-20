@@ -1,0 +1,17 @@
+Instance:           tsp225_05_2
+Instance path:      normalized_instances/tsplib/tsp225_05_2.txt
+Num runs:           10
+Time limit (s):     300
+Date:               2026-04-28 06:54:53
+---
+Valid runs:         10 / 10
+Feasible runs:      10
+Infeasible runs:    0
+---
+Best cost:          410912.570000
+Worst cost:         410961.560000
+Avg cost:           410932.166000
+Std dev cost:       25.298327
+---
+Avg time-to-best:   104.0309 s
+Best time-to-best:  195.3380 s

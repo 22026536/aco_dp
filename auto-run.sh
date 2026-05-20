@@ -15,45 +15,38 @@ for instance_path in "$instance_dir"/*.txt; do
     echo "   Processing instance: $instance_name"
     echo "=============================="
 
-    # # --- RUN PRED ---
-    # echo "▶️ Chạy run.sh (pred) cho $instance_name..."
-    # ./run.sh "$instance_path" &
-    # pid_pred=$!
+    # Lấy số đầu tiên trong tên file để xác định time limit
+    size=$(echo "$instance_name" | grep -oP '\d+' | head -1)
 
-    # # --- RUN DP ---
-    # echo "▶️ Chạy run-dp.sh cho $instance_name..."
-    # ./run-dp.sh "$instance_path" &
-    # pid_dp=$!
+    if   [ "$size" -ge 1 ]   && [ "$size" -lt 100 ]; then
+        time_limit=10
+    elif [ "$size" -ge 100 ] && [ "$size" -lt 200 ]; then
+        time_limit=60
+    elif [ "$size" -ge 200 ] && [ "$size" -lt 400 ]; then
+        time_limit=300
+    elif [ "$size" -ge 400 ] && [ "$size" -lt 500 ]; then
+        time_limit=1500
+    else
+        time_limit=1200  # mặc định nếu ngoài các khoảng trên
+    fi
 
-    # # --- RUN HDP ---
-    # echo "▶️ Chạy run-hdp.sh cho $instance_name..."
-    # ./run-hdp.sh "$instance_path" &
-    # pid_hdp=$!
+    echo "⏱️ Time limit cho $instance_name (size=$size): ${time_limit}s"
+
+    # Tạo thư mục đích trước
+    dest_logs="$summary_dir/$instance_name/logs"
+    mkdir -p "$dest_logs"
 
     # --- RUN ACO ---
-    echo "▶️ Chạy run-aco.sh (pred) cho $instance_name..."
-    ./run-aco.sh "$instance_path" &
-    pid_aco=$!
+    echo "▶️ Chạy run-aco.sh cho $instance_name..."
+    ./run-aco.sh "$instance_path" "$time_limit"
 
-    # Chờ cả 4 tiến trình xong
-    wait $pid_aco
-
-    # Sau khi tất cả đã xong, copy kết quả
-    # dest_pred="$summary_dir/$instance_name/pred_logs"
-    # mkdir -p "$dest_pred"
-    # cp -r results/logs/pred_logs/* "$dest_pred"/
-
-    # dest_dp="$summary_dir/$instance_name/dp_logs"
-    # mkdir -p "$dest_dp"
-    # cp -r results/logs/dp_logs/* "$dest_dp"/
-
-    # dest_hdp="$summary_dir/$instance_name/hdp_logs"
-    # mkdir -p "$dest_hdp"
-    # cp -r results/logs/hdp_logs/* "$dest_hdp"/
-
-    dest_aco="$summary_dir/$instance_name/aco_logs"
-    mkdir -p "$dest_aco"
-    cp -r results/logs/aco_logs/* "$dest_aco"/
+    # Copy logs sau khi chạy xong
+    if [ -d "results/logs/$instance_name" ]; then
+        cp -r "results/logs/$instance_name/." "$dest_logs/"
+        echo "✅ Đã lưu logs vào $dest_logs"
+    else
+        echo "⚠️ Không tìm thấy logs cho $instance_name"
+    fi
 
     echo "✅ Hoàn thành instance $instance_name"
     echo

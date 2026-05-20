@@ -1,0 +1,48 @@
+[ITER 1] New best cost=663496.22 (feasible=YES, time 6.58939s)
+[ITER 2] New best cost=565975.65 (feasible=YES, time 18.081s)
+[ITER 3] New best cost=559839.61 (feasible=YES, time 28.9456s)
+[ITER 4] New best cost=554615.61 (feasible=YES, time 43.0688s)
+[ITER 10] bestGlobalCost=554615.61 (feasible=YES) bestThisIter=570870.47 feasibleAnts=10 noImprove=6 (elapsed 119.623s)
+[ITER 14] New best cost=551909.43 (feasible=YES, time 159.679s)
+[ITER 19] New best cost=547811.37 (feasible=YES, time 213.624s)
+[ITER 20] bestGlobalCost=547811.37 (feasible=YES) bestThisIter=550735.55 feasibleAnts=10 noImprove=1 (elapsed 236.307s)
+[ITER 22] New best cost=542148.18 (feasible=YES, time 257.762s)
+[ITER 28] New best cost=541267.99 (feasible=YES, time 324.39s)
+[ITER 30] bestGlobalCost=541267.99 (feasible=YES) bestThisIter=563728.57 feasibleAnts=10 noImprove=2 (elapsed 356.676s)
+[ITER 32] New best cost=540565.81 (feasible=YES, time 378.91s)
+[ITER 40] bestGlobalCost=540565.81 (feasible=YES) bestThisIter=544066.58 feasibleAnts=10 noImprove=8 (elapsed 484.268s)
+[ITER 43] New best cost=536319.77 (feasible=YES, time 516.94s)
+[ITER 50] bestGlobalCost=536319.77 (feasible=YES) bestThisIter=564067.97 feasibleAnts=10 noImprove=7 (elapsed 607.53s)
+[ITER 59] New best cost=533599.15 (feasible=YES, time 703.598s)
+[ITER 60] bestGlobalCost=533599.15 (feasible=YES) bestThisIter=546803.17 feasibleAnts=10 noImprove=1 (elapsed 725.147s)
+[ITER 70] bestGlobalCost=533599.15 (feasible=YES) bestThisIter=548425.45 feasibleAnts=10 noImprove=11 (elapsed 850.497s)
+[ITER 80] bestGlobalCost=533599.15 (feasible=YES) bestThisIter=549384.97 feasibleAnts=10 noImprove=21 (elapsed 969.665s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 90] bestGlobalCost=533599.15 (feasible=YES) bestThisIter=671815.49 feasibleAnts=10 noImprove=1 (elapsed 1084.89s)
+[ITER 100] bestGlobalCost=533599.15 (feasible=YES) bestThisIter=547583.07 feasibleAnts=10 noImprove=11 (elapsed 1207.24s)
+[ITER 110] bestGlobalCost=533599.15 (feasible=YES) bestThisIter=557319.59 feasibleAnts=10 noImprove=21 (elapsed 1325.74s)
+[ITER 117] New best cost=532637.31 (feasible=YES, time 1405.23s)
+[ITER 120] bestGlobalCost=532637.31 (feasible=YES) bestThisIter=547574.58 feasibleAnts=10 noImprove=3 (elapsed 1454.42s)
+1 8 10 18 19 24 26 32 310 311 312 324 334 335 349 350 351 352 353 
+3 9 20 30 37 40 122 123 124 125 126 128 129 144 145 146 149 150 152 153 
+25 34 36 38 41 42 43 44 46 47 48 49 50 51 53 56 179 200 309 313 
+211 216 217 218 219 220 221 222 223 224 225 236 240 241 242 243 244 245 246 247 248 249 
+251 252 254 255 256 257 258 259 260 264 275 276 277 278 279 281 282 283 284 285 289 290 
+60 65 70 72 88 89 103 104 105 237 363 364 365 366 367 390 406 407 408 
+164 166 169 170 171 172 173 174 175 176 177 183 187 190 191 193 195 196 197 198 199 
+62 66 67 69 73 77 78 79 82 83 84 85 87 90 91 93 94 95 96 97 100 
+92 101 102 369 370 371 372 384 386 394 395 396 409 410 411 412 413 414 417 
+205 206 207 208 209 210 212 213 214 215 227 228 229 230 231 232 233 234 235 238 239 368 391 393 
+250 253 261 274 280 373 374 375 376 377 378 379 385 387 397 398 399 415 416 
+35 132 298 299 300 301 302 306 320 322 323 328 329 330 340 341 342 343 344 346 347 
+45 52 54 55 57 58 59 61 63 64 68 71 74 75 76 80 81 86 98 99 
+2 4 5 6 7 11 12 13 14 15 16 17 21 22 23 27 28 29 31 39 151 
+154 157 158 160 162 163 165 167 168 178 180 181 182 184 185 186 188 189 192 194 318 
+202 203 204 226 358 359 360 361 362 380 381 382 383 388 389 392 400 401 402 403 404 405 
+33 106 107 108 109 111 112 114 130 131 133 303 304 305 307 308 321 331 332 333 345 348 
+262 263 265 266 267 268 269 270 271 272 273 286 287 288 291 292 293 294 295 296 297 
+155 156 159 161 201 314 315 316 317 319 325 326 327 336 337 338 339 354 355 356 357 
+110 113 115 116 117 118 119 120 121 127 134 135 136 137 138 139 140 141 142 143 147 148 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/fl417_20_5.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/fl417_20_5.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/fl417_20_5.txt

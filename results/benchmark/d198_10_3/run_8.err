@@ -1,0 +1,45 @@
+[ITER 1] New best cost=454431.54 (feasible=YES, time 2.64467s)
+[ITER 10] bestGlobalCost=454431.54 (feasible=YES) bestThisIter=451981.22 feasibleAnts=12 noImprove=9 (elapsed 4.04983s)
+[ITER 20] bestGlobalCost=454431.54 (feasible=YES) bestThisIter=456928.17 feasibleAnts=13 noImprove=19 (elapsed 7.17516s)
+[ITER 22] New best cost=451274.49 (feasible=YES, time 9.011s)
+[ITER 25] New best cost=451251.58 (feasible=YES, time 9.40529s)
+[ITER 30] bestGlobalCost=451251.58 (feasible=YES) bestThisIter=452006.33 feasibleAnts=13 noImprove=5 (elapsed 10.0179s)
+[ITER 31] New best cost=451089.40 (feasible=YES, time 11.6076s)
+[ITER 40] bestGlobalCost=451089.40 (feasible=YES) bestThisIter=455451.97 feasibleAnts=15 noImprove=9 (elapsed 12.8723s)
+[ITER 41] New best cost=450721.41 (feasible=YES, time 14.4371s)
+[ITER 49] New best cost=450407.25 (feasible=YES, time 15.4603s)
+[ITER 50] bestGlobalCost=450407.25 (feasible=YES) bestThisIter=453471.18 feasibleAnts=14 noImprove=1 (elapsed 15.5816s)
+[ITER 58] New best cost=448093.13 (feasible=YES, time 17.8477s)
+[ITER 60] bestGlobalCost=448093.13 (feasible=YES) bestThisIter=449837.29 feasibleAnts=15 noImprove=2 (elapsed 18.0712s)
+[ITER 70] bestGlobalCost=448093.13 (feasible=YES) bestThisIter=460106.91 feasibleAnts=13 noImprove=12 (elapsed 21.1003s)
+[ITER 76] New best cost=447752.45 (feasible=YES, time 23.6801s)
+[ITER 80] bestGlobalCost=447752.45 (feasible=YES) bestThisIter=452377.24 feasibleAnts=14 noImprove=4 (elapsed 24.2624s)
+[ITER 86] New best cost=445192.66 (feasible=YES, time 26.9889s)
+[ITER 90] bestGlobalCost=445192.66 (feasible=YES) bestThisIter=452336.67 feasibleAnts=13 noImprove=4 (elapsed 27.6133s)
+[ITER 100] bestGlobalCost=445192.66 (feasible=YES) bestThisIter=449439.51 feasibleAnts=14 noImprove=14 (elapsed 31.6797s)
+[ITER 110] New best cost=444749.19 (feasible=YES, time 35.2134s)
+[ITER 110] bestGlobalCost=444749.19 (feasible=YES) bestThisIter=455360.41 feasibleAnts=15 noImprove=0 (elapsed 35.2183s)
+[ITER 117] New best cost=444630.36 (feasible=YES, time 37.9325s)
+[ITER 120] bestGlobalCost=444630.36 (feasible=YES) bestThisIter=451590.47 feasibleAnts=14 noImprove=3 (elapsed 38.3852s)
+[ITER 128] New best cost=442579.16 (feasible=YES, time 40.9817s)
+[ITER 130] bestGlobalCost=442579.16 (feasible=YES) bestThisIter=448967.84 feasibleAnts=15 noImprove=2 (elapsed 41.2183s)
+[ITER 140] bestGlobalCost=442579.16 (feasible=YES) bestThisIter=446115.43 feasibleAnts=14 noImprove=12 (elapsed 43.6728s)
+[ITER 150] bestGlobalCost=442579.16 (feasible=YES) bestThisIter=447141.55 feasibleAnts=14 noImprove=22 (elapsed 46.6836s)
+[ITER 160] bestGlobalCost=442579.16 (feasible=YES) bestThisIter=447143.19 feasibleAnts=15 noImprove=32 (elapsed 49.5065s)
+[ITER 170] bestGlobalCost=442579.16 (feasible=YES) bestThisIter=448390.46 feasibleAnts=14 noImprove=42 (elapsed 52.0604s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 180] bestGlobalCost=442579.16 (feasible=YES) bestThisIter=454126.68 feasibleAnts=15 noImprove=2 (elapsed 55.312s)
+[ITER 190] bestGlobalCost=442579.16 (feasible=YES) bestThisIter=447122.63 feasibleAnts=11 noImprove=12 (elapsed 58.4396s)
+1 2 3 4 5 6 7 8 10 11 12 13 19 24 41 42 57 84 
+138 139 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 162 
+174 175 176 177 178 179 180 181 182 184 185 186 187 188 190 192 193 194 195 196 197 198 
+14 15 16 17 18 20 21 22 23 25 27 28 29 30 31 32 33 34 40 
+91 93 94 102 103 104 105 106 107 108 109 110 111 112 113 114 115 117 119 121 122 123 
+126 127 128 129 130 131 132 133 134 135 136 137 140 141 143 144 163 164 165 166 171 172 
+9 43 55 56 58 59 60 67 68 69 70 71 72 73 83 85 86 87 98 99 100 
+36 37 38 44 45 46 53 54 61 62 65 66 74 75 81 82 88 90 95 97 
+116 118 120 124 125 142 161 167 168 169 170 173 183 189 191 
+26 35 39 47 48 49 50 51 52 63 64 76 77 78 79 80 89 92 96 101 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/d198_10_3.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/d198_10_3.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/d198_10_3.txt

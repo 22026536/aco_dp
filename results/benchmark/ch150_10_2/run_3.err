@@ -1,0 +1,48 @@
+[ITER 1] New best cost=126774.78 (feasible=YES, time 0.565695s)
+[ITER 2] New best cost=126310.51 (feasible=YES, time 0.908531s)
+[ITER 3] New best cost=126021.61 (feasible=YES, time 1.24625s)
+[ITER 7] New best cost=125987.50 (feasible=YES, time 2.20244s)
+[ITER 8] New best cost=125891.31 (feasible=YES, time 2.42987s)
+[ITER 10] bestGlobalCost=125891.31 (feasible=YES) bestThisIter=125891.31 feasibleAnts=10 noImprove=2 (elapsed 3.57531s)
+[ITER 13] New best cost=125870.00 (feasible=YES, time 4.32284s)
+[ITER 20] bestGlobalCost=125870.00 (feasible=YES) bestThisIter=125870.00 feasibleAnts=11 noImprove=7 (elapsed 6.9317s)
+[ITER 28] New best cost=125740.92 (feasible=YES, time 9.04205s)
+[ITER 30] bestGlobalCost=125740.92 (feasible=YES) bestThisIter=125870.00 feasibleAnts=10 noImprove=2 (elapsed 10.3349s)
+[ITER 40] bestGlobalCost=125740.92 (feasible=YES) bestThisIter=125740.92 feasibleAnts=16 noImprove=12 (elapsed 13.9427s)
+[ITER 50] bestGlobalCost=125740.92 (feasible=YES) bestThisIter=125740.92 feasibleAnts=12 noImprove=22 (elapsed 16.5653s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 60] bestGlobalCost=125740.92 (feasible=YES) bestThisIter=125740.92 feasibleAnts=10 noImprove=2 (elapsed 19.2012s)
+[ITER 70] bestGlobalCost=125740.92 (feasible=YES) bestThisIter=125740.92 feasibleAnts=13 noImprove=12 (elapsed 21.8326s)
+[ITER 80] bestGlobalCost=125740.92 (feasible=YES) bestThisIter=125740.92 feasibleAnts=15 noImprove=22 (elapsed 24.4257s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 90] bestGlobalCost=125740.92 (feasible=YES) bestThisIter=125740.92 feasibleAnts=10 noImprove=2 (elapsed 27.2299s)
+[ITER 100] bestGlobalCost=125740.92 (feasible=YES) bestThisIter=125740.92 feasibleAnts=11 noImprove=12 (elapsed 29.8657s)
+[ITER 110] bestGlobalCost=125740.92 (feasible=YES) bestThisIter=125740.92 feasibleAnts=11 noImprove=22 (elapsed 32.4093s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 120] bestGlobalCost=125740.92 (feasible=YES) bestThisIter=125740.92 feasibleAnts=11 noImprove=2 (elapsed 35.1898s)
+[ITER 130] bestGlobalCost=125740.92 (feasible=YES) bestThisIter=125740.92 feasibleAnts=12 noImprove=12 (elapsed 37.9164s)
+[ITER 140] bestGlobalCost=125740.92 (feasible=YES) bestThisIter=125740.92 feasibleAnts=12 noImprove=22 (elapsed 40.6528s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 149] New best cost=125388.71 (feasible=YES, time 42.6315s)
+[ITER 150] [TS] New best cost=125109.32 (feasible=YES, time 43.0744s)
+[ITER 150] bestGlobalCost=125109.32 (feasible=YES) bestThisIter=125109.32 feasibleAnts=10 noImprove=1 (elapsed 43.6034s)
+[ITER 151] New best cost=125007.35 (feasible=YES, time 43.8955s)
+[ITER 160] bestGlobalCost=125007.35 (feasible=YES) bestThisIter=125007.35 feasibleAnts=11 noImprove=9 (elapsed 46.8469s)
+[ITER 170] bestGlobalCost=125007.35 (feasible=YES) bestThisIter=125007.35 feasibleAnts=13 noImprove=19 (elapsed 49.7925s)
+[ITER 180] bestGlobalCost=125007.35 (feasible=YES) bestThisIter=125007.35 feasibleAnts=11 noImprove=29 (elapsed 52.8018s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 190] bestGlobalCost=125007.35 (feasible=YES) bestThisIter=125007.35 feasibleAnts=13 noImprove=9 (elapsed 55.9357s)
+[ITER 200] bestGlobalCost=125007.35 (feasible=YES) bestThisIter=125007.35 feasibleAnts=12 noImprove=19 (elapsed 58.9015s)
+11 17 36 39 41 57 60 61 66 69 117 118 127 130 140 148 
+2 19 29 50 58 70 81 86 99 102 108 114 132 135 137 
+12 23 32 38 43 67 101 109 116 122 129 131 134 138 
+15 16 33 52 54 59 78 79 88 94 105 111 121 126 133 
+14 27 31 49 64 72 77 80 112 123 136 144 145 147 
+3 8 10 30 35 48 62 63 73 76 84 89 93 96 113 
+4 13 21 22 44 45 68 71 74 91 104 106 115 119 125 128 149 150 
+1 5 7 34 82 87 95 97 98 100 103 107 124 143 
+6 9 24 25 28 37 40 42 47 51 53 110 120 139 
+18 20 26 46 55 56 65 75 83 85 90 92 141 142 146 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/ch150_10_2.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/ch150_10_2.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/ch150_10_2.txt

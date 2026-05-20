@@ -1,0 +1,43 @@
+[ITER 1] New best cost=2439265.39 (feasible=YES, time 4.32406s)
+[ITER 2] New best cost=2365651.12 (feasible=YES, time 8.53861s)
+[ITER 3] New best cost=2347274.84 (feasible=YES, time 12.5539s)
+[ITER 6] New best cost=2309288.13 (feasible=YES, time 22.1216s)
+[ITER 9] New best cost=2281738.67 (feasible=YES, time 32.2088s)
+[ITER 10] [TS] New best cost=2279595.84 (feasible=YES, time 37.0456s)
+[ITER 10] [TS] New best cost=2275360.69 (feasible=YES, time 40.3832s)
+[ITER 10] bestGlobalCost=2275360.69 (feasible=YES) bestThisIter=2320201.46 feasibleAnts=10 noImprove=1 (elapsed 43.5533s)
+[ITER 11] New best cost=2272451.66 (feasible=YES, time 47.2919s)
+[ITER 20] bestGlobalCost=2272451.66 (feasible=YES) bestThisIter=2309656.90 feasibleAnts=10 noImprove=9 (elapsed 85.9403s)
+[ITER 23] New best cost=2270431.94 (feasible=YES, time 96.4786s)
+[ITER 30] bestGlobalCost=2270431.94 (feasible=YES) bestThisIter=2306896.49 feasibleAnts=10 noImprove=7 (elapsed 126.886s)
+[ITER 36] New best cost=2265589.27 (feasible=YES, time 145.788s)
+[ITER 40] bestGlobalCost=2265589.27 (feasible=YES) bestThisIter=2312644.40 feasibleAnts=10 noImprove=4 (elapsed 167.228s)
+[ITER 44] New best cost=2264103.31 (feasible=YES, time 180.623s)
+[ITER 50] bestGlobalCost=2264103.31 (feasible=YES) bestThisIter=2277778.15 feasibleAnts=10 noImprove=6 (elapsed 209.112s)
+[ITER 60] bestGlobalCost=2264103.31 (feasible=YES) bestThisIter=2320641.40 feasibleAnts=10 noImprove=16 (elapsed 247.942s)
+[ITER 66] New best cost=2261277.61 (feasible=YES, time 267.203s)
+[ITER 68] New best cost=2257056.34 (feasible=YES, time 273.117s)
+[ITER 70] bestGlobalCost=2257056.34 (feasible=YES) bestThisIter=2349868.17 feasibleAnts=10 noImprove=2 (elapsed 286.968s)
+65 67 68 69 71 170 191 192 193 194 
+91 92 93 94 95 97 98 100 216 217 218 221 
+30 51 53 54 55 56 57 159 176 181 182 184 
+1 2 3 4 5 6 7 126 127 128 129 131 133 
+14 15 16 17 18 19 20 21 22 138 141 142 
+115 116 117 118 119 120 121 212 215 220 
+74 75 96 99 172 173 174 175 196 197 198 199 
+102 103 104 105 106 107 108 201 204 208 
+37 58 59 60 61 62 63 160 161 163 164 165 
+24 25 47 49 50 146 147 148 149 150 171 
+52 76 77 101 177 179 180 183 202 203 205 
+26 27 28 29 130 151 152 153 154 155 178 
+86 109 110 111 112 113 114 209 210 211 213 214 
+8 9 10 11 12 13 36 136 137 139 140 
+122 123 124 125 195 200 222 223 224 225 
+44 45 48 66 70 72 73 166 167 168 169 
+64 87 88 89 90 186 187 188 190 219 
+23 38 39 40 41 42 43 46 143 144 145 
+31 32 33 34 35 132 134 135 156 157 158 162 
+78 79 80 81 82 83 84 85 185 189 206 207 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/ts225_20_5.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/ts225_20_5.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/ts225_20_5.txt

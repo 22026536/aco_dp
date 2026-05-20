@@ -1,0 +1,43 @@
+[ITER 1] New best cost=39907.39 (feasible=YES, time 1.61294s)
+[ITER 2] New best cost=39257.13 (feasible=YES, time 2.70992s)
+[ITER 5] New best cost=39059.21 (feasible=YES, time 6.78218s)
+[ITER 6] New best cost=38912.68 (feasible=YES, time 8.43717s)
+[ITER 10] bestGlobalCost=38912.68 (feasible=YES) bestThisIter=38971.67 feasibleAnts=10 noImprove=4 (elapsed 16.9885s)
+[ITER 11] New best cost=38659.98 (feasible=YES, time 18.3925s)
+[ITER 14] New best cost=38515.35 (feasible=YES, time 22.1992s)
+[ITER 19] New best cost=38392.42 (feasible=YES, time 28.8066s)
+[ITER 20] bestGlobalCost=38392.42 (feasible=YES) bestThisIter=38566.03 feasibleAnts=10 noImprove=1 (elapsed 34.1713s)
+[ITER 30] bestGlobalCost=38392.42 (feasible=YES) bestThisIter=38903.64 feasibleAnts=10 noImprove=11 (elapsed 52.7942s)
+[ITER 40] bestGlobalCost=38392.42 (feasible=YES) bestThisIter=39121.10 feasibleAnts=10 noImprove=21 (elapsed 73.1193s)
+[ITER 50] bestGlobalCost=38392.42 (feasible=YES) bestThisIter=40187.89 feasibleAnts=10 noImprove=31 (elapsed 91.5779s)
+[ITER 60] bestGlobalCost=38392.42 (feasible=YES) bestThisIter=39448.68 feasibleAnts=10 noImprove=41 (elapsed 108.844s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 70] bestGlobalCost=38392.42 (feasible=YES) bestThisIter=40932.77 feasibleAnts=10 noImprove=1 (elapsed 124.735s)
+[ITER 80] bestGlobalCost=38392.42 (feasible=YES) bestThisIter=38905.36 feasibleAnts=10 noImprove=11 (elapsed 143.698s)
+[ITER 90] bestGlobalCost=38392.42 (feasible=YES) bestThisIter=39692.88 feasibleAnts=10 noImprove=21 (elapsed 162.38s)
+[ITER 100] bestGlobalCost=38392.42 (feasible=YES) bestThisIter=39519.36 feasibleAnts=10 noImprove=31 (elapsed 181.59s)
+[ITER 110] bestGlobalCost=38392.42 (feasible=YES) bestThisIter=39296.49 feasibleAnts=10 noImprove=41 (elapsed 199.167s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 120] bestGlobalCost=38392.42 (feasible=YES) bestThisIter=39388.79 feasibleAnts=10 noImprove=1 (elapsed 217.974s)
+[ITER 130] bestGlobalCost=38392.42 (feasible=YES) bestThisIter=39224.26 feasibleAnts=10 noImprove=11 (elapsed 236.682s)
+[ITER 140] bestGlobalCost=38392.42 (feasible=YES) bestThisIter=39323.66 feasibleAnts=10 noImprove=21 (elapsed 254.609s)
+[ITER 150] bestGlobalCost=38392.42 (feasible=YES) bestThisIter=39181.70 feasibleAnts=10 noImprove=31 (elapsed 276.535s)
+[ITER 160] bestGlobalCost=38392.42 (feasible=YES) bestThisIter=39761.58 feasibleAnts=10 noImprove=41 (elapsed 294.136s)
+15 26 27 28 29 30 31 33 34 35 36 86 92 93 170 
+41 42 45 46 50 165 176 178 180 181 183 184 185 187 188 196 
+43 44 47 48 49 186 189 190 191 192 193 194 195 197 198 201 
+1 2 3 4 5 8 10 12 13 14 17 18 20 51 62 
+108 114 122 123 133 141 144 146 147 148 149 150 152 154 155 
+21 22 24 25 66 69 77 78 81 82 83 84 85 87 88 90 
+107 115 116 117 118 119 120 121 124 125 126 128 130 139 142 143 
+37 68 70 71 72 73 74 75 76 79 80 89 91 98 102 113 
+109 111 127 131 132 134 135 136 137 138 140 151 153 160 163 172 
+129 145 156 157 158 159 161 162 175 200 202 204 205 206 211 212 
+9 11 16 23 54 55 56 57 58 59 60 61 63 65 67 
+6 7 19 52 53 64 217 218 224 225 226 227 228 229 
+38 94 95 96 97 99 100 101 103 104 105 106 110 112 
+203 207 208 209 210 213 214 215 216 219 220 221 222 223 
+32 39 40 164 166 167 168 169 171 173 174 177 179 182 199 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/gr229_15_5.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/gr229_15_5.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/gr229_15_5.txt

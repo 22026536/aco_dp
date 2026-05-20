@@ -19,7 +19,6 @@
 
 #include "ACO.h"            // Header chứa khai báo struct ACOSolution, Instance, Parameters, LogRow,...
 #include "Local_search.h"   // Header cho hàm local_search() — cải thiện nghiệm bằng relocate/swap
-#include "Large_search.h"   // Header cho large neighborhood search (nếu dùng)
 #include "Tabu_search.h"    // Header cho iterated_tabu_search() — tìm kiếm tabu lặp
 #include <iostream>         // cout, cerr — in ra console
 #include <iomanip>          // setw, setprecision — định dạng output
@@ -88,6 +87,9 @@ vector<vector<double>> distmat; // distmat[i][j] = khoảng cách từ node i đ
                                 //   Đây là chi phí intra-cluster: ta muốn minimize tổng dist các cặp
                                 //   node cùng cluster
 
+vector<vector<int>> globalCL;   // candidate list toàn cục
+const int GLOBAL_CL_SIZE = 20;  // só lượng candidate list cho mỗi đỉnh
+
 double PENALTY_SCALE = 10000.0; // Hệ số phạt cho vi phạm ràng buộc trọng số
                                 //   cost = intra_distance + PENALTY_SCALE * total_violation
                                 //   Giá trị lớn → ưu tiên tìm nghiệm feasible trước
@@ -101,22 +103,6 @@ double VALID_EPS = 1e-6;        // Epsilon cho kiểm tra feasibility
 // ═══════════════════════════════════════════════════════════════════════════
 // HÀM TIỆN ÍCH (UTILITY FUNCTIONS)
 // ═══════════════════════════════════════════════════════════════════════════
-
-// ─── Format số thực dạng fixed (không dùng ký hiệu khoa học) ───
-// Ví dụ: format_cost_fixed(12345.678, 2) → "12345.68"
-// Ví dụ: format_cost_fixed(12345.678, 0) → "12346"
-//
-// v:        giá trị cần format
-// decimals: số chữ số thập phân (0 → số nguyên)
-// return:   chuỗi đã format
-static inline std::string format_cost_fixed(double v, int decimals)
-{
-    std::ostringstream oss;                             // tạo string stream
-    oss << std::fixed                                   // dùng fixed notation (không scientific)
-        << std::setprecision(decimals)                  // đặt số chữ số sau dấu chấm
-        << v;                                           // ghi giá trị vào stream
-    return oss.str();                                   // trả về chuỗi kết quả
-}
 
 // ─── Format số với dấu phân cách hàng nghìn (locale-dependent) ───
 // Ví dụ: format_cost_with_commas(1234567.89, 0) → "1,234,568" (tùy locale)
@@ -146,72 +132,6 @@ static inline std::string format_cost_with_commas(double v, int decimals)
         << v;                                           // giá trị
     return oss.str();                                   // trả chuỗi
 }
-
-
-// ═══════════════════════════════════════════════════════════════════════════
-// KIỂM TRA TÍNH HỢP LỆ CỦA INSTANCE
-//
-// Kiểm tra: tổng trọng số tất cả node có nằm trong khoảng
-//           [tổng lower bound, tổng upper bound] hay không?
-//
-// Nếu KHÔNG → instance không thể có nghiệm feasible → báo lỗi ngay.
-//
-// Ví dụ: 3 cluster, mỗi cluster cần ít nhất 100 đơn vị trọng số
-//        → tổng lower = 300
-//        Nếu tổng trọng số node = 250 → KHÔNG THỂ feasible → trả false
-// ═══════════════════════════════════════════════════════════════════════════
-bool check_weights_validity(const Instance instance)
-{
-    int N = instance.nV;                                // số node
-    int K = instance.nK;                                // số cluster
-    int T = instance.nT;                                // số chiều trọng số
-
-    // Kiểm tra kích thước cơ bản
-    if (N <= 0 || K <= 0 || T <= 0)
-    {
-        cerr << "[ERROR] Invalid sizes\n";              // in lỗi ra stderr
-        return false;                                   // instance không hợp lệ
-    }
-
-    vector<double> sumNode(T, 0.0);                     // sumNode[t] = tổng trọng số chiều t của TẤT CẢ node
-    vector<double> sumMin(T, 0.0);                      // sumMin[t] = tổng lower bound chiều t của TẤT CẢ cluster
-    vector<double> sumMax(T, 0.0);                      // sumMax[t] = tổng upper bound chiều t của TẤT CẢ cluster
-
-    // Tính tổng trọng số tất cả node, từng chiều
-    for (int i = 0; i < N; ++i)                         // duyệt mỗi node
-    {
-        for (int t = 0; t < T; ++t)                     // duyệt mỗi chiều trọng số
-            sumNode[t] += instance.W[i][t];             // cộng dồn trọng số node i chiều t
-    }
-
-    // Tính tổng lower/upper bound tất cả cluster, từng chiều
-    for (int k = 0; k < K; ++k)                         // duyệt mỗi cluster
-    {
-        for (int t = 0; t < T; ++t)                     // duyệt mỗi chiều
-        {
-            sumMin[t] += instance.WL[k][t];             // cộng dồn lower bound cluster k chiều t
-            sumMax[t] += instance.WU[k][t];             // cộng dồn upper bound cluster k chiều t
-        }
-    }
-
-    // Kiểm tra: tổng node phải nằm trong [tổng min, tổng max] cho mỗi chiều
-    for (int t = 0; t < T; ++t)
-    {
-        // sumNode[t] < sumMin[t] → thiếu trọng số, không đủ fill tất cả lower bound
-        // sumNode[t] > sumMax[t] → quá nhiều trọng số, tràn tất cả upper bound
-        if (sumNode[t] < sumMin[t] - 1e-9 || sumNode[t] > sumMax[t] + 1e-9)
-        {
-            cerr << "\n[INVALID] Weight type " << t << "\n";
-            cerr << "  Sum node = " << sumNode[t] << "\n";    // tổng trọng số thực tế
-            cerr << "  Sum min  = " << sumMin[t] << "\n";     // tổng lower bound
-            cerr << "  Sum max  = " << sumMax[t] << "\n";     // tổng upper bound
-            return false;                                      // instance không khả thi
-        }
-    }
-
-    return true;                                        // tất cả chiều OK → instance hợp lệ
-}
-
 
 // ═══════════════════════════════════════════════════════════════════════════
 // TÍNH CHI PHÍ (COST) CỦA MỘT NGHIỆM
@@ -275,6 +195,54 @@ double compute_cost(const vector<int> &assign)
     return intra + penalty;                              // tổng cost (nhỏ hơn = tốt hơn)
 }
 
+// ═══════════════════════════════════════════════════════════════════════════
+// FAST INCREMENTAL COST — tính cost từ sumDist đã có sẵn
+//
+// Thay vì O(N²) mỗi lần gọi compute_cost, ta dùng sumDist đã maintain
+// trong ACOSolution để tính trong O(N + K*M_weights)
+//
+// Tại sao nhanh hơn:
+//   intra = Σ_i sumDist[i][assign[i]] / 2
+//   (chia 2 vì mỗi cặp được đếm 2 lần: i→j trong sumDist[i] và j→i trong sumDist[j])
+//
+// Lưu ý: chỉ dùng được khi sumDist đã được maintain chính xác
+// ═══════════════════════════════════════════════════════════════════════════
+double compute_cost_fast(const ACOSolution &sol)
+{
+    // Tính intra-distance từ sumDist: O(N)
+    double intra = 0.0;
+    for (int i = 0; i < N; ++i) {
+        int k = sol.assign[i];
+        if (k < 0 || k >= K) return 1e300;
+        intra += sol.clusterSumDist[i][k];
+        // sumDist[i][k] = Σ dist(i,j) cho j ∈ cluster k
+        // Nhưng dist(i,j) + dist(j,i) cần đếm cả 2 chiều
+        // Và mỗi cặp bị đếm 2 lần (từ i và từ j)
+    }
+    // intra bây giờ = Σ_i Σ_{j∈same_cluster, j≠i} dist(i,j)
+    //               = Σ_{i<j, same cluster} (dist(i,j) + dist(j,i))
+    // → đúng rồi, KHÔNG cần chia 2 vì distmat[i][j] ≠ distmat[j][i] có thể
+
+    // Nhưng chờ đã - sumDist[i][k] bao gồm dist(i,i)=0 nếu i ∈ cluster k
+    // → OK vì dist(i,i) = 0
+
+    // Thực ra cần kiểm tra lại: compute_cost gốc tính Σ_{i<j} (d[i][j]+d[j][i])
+    // sumDist[i][k] = Σ_{j∈k} d[i][j], kể cả j=i (nhưng d[i][i]=0)
+    // Σ_i sumDist[i][assign[i]] = Σ_i Σ_{j∈same_cluster} d[i][j]
+    //   = Σ_{i,j cùng cluster, i≠j} d[i][j]
+    //   = Σ_{i<j, cùng cluster} (d[i][j] + d[j][i])  ← chính xác!
+
+    // Tính violation: O(K * M_weights)
+    double total_violation = 0.0;
+    for (int k = 0; k < K; ++k)
+        for (int t = 0; t < M_weights; ++t) {
+            double s = sol.clusterWeight[k][t];
+            if (s < WLmat[k][t]) total_violation += (WLmat[k][t] - s);
+            if (s > WUmat[k][t]) total_violation += (s - WUmat[k][t]);
+        }
+
+    return intra + total_violation * PENALTY_SCALE;
+}
 
 // ═══════════════════════════════════════════════════════════════════════════
 // KIỂM TRA TÍNH KHẢ THI (FEASIBILITY) CỦA MỘT NGHIỆM
@@ -508,39 +476,21 @@ void SaveLogs(const ACOSolution &best)
 ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSeconds, const string &instance_name)
 {
     // ─────────────────────────────────────────────────────────────────────
-    // BƯỚC 0: CẤU HÌNH ĐƯỜNG DẪN LOG
+    // BƯỚC 1: CẤU HÌNH ĐƯỜNG DẪN LOG
     // ─────────────────────────────────────────────────────────────────────
 
     std::string base = parameters.LOGdir;                // lấy thư mục log từ config
     if (base.empty())
-        base = "results/logs/aco_logs";                  // mặc định nếu không set
+        base = "results/logs";                  // mặc định nếu không set
     if (base.back() == '/')
         base.pop_back();                                 // bỏ dấu / cuối nếu có
-
+ 
     // Tạo đường dẫn đầy đủ cho 3 file log
-    LOG_EVOL_FILENAME = base + "/evolution/" + instance_name;    // file diễn biến hội tụ
-    LOG_COST_FILENAME = base + "/objectives/" + instance_name;   // file cost tốt nhất
-    LOG_SOLU_FILENAME = base + "/solutions/" + instance_name;    // file nghiệm tốt nhất
-
-
-    // ─────────────────────────────────────────────────────────────────────
-    // BƯỚC 1: KIỂM TRA TÍNH HỢP LỆ CỦA INSTANCE
-    //
-    // Nếu tổng trọng số node không nằm trong [tổng lower, tổng upper]
-    // → không thể tìm nghiệm feasible → dừng sớm
-    // ─────────────────────────────────────────────────────────────────────
-
-    if (!check_weights_validity(instance))
-    {
-        cerr << "[ERROR] Instance weight bounds inconsistent. Aborting ACO.\n";
-        ACOSolution empty;                               // tạo nghiệm rỗng
-        empty.assign.clear();                            // không có assignment
-        empty.cost = 1e300;                              // cost "vô cực"
-        empty.feasible = false;                          // infeasible
-        return empty;                                    // trả về ngay
-    }
-
-
+    // Cấu trúc: base/instance_name/evolution/instance_name, v.v.
+    std::string instDir = base + "/" + instance_name;
+    LOG_EVOL_FILENAME = instDir + "/evolution/" + instance_name;  // file diễn biến hội tụ
+    LOG_COST_FILENAME = instDir + "/objectives/" + instance_name; // file cost tốt nhất
+    LOG_SOLU_FILENAME = instDir + "/solutions/" + instance_name;  // file nghiệm tốt nhất
     // ─────────────────────────────────────────────────────────────────────
     // BƯỚC 2: COPY DỮ LIỆU INSTANCE VÀO BIẾN TOÀN CỤC
     //
@@ -606,7 +556,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     for (int i = 0; i < N; ++i)
         for (int j = i + 1; j < N; ++j)
         {
-            BASE_COST += distmat[i][j];                  // cộng dist(i,j)
+            BASE_COST += distmat[i][j] + distmat[j][i];  // cộng dist(i,j)
             pairCount++;                                 // đếm cặp
         }
 
@@ -619,7 +569,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     // DIST_SCALE dùng để normalize giá trị này về khoảng [0, vài đơn vị]
     // → desirability heuristic không bị lệch scale
 
-    double avgClusterSize = max(1.0, (double)N / K);     // kích thước cluster trung bình
+    double avgClusterSize = N / K;     // kích thước cluster trung bình
     double DIST_SCALE = avgClusterSize * meanDist;       // scale factor cho distance heuristic
 
     // ── 3c. Tính PENALTY_SCALE (cân bằng penalty vs distance) ──
@@ -627,21 +577,33 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     // Ý tưởng: penalty cho 1 đơn vị vi phạm trọng số nên "tương đương"
     //          với chi phí distance đáng kể, để ACO ưu tiên feasibility.
     //
-    // PENALTY_SCALE = 50 * (meanDist / meanWeight)
+    // PENALTY_SCALE = ((N / K) / M_weights) * (meanDist / meanWeight)
     //   - meanDist lớn → penalty cần lớn theo
     //   - meanWeight nhỏ → 1 đơn vị vi phạm "đắt" hơn → penalty scale tăng
 
-    double sumW = 0.0;                                   // tổng tất cả trọng số
+    double sumAllW = 0.0;                                  // tổng tất cả trọng số
     for (int i = 0; i < N; ++i)
         for (int t = 0; t < M_weights; ++t)
-            sumW += Wmat[i][t];                          // cộng dồn
+            sumAllW += Wmat[i][t];                          // cộng dồn
 
-    double meanWeight = sumW / (N * M_weights);          // trọng số trung bình 1 node 1 chiều
+    double meanWeight = max(sumAllW / (N * M_weights), 1e-12);          // trọng số trung bình 1 node 1 chiều
 
-    PENALTY_SCALE = 50.0 * (meanDist / meanWeight);      // auto-scale penalty
-    // Ví dụ: meanDist=100, meanWeight=10 → PENALTY_SCALE=500
-    //         → 1 đơn vị vi phạm trọng số bị phạt 500 đơn vị distance
+    //         → 1 đơn vị vi phạm trọng số bị phạt x đơn vị distance
+    PENALTY_SCALE = ((N / K)) * (meanDist / meanWeight);
 
+    // Build candidate list
+    globalCL.assign(N, vector<int>(GLOBAL_CL_SIZE));
+    {
+        vector<pair<double,int>> tmp(N);
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < N; ++j)
+                tmp[j] = {(distmat[i][j]+distmat[j][i])*0.5, j};
+            tmp[i].first = 1e300;
+            partial_sort(tmp.begin(), tmp.begin()+GLOBAL_CL_SIZE, tmp.end());
+            for (int r = 0; r < GLOBAL_CL_SIZE; ++r)
+                globalCL[i][r] = tmp[r].second;
+        }
+    }
 
     // ─────────────────────────────────────────────────────────────────────
     // BƯỚC 4: CẤU HÌNH THAM SỐ ACO
@@ -649,47 +611,55 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     // Các tham số điều khiển hành vi thuật toán kiến
     // ─────────────────────────────────────────────────────────────────────
 
-    int m = min(N / 2, 40);                              // số con kiến (ants) mỗi iteration
-                                                         // min(N/2, 40): scale theo bài toán nhưng cap ở 40
-                                                         // Nhiều ant → explore tốt hơn nhưng chậm hơn
+    int m = 40;                                         // số con kiến (ants) mỗi iteration
+                                                        // min(N/2, 40): scale theo bài toán nhưng cap ở 40
+                                                        // Nhiều ant → explore tốt hơn nhưng chậm hơn
 
-    double alpha = 1.25;                                 // hệ số importance của PHEROMONE
-                                                         // alpha lớn → kiến ưu tiên đường có nhiều pheromone
-                                                         // (exploitation > exploration)
+    double alpha = 1.0;                                 // hệ số importance của PHEROMONE
+                                                        // alpha lớn → kiến ưu tiên đường có nhiều pheromone
+                                                        // (exploitation > exploration)
 
-    double beta = 1.0;                                   // hệ số importance của HEURISTIC (desirability)
-                                                         // beta lớn → kiến ưu tiên cluster "tốt" về distance + capacity
-                                                         // (greedy hơn)
+    double beta = 1.0;                                  // hệ số importance của HEURISTIC (desirability)
+                                                        // beta lớn → kiến ưu tiên cluster "tốt" về distance + capacity
+                                                        // (greedy hơn)
 
-    double rho = 0.2;                                    // tỷ lệ bay hơi pheromone (evaporation rate)
-                                                         // Mỗi iteration: phi *= (1-rho)
-                                                         // rho lớn → quên nhanh → explore nhiều
-                                                         // rho nhỏ → nhớ lâu → exploit nhiều
+    double rho = 0.2;                                   // tỷ lệ bay hơi pheromone (evaporation rate)
+                                                        // Mỗi iteration: phi *= (1-rho)
+                                                        // rho lớn → quên nhanh → explore nhiều
+                                                        // rho nhỏ → nhớ lâu → exploit nhiều
 
     // ── Tham số adaptive (thay đổi theo quá trình chạy) ──
 
-    double T_max = 1.0;                                  // lượng pheromone deposit tối đa (best ant)
+    double T_max = 0.3;                                 // lượng pheromone deposit tối đa (best ant)
     double T_min = 0.1;                                 // lượng pheromone deposit tối thiểu (all ants)
-                                                         // T_max >> T_min → best ant ảnh hưởng mạnh
-    const double PHI_MIN = 0.05;                         // giới hạn dưới vết mùi (tránh = 0)
-    const double PHI_MAX = 5;                            // giới hạn trên vết mùi (tránh quá lớn → bias cực)
+                                                        // T_max >> T_min → best ant ảnh hưởng mạnh
+    const double PHI_MIN = 0.1;                         // giới hạn dưới vết mùi (tránh = 0)
+    const double PHI_MAX = 1.0;                         // giới hạn trên vết mùi (tránh quá lớn → bias cực)
 
-    double Q_max = 0.8;                                  // xác suất exploitation tối đa
-    double Q_min = 0.1;                                  // xác suất exploitation tối thiểu
-    double Q0 = Q_max;                                   // xác suất exploitation hiện tại
-                                                         // Q0 cao → kiến thường chọn cluster tốt nhất (exploit)
-                                                         // Q0 thấp → kiến chọn theo roulette wheel (explore)
+    double Q_max = 0.95;                                // xác suất exploitation tối đa
+    double Q_min = 0.05;                                // xác suất exploitation tối thiểu
+    double Q0 = Q_max;                                  // xác suất exploitation hiện tại
+                                                        // Q0 cao → kiến thường chọn cluster tốt nhất (exploit)
+                                                        // Q0 thấp → kiến chọn theo roulette wheel (explore)
 
-    double STAGNATE_DROP = 0.05;                         // Ý định: mỗi iteration stagnate, giảm Q0 đi 0.05
+    // Stagnation parameters
+    int STAGNATE_LIMIT = 1;                             // sau bao nhiêu iteration không improve → bắt đầu giảm Q_max
+                                                        // → chuyển dần từ exploitation sang exploration
+    int STAGNATE_COUNT = 0;                             // đếm số vòng liên tiếp không cải thiện sau khi giảm Q_0
 
-    int STAGNATE_LIMIT = 10;                             // sau bao nhiêu iteration không improve → bắt đầu giảm Q0
-                                                         // → chuyển dần từ exploitation sang exploration
+    int STAGNATE_DROP = 0.05;                           // Ý định: mỗi iteration stagnate, giảm Q0 đi 0.05
 
     // ── Repair configuration ──
-    int repairTop = 5;                                   // số ant được chọn để local search + tabu search
-                                                         // Không repair TẤT CẢ m ant (quá chậm)
-                                                         // Chỉ repair top ants (theo cost) + đa dạng (Hamming)
+    int lsTop = 10;                                     // số ant được chọn để local search
+                                                        // Không repair TẤT CẢ m ant (quá chậm)
+                                                        // Chỉ repair top ants (theo cost) + đa dạng (Hamming)
+    int lsMaxMoves = 1000;                              // giới hạn moves mỗi lần LS
 
+    // Số ant được Tabu Search (subset của lsTop)
+    int tsTop = 5;                                     // số ant được chọn để tabu search
+
+    // Điều kiện chạy Tabu Search
+    int tsInterval = 10;                                // chạy TS mỗi x iteration
 
     // ─────────────────────────────────────────────────────────────────────
     // BƯỚC 5: KHỞI TẠO RNG VÀ BIẾN TRẠNG THÁI
@@ -707,7 +677,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     ACOSolution best;                                    // nghiệm tốt nhất tìm được (global best)
                                                          // Khởi tạo mặc định: cost = 1e300, feasible = false
                                                          // (sẽ được cập nhật ngay iteration đầu tiên)
-
+                
     // ─────────────────────────────────────────────────────────────────────
     // BƯỚC 6: KHỞI TẠO MA TRẬN PHEROMONE
     //
@@ -721,12 +691,89 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     vector<vector<double>> phi(N, vector<double>(K, T_min));
                                                          // phi[i][k] khởi tạo = T_min cho tất cả (i,k)
                                                          // Kích thước: N x K
+    
+    // ─────────────────────────────────────────────────────────────────────
+    // BƯỚC 7: KHỞI TẠO ANT POOL — ELITE ARCHIVE LIÊN ITERATION
+    //
+    // antPool: lưu trữ các nghiệm tốt + đa dạng từ NHIỀU iteration trước.
+    // Thay vì chỉ chọn tsTop kiến trong iteration hiện tại để chạy TS,
+    // ta tích lũy pool qua nhiều iteration rồi chọn ứng viên TS từ đó.
+    //
+    // Lợi ích:
+    //   - Tránh chạy TS trên các kiến quá giống nhau (cùng iteration)
+    //   - Pool chứa nhiều "local optima" từ các vùng khác nhau → TS explore
+    //     nhiều basin of attraction hơn
+    //   - Sau reset pheromone, pool vẫn giữ lại nghiệm tốt cũ → không mất
+    //
+    // Chiến lược duy trì pool:
+    //   Khi thêm ant mới vào pool:
+    //     (1) Nếu pool chưa đầy → thêm thẳng
+    //     (2) Nếu pool đầy:
+    //         - Loại ant tệ nhất TRONG POOL nếu ant mới tốt hơn VÀ đủ đa dạng
+    //         - Nếu ant mới quá giống 1 ant đã có → chỉ thay thế nếu tốt hơn ant đó
+    //
+    // poolSize  = tsInterval * tsTop: tích lũy đủ để có ứng viên từ nhiều iteration
+    // MIN_DIFF_POOL: Hamming distance tối thiểu giữa các phần tử trong pool
+    // ─────────────────────────────────────────────────────────────────────
+ 
+    const int poolSize     = max(tsInterval * tsTop, 1);         // kích thước pool tối đa
+    const int MIN_DIFF_POOL = max(N / 10, 1);            // độ đa dạng tối thiểu trong pool
+ 
+    struct PoolEntry {
+        ACOSolution sol;
+    };
+    vector<PoolEntry> antPool;                           // elite archive
+    antPool.reserve(poolSize);
+ 
+    // Hàm thêm ant vào pool với chiến lược diversity-aware replacement
+    auto addToPool = [&](const ACOSolution &candidate) {
+        // Tìm xem có ant nào trong pool quá giống candidate không
+        int twinIdx = -1;      // index ant trong pool giống candidate nhất
+        int twinDist = max(N/100, 1);  // Hamming dist tới twin
+        for (int pi = 0; pi < (int)antPool.size(); ++pi) {
+            int hd = hamming_distance(candidate.assign, antPool[pi].sol.assign);
+            if (hd < twinDist) { twinDist = hd; twinIdx = pi; }
+        }
+ 
+        if ((int)antPool.size() < poolSize) {
+            // Pool chưa đầy → thêm thẳng (dù có twin)
+            // Nếu có twin quá gần (< MIN_DIFF_POOL) → chỉ giữ cái tốt hơn
+            if (twinIdx >= 0 && twinDist < MIN_DIFF_POOL) {
+                if (candidate.cost < antPool[twinIdx].sol.cost - 1e-9) {
+                    antPool[twinIdx].sol       = candidate;
+                }
+                // Nếu twin tốt hơn → bỏ qua candidate (không thêm duplicate)
+            } else {
+                antPool.push_back({candidate});
+            }
+        } else {
+            // Pool đầy → cần thay thế
+            if (twinIdx >= 0 && twinDist < MIN_DIFF_POOL) {
+                // Có twin trong pool: chỉ swap nếu candidate tốt hơn twin
+                if (candidate.cost < antPool[twinIdx].sol.cost - 1e-9) {
+                    antPool[twinIdx].sol       = candidate;
+                }
+            } else {
+                // Candidate đủ đa dạng → thay thế ant tệ nhất trong pool
+                int worstIdx  = 0;
+                double worstCost = antPool[0].sol.cost;
+                for (int pi = 1; pi < (int)antPool.size(); ++pi) {
+                    if (antPool[pi].sol.cost > worstCost) {
+                        worstCost = antPool[pi].sol.cost;
+                        worstIdx  = pi;
+                    }
+                }
+                if (candidate.cost < worstCost - 1e-9) {
+                    antPool[worstIdx].sol       = candidate;
+                }
+            }
+        }
+    };
 
     auto start = Clock::now();                           // thời điểm bắt đầu (để đo elapsed time)
     int iter = 0;                                        // đếm iteration
     int noImprove = 0;                                   // số iteration liên tiếp không cải thiện best
-
-
+    
     // ═══════════════════════════════════════════════════════════════════════
     // ═══════════════════════════════════════════════════════════════════════
     // ══                                                                   ══
@@ -801,122 +848,69 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                 // ── Tính desirability + probability weight cho mỗi cluster k ──
                 for (int k = 0; k < K; ++k)
                 {
-                    // ~~~~ HEURISTIC 1: CAPACITY FIT ~~~~
-                    // Đánh giá node i "hợp" với cluster k như thế nào về mặt trọng số
+                    double deltaDist = ants[a].clusterSumDist[i][k];
 
-                    double dot = 0.0;                    // tích vô hướng (dot product) giữa need và weight
-                    double normNeed = 0.0;               // norm² của vector need
-                    double normNode = 0.0;               // norm² của vector weight node
-                    double emptiness = 0.0;              // mức "đói" tương đối của cluster
-                    double overflow = 0.0;               // mức vi phạm upper bound
+                    double fitness = 0.0;
 
-                    for (int t = 0; t < M_weights; ++t)  // duyệt mỗi chiều trọng số
+                    for (int t = 0; t < M_weights; ++t)
                     {
-                        // need = lượng trọng số cluster k CÒN THIẾU để đạt lower bound
-                        // Nếu cluster đã đủ/thừa → need = 0
-                        double need = max(0.0, WLmat[k][t] - ants[a].clusterWeight[k][t]);
-                                                         // max(0, lower - current)
+                        double cur   = ants[a].clusterWeight[k][t];
+                        double w     = Wmat[i][t];
+                        double after = cur + w;
 
-                        double w = Wmat[i][t];           // trọng số node i tại chiều t
+                        double lo   = WLmat[k][t];
+                        double hi   = WUmat[k][t];
+                        double span = max(hi - lo, VALID_EPS);
 
-                        // Kiểm tra nếu gán node i vào cluster k có vượt upper bound không
-                        double after = ants[a].clusterWeight[k][t] + w;
-                                                         // trọng số cluster k SAU khi thêm node i
+                        double fitness_t = 0.0;
 
-                        if (after > WUmat[k][t])         // vượt upper bound
+                        if (after > hi)
                         {
-                            double excess = (after - WUmat[k][t]) / WUmat[k][t];
-                                                         // tỷ lệ vượt quá (normalized)
-                            overflow += excess;          // cộng dồn tỷ lệ vượt
+                            // ── Vi phạm upper bound ──
+                            // fitness bắt đầu tại 0.3, giảm chậm khi vi phạm tăng.
+                            // Dùng log để phạt nhẹ: vi phạm gấp đôi span chỉ mất ~0.1 fitness.
+                            // Local search sẽ sửa → không cần phạt quá nặng ở đây.
+                            double over = (after - hi) / span;      // vi phạm tính theo span
+                            fitness_t = 3.0 / (1.0 + log1p(over));  // [0.3 → 0 chậm]
+                        }
+                        else if (after < lo)
+                        {
+                            double room_ratio = after / max(lo,VALID_EPS);               // tỉ lệ w dùng vào phần thiếu
+                            fitness_t = 0.75 + 0.25 * room_ratio; // [0.75, 1.0]
+                        }
+                        else
+                        {
+                            // ── Cluster đã thỏa mãn [lo, hi], thêm node vẫn trong giới hạn ──
+                            // Không "cần thiết" nhưng cũng không hại.
+                            // fitness ≈ 0.7, giảm nhẹ khi gần chạm upper (ít room hơn).
+                            double room_ratio = (hi - after) / span;   // 1.0 = rất thoáng, 0.0 = sát upper
+                            fitness_t = 0.6 + 0.15 * room_ratio;      // [0.50, 0.75]
                         }
 
-                        // ── Vector Fit: cosine similarity giữa "need" và "weight" ──
-                        //
-                        // Ý tưởng: nếu node i có profile trọng số GIỐNG với phần
-                        //          cluster k đang thiếu → fit tốt
-                        //
-                        // Ví dụ: cluster cần [100, 0], node có [80, 5]
-                        //        → cosine cao (hướng tương tự)
-                        //        cluster cần [100, 0], node có [5, 80]
-                        //        → cosine thấp (hướng khác)
-                        dot      += need * w;            // tử số cosine similarity
-                        normNeed += need * need;         // mẫu số (phần need)
-                        normNode += w * w;               // mẫu số (phần node weight)
-
-                        // ── Emptiness: mức "đói" tương đối của cluster ──
-                        // emptiness += need / WLmat[k][t]
-                        // = tỷ lệ phần trăm còn thiếu so với lower bound
-                        // Cluster đang rất đói → emptiness cao → ưu tiên gán node vào
-                        emptiness += need / max(WLmat[k][t], VALID_EPS); // ⚠️ Potential div by 0 nếu WLmat=0
+                        fitness += log(max(fitness_t, 1e-12));
                     }
 
-                    // ── Normalize ──
-                    double vectorFit = 0.0;              // cosine similarity [0, 1]
-                    if (normNeed > 1e-12 && normNode > 1e-12)
-                        vectorFit = dot / (sqrt(normNeed) * sqrt(normNode));
-                                                         // cos(θ) = (need·w) / (||need|| * ||w||)
-                                                         // = 1 nếu cùng hướng hoàn toàn
-                                                         // = 0 nếu vuông góc
+                    // Trung bình fitness qua tất cả các chiều trọng số
+                    fitness = exp(fitness / M_weights);;
 
-                    emptiness /= M_weights;              // trung bình emptiness trên các chiều [0, 1]
-                    overflow /= M_weights;               // trung bình overflow trên các chiều [0, ~∞)
+                    // ── Desirability = fitness / distance (normalized) ──
+                    // Thêm offset 0.5*DIST_SCALE tránh div-by-zero khi cluster rỗng.
+                    // Cluster rỗng: dist_term = 0.5 → desir = 2 * fitness (thưởng nhẹ để khuyến khích fill cluster mới)
+                    double dist_term = (deltaDist + DIST_SCALE * 0.5) / DIST_SCALE;
+                    double desir = fitness / dist_term;
 
-                    // ── Kết hợp thông tin capacity ──
-                    double capacityGain =
-                        0.8 * vectorFit +                // 80% weight: node i fit tốt với nhu cầu cluster k
-                        0.3 * emptiness;                 // 30% weight: cluster k đang đói
-                                                         // Tổng có thể > 1 (không phải xác suất, là score)
-
-                    // ── Penalty cho overflow ──
-                    // Nếu gán node i vào k làm vượt upper → giảm desirability
-                    // exp(-4*overflow): overflow=0 → 1.0, overflow=1 → 0.018
-                    double violationPenalty = exp(-4.0 * overflow);
-
-
-                    // ~~~~ HEURISTIC 2: DISTANCE ~~~~
-                    // Node i nên gán vào cluster k có tổng khoảng cách nhỏ
-
-                    // distTerm = sumDist[i][k] / DIST_SCALE
-                    //   sumDist[i][k] = tổng dist(i, mọi node đã ở cluster k)
-                    //   DIST_SCALE normalize về khoảng ~1
-                    double distTerm = ants[a].clusterSumDist[i][k] / DIST_SCALE;
-
-
-                    // ~~~~ KẾT HỢP HEURISTIC ~~~~
-                    //
-                    // desirability = (1 / (1 + distTerm))     ← distance nhỏ → desir cao
-                    //              * (1 + capacityGain)       ← capacity fit tốt → desir cao
-                    //              * violationPenalty          ← overflow → desir giảm
-                    double desir =
-                        (1.0 / (1.0 + distTerm)) *       // distance term: nhỏ → gần → tốt
-                        (1.0 + capacityGain) *            // capacity term: fit → tốt
-                        violationPenalty;                  // violation term: overflow → xấu
-
-
-                    // ~~~~ PHEROMONE ~~~~
-                    double tau = phi[i][k];               // pheromone trên cạnh (node i, cluster k)
-                                                         // Cao → best solutions thường gán i vào k
-
-
-                    // ~~~~ PROBABILITY WEIGHT ~~~~
-                    // Theo công thức ACO chuẩn:
-                    //   weight[k] = tau^alpha * desirability^beta
-                    //
-                    // alpha = 1.25: pheromone quan trọng hơn heuristic một chút
-                    // beta = 1.0:   heuristic importance bình thường
+                    double tau    = phi[i][k];
                     double weight = pow(tau, alpha) * pow(desir, beta);
-                    weights[k] = weight;                  // lưu weight cho roulette wheel
 
-                    // Track cluster có weight cao nhất (cho exploitation)
+                    weights[k] = weight;
+
                     if (weight > bestWeight)
                     {
                         bestWeight = weight;
-                        chosenK = k;                      // cluster tốt nhất hiện tại
+                        chosenK    = k;
                     }
                 }
-                // ── Kết thúc tính weight cho K cluster ──
-
-
+                
                 // ═════════════════════════════════════════════════════════
                 // QUY TẮC CHỌN CLUSTER: Exploitation vs Exploration
                 //
@@ -929,16 +923,13 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                 //   → probability(k) ∝ weights[k]
                 //   → có cơ hội thử cluster mới (diversity)
                 //
-                // Ban đầu Q0 = Q_max = 0.8 → 80% exploit, 20% explore
                 // Khi stagnate → Q0 giảm → explore nhiều hơn
                 // ═════════════════════════════════════════════════════════
 
                 double q = uni01(rng);                    // random trong [0, 1)
 
-                if (q >= Q0)                              // q >= Q0 → EXPLORATION (roulette wheel)
-                                                         // ⚠️ Logic: q >= Q0 → explore
-                                                         //   Q0 = 0.8 → 20% explore (q ∈ [0.8, 1))
-                                                         //   → đúng: phần lớn exploit, ít explore
+                if (q >= Q0)                          // q >= antQ0 → EXPLORATION (roulette wheel)
+                                                         // Logic: q >= antQ0 → explore
                 {
                     double sumW = accumulate(weights.begin(), weights.end(), 0.0);
                                                          // tổng weight tất cả cluster
@@ -958,7 +949,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                     }
                     // Nếu sumW == 0 → giữ chosenK từ argmax (fallback)
                 }
-                // Nếu q < Q0 → EXPLOITATION → giữ chosenK = argmax(weights)
+                // Nếu q < antQ0 → EXPLOITATION → giữ chosenK = argmax(weights)
 
                 // ═════════════════════════════════════════════════════════
                 // GÁN NODE i VÀO CLUSTER chosenK
@@ -986,17 +977,16 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
 
             // ═════ TÍNH COST CHO ANT SAU KHI XÂY XONG ═════
             // cost = intra_distance + PENALTY_SCALE * total_violation
-            ants[a].cost = compute_cost(ants[a].assign);
+            ants[a].cost = compute_cost_fast(ants[a]);
             ants[a].feasible = is_feasible(ants[a].assign);
 
         } // ── Kết thúc construction phase (m ants built) ──
-
 
         // ═════════════════════════════════════════════════════════════════
         // PHASE 2: IMPROVEMENT — Local Search + Tabu Search cho top ants
         //
         // Không improve TẤT CẢ m ants (quá chậm).
-        // Chọn repairTop ants TỐT NHẤT + ĐA DẠNG:
+        // Chọn top ants TỐT NHẤT + ĐA DẠNG:
         //   - Sort ants theo cost tăng dần
         //   - Chọn ant tốt nhất, nếu ant tiếp theo đủ khác biệt
         //     (Hamming distance >= MIN_DIFF) thì thêm vào
@@ -1007,22 +997,22 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         vector<int> order(m);                            // index [0, 1, ..., m-1]
         iota(order.begin(), order.end(), 0);             // fill
         sort(order.begin(), order.end(), [&](int a1, int a2)
-             { return ants[a1].cost < ants[a2].cost; }); // sort tăng dần theo cost
-                                                         // order[0] = ant có cost thấp nhất
+            { return ants[a1].cost < ants[a2].cost; }); // sort tăng dần theo cost
+                                                        // order[0] = ant có cost thấp nhất
 
-        // ── Chọn repairTop ants đa dạng ──
-        vector<int> selected;                            // index các ant được chọn để repair
-        int MIN_DIFF = max(N/100,1);                                // Hamming distance tối thiểu giữa các ant selected
+        // ── Chọn top ants đa dạng ──
+        vector<int> lsSelected;                          // index các ant được chọn để local search
+        int MIN_DIFF_LS = max(N/100,1);                     // Hamming distance tối thiểu giữa các ant selected
 
-        for (int idx = 0; idx < m && selected.size() < repairTop; ++idx)
+        for (int idx = 0; idx < m && (int)lsSelected.size() < lsTop; ++idx)
         {
             int ai = order[idx];                         // ant tốt thứ idx
             bool diverse = true;                         // giả sử đủ khác biệt
 
             // Kiểm tra Hamming distance với tất cả ant đã chọn
-            for (int sj : selected)
+            for (int sj : lsSelected)
             {
-                if (hamming_distance(ants[ai].assign, ants[sj].assign) < MIN_DIFF)
+                if (hamming_distance(ants[ai].assign, ants[sj].assign) < MIN_DIFF_LS)
                 {
                     diverse = false;                     // quá giống ant đã chọn → bỏ qua
                     break;
@@ -1030,36 +1020,116 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
             }
 
             if (diverse)
-                selected.push_back(ai);                  // thêm vào danh sách repair
+                lsSelected.push_back(ai);                // thêm vào danh sách repair
         }
 
         // Nếu chưa đủ repairTop ant (do tất cả quá giống nhau)
         // → bổ sung thêm ant theo thứ tự cost (không check Hamming)
-        for (int idx = 0; idx < m && selected.size() < repairTop; ++idx)
+        for (int idx = 0; idx < m && (int)lsSelected.size() < lsTop; ++idx)
         {
             int ai = order[idx];
-            if (find(selected.begin(), selected.end(), ai) == selected.end())
-                                                         // nếu ai chưa trong selected
-                selected.push_back(ai);                  // thêm vào
+            if (find(lsSelected.begin(), lsSelected.end(), ai) == lsSelected.end())
+                lsSelected.push_back(ai);                // thêm vào
         }
 
-        // ── Chạy Local Search + Tabu Search cho các ant được chọn ──
-        for (int ai : selected)
+        // ── LOCAL SEARCH cho tất cả ant được chọn ──
+        //   LS nhanh → chạy cho nhiều ant → cải thiện population chung
+        for (int ai : lsSelected)
         {
-            // Local Search: relocate + swap (tối đa 1000 moves)
-            // Cải thiện nghiệm bằng các thay đổi nhỏ (neighborhood search)
-            local_search(ants[ai], rng, 1000);
+            local_search(ants[ai], rng, lsMaxMoves);
 
-            // Iterated Tabu Search: tìm kiếm sâu hơn với tabu list
-            // (tránh quay lại nghiệm đã thăm gần đây)
-            iterated_tabu_search(ants[ai], rng);
-
-            // Tính lại cost và feasibility sau khi improve
-            ants[ai].cost = compute_cost(ants[ai].assign);
+            ants[ai].cost = compute_cost_fast(ants[ai]);
             ants[ai].feasible = is_feasible(ants[ai].assign);
         }
 
+        // ═════════════════════════════════════════════════════════════
+        // NẠP POOL SAU LOCAL SEARCH
+        //
+        // Sau mỗi iteration, thêm các ant vừa được LS vào antPool.
+        // Pool tích lũy dần qua nhiều iteration → khi đến lượt chạy TS
+        // sẽ có nhiều ứng viên chất lượng cao từ nhiều vùng tìm kiếm.
+        //
+        // Chỉ nạp lsSelected (đã qua LS) — không nạp ant thô từ construction
+        // vì chúng chưa được cải thiện và thường có cost cao.
+        // ═════════════════════════════════════════════════════════════
+        for (int ai : lsSelected)
+            addToPool(ants[ai]);
+        
+        if (iter % tsInterval == 0) // chay tabu search mỗi tsInterval vòng
+        {
+            // ═════════════════════════════════════════════════════════════
+            // CHỌN ỨNG VIÊN TS TỪ POOL LIÊN ITERATION
+            // Chọn tsTop kiến TỐT NHẤT + ĐA DẠNG từ antPool —
+            // pool tích lũy từ nhiều iteration trước (tối đa poolSize phần tử).
+            //
+            // Sort pool theo cost, chọn top đa dạng.
+            // ═════════════════════════════════════════════════════════════
+    
+            // Sort pool theo cost tăng dần
+            sort(antPool.begin(), antPool.end(),
+                [](const PoolEntry &a, const PoolEntry &b){
+                    return a.sol.cost < b.sol.cost;
+                });
+    
+            // Chọn tsTop phần tử đa dạng từ pool
+            vector<int> tsPoolSelected;
+    
+            for (int pi = 0; pi < (int)antPool.size() && (int)tsPoolSelected.size() < tsTop; ++pi)
+            {
+                tsPoolSelected.push_back(pi);
+            }
+    
+            // ── Chạy Iterated Tabu Search trên ứng viên từ pool ──
+            for (int pi : tsPoolSelected)
+            {
+                // antPool[pi].sol là nghiệm đã qua LS từ iteration trước
+                // → TS khai thác sâu hơn + thoát local opt
+                iterated_tabu_search(antPool[pi].sol, rng);
+    
+                antPool[pi].sol.cost     = compute_cost_fast(antPool[pi].sol);
+                antPool[pi].sol.feasible = is_feasible(antPool[pi].sol.assign);
+    
+                // Nghiệm sau TS cũng là ứng viên để cập nhật best global
+                bool curFeasible  = antPool[pi].sol.feasible;
+                double curCost    = antPool[pi].sol.cost;
 
+                bool bestFeasible = best.feasible;
+                double bestCost   = best.cost;
+
+                bool accept = false;
+
+                if (curFeasible)
+                {
+                    if (!bestFeasible || curCost + VALID_EPS < bestCost)
+                        accept = true;
+                }
+                else
+                {
+                    if (!bestFeasible && curCost + VALID_EPS < bestCost)
+                        accept = true;
+                }
+
+                if (accept)
+                {
+                    best = antPool[pi].sol;
+
+                    auto now = Clock::now();
+                    double elapsed = chrono::duration<double>(now - start).count();
+
+                    noImprove = 0;                           // reset counter stagnation
+                    STAGNATE_COUNT = 0;
+                    Q0 = Q_max;                             // reset Q_max
+
+                    cerr << "[ITER " << iter << "]"
+                        << " [TS] New best cost=" 
+                        << format_cost_with_commas(best.cost, 2)
+                        << " (feasible=" << (best.feasible ? "YES" : "NO")
+                        << ", time " << elapsed << "s)\n";
+                }
+            }
+
+            antPool.clear();
+        }
         // ═════════════════════════════════════════════════════════════════
         // PHASE 3: UPDATE — Cập nhật best global + pheromone
         // ═════════════════════════════════════════════════════════════════
@@ -1094,16 +1164,15 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                 //   → Chấp nhận nếu:
                 //     (a) Best cũ infeasible (feasible LUÔN thắng infeasible)
                 //     (b) Hoặc cost mới < cost cũ
-                if (!bestFeasible || curCost + 1e-12 < bestCost)
+                if (!bestFeasible || curCost + VALID_EPS < bestCost)
                     accept = true;
-                // ⚠️ 1e-12 tolerance: tránh chấp nhận do lỗi floating point
             }
             else
             {
                 // Trường hợp 2: Ant mới INFEASIBLE
                 //   → Chỉ chấp nhận nếu best cũng infeasible VÀ cost nhỏ hơn
                 //   → KHÔNG BAO GIỜ thay thế best feasible bằng infeasible
-                if (!bestFeasible && curCost + 1e-12 < bestCost)
+                if (!bestFeasible && curCost + VALID_EPS < bestCost)
                     accept = true;
             }
 
@@ -1112,15 +1181,14 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                 best = ants[ai];                         // cập nhật best global
                 improvedThisIter = true;                 // đánh dấu iteration này có cải thiện
 
-                Q0 = Q_max;                              // reset Q0 về max (exploit nghiệm tốt)
-                                                         // → sau khi tìm được best mới, tập trung exploit
-
                 noImprove = 0;                           // reset counter stagnation
+                STAGNATE_COUNT = 0;
+                Q0 = Q_max;                             // reset Q_max
 
                 // In thông báo ra stderr
                 auto now = Clock::now();
                 double elapsed = chrono::duration<double>(now - start).count();
-                cerr << "[ITER " << iter << "] New best cost=" << format_cost_with_commas(best.cost, 0)
+                cerr << "[ITER " << iter << "] New best cost=" << format_cost_with_commas(best.cost, 2)
                      << " (feasible=" << (best.feasible ? "YES" : "NO")
                      << ", time " << elapsed << "s)\n";
             }
@@ -1130,18 +1198,13 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         if (!improvedThisIter)
         {
             ++noImprove;                                 // tăng counter stagnation
-
-            // Nếu stagnate quá lâu → giảm Q0 để explore nhiều hơn
-            if (noImprove > STAGNATE_LIMIT)
-            {
-                Q0 -= STAGNATE_DROP;                     // ⚠️ STAGNATE_DROP = 0 (do bug int)
-                                                         //    → Q0 không thực sự giảm!
-                                                         //    Fix: đổi STAGNATE_DROP thành double
-                if (Q0 < Q_min)
-                    Q0 = Q_min;                          // clamp: không giảm dưới Q_min
+            ++STAGNATE_COUNT;
+            if(STAGNATE_COUNT >= STAGNATE_LIMIT){
+                Q0 -= STAGNATE_DROP;
+                STAGNATE_COUNT = 0;
+                if (Q0 < Q_min) Q0 = Q_min; // Q_max limit
             }
         }
-
 
         // ═════════════════════════════════════════════════════════════════
         // PHEROMONE UPDATE
@@ -1178,20 +1241,25 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                 phi[i][c] += T_max;                      // deposit lượng lớn trên cạnh best
         }
 
-        // ── Tìm Best Local (ant tốt nhất KHÁC best global) ──
-        // Dùng cho logging, có thể dùng để deposit bổ sung
+        // Bước 3: Deposit từ ITERATION BEST (khác global)
         int bestLocal = -1;
+        int MIN_DIFF = max(N/100,1);
+        for (int r = 0; r < m; ++r) {
+            int ai = order[r];
+            if (hamming_distance(ants[ai].assign, best.assign) >= MIN_DIFF) {
+                bestLocal = ai;
+                break;
+            }
+        }
 
-        for (int r = 0; r < m; ++r)
-        {
-            int ai = order[r];                           // ant thứ r (theo cost tăng dần)
-
-            // Bỏ qua nếu quá giống best global (Hamming < MIN_DIFF)
-            if (hamming_distance(ants[ai].assign, best.assign) < MIN_DIFF)
-                continue;
-
-            bestLocal = ai;                              // ant tốt nhất khác best global
-            break;                                       // chỉ cần 1 cái
+        if (bestLocal >= 0) {
+            // Deposit iteration-best với trọng số nhỏ hơn global
+            double iterDeposit = T_max * 0.3;
+            for (int i = 0; i < N; ++i) {
+                int c = ants[bestLocal].assign[i];
+                if (c >= 0 && c < K)
+                    phi[i][c] += iterDeposit;
+            }
         }
 
         // Bước 4: CLAMP pheromone vào [PHI_MIN, PHI_MAX]
@@ -1207,9 +1275,8 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
 
         if (iter % 10 == 0)                              // log mỗi 10 iteration
         {
-            // Best local ant (nếu không tìm được → dùng ant tốt nhất)
-            int safeLocal = (bestLocal >= 0) ? bestLocal : order[0];
-            auto bestThisIter = ants[safeLocal];
+            // Best local ant
+            auto bestThisIter = ants[order[0]];
 
             // Đếm số ant feasible trong iteration này
             int feasCount = 0;
@@ -1219,9 +1286,9 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
 
             // In ra stderr
             double elapsed = chrono::duration<double>(Clock::now() - start).count();
-            cerr << "[ITER " << iter << "] bestGlobalCost=" << format_cost_with_commas(best.cost, 0)
+            cerr << "[ITER " << iter << "] bestGlobalCost=" << format_cost_with_commas(best.cost, 2)
                  << " (feasible=" << (best.feasible ? "YES" : "NO") << ")"
-                 << " bestThisIter=" << format_cost_with_commas(bestThisIter.cost, 0)
+                 << " bestThisIter=" << format_cost_with_commas(bestThisIter.cost, 2)
                  << " feasibleAnts=" << feasCount
                  << " noImprove=" << noImprove
                  << " (elapsed " << elapsed << "s)\n";
@@ -1244,13 +1311,12 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         //
         // Nếu không cải thiện best sau noImproveReset iteration liên tiếp:
         //   → Reset pheromone về T_min (uniform, như ban đầu)
-        //   → Reset Q0 về Q_max
         //   → Cho phép ACO "khám phá lại từ đầu" với kinh nghiệm mới
         //
         // Đây là cơ chế thoát local optima quan trọng nhất.
         // ═════════════════════════════════════════════════════════════════
 
-        int noImproveReset = 200;                        // ngưỡng reset (200 iteration)
+        int noImproveReset = 30;  // ngưỡng reset (50 iteration)
 
         if (noImprove >= noImproveReset)
         {
@@ -1262,7 +1328,8 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                     phi[i][k] = T_min;                   // phi = 0.05 (uniform)
 
             noImprove = 0;                               // reset counter
-            Q0 = Q_max;                                  // reset exploitation probability
+            STAGNATE_DROP = 0;
+            Q0 = Q_max;
         }
 
     } // ════════ KẾT THÚC VÒNG LẶP ACO ════════
@@ -1293,7 +1360,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     else
         cout << "Final solution is valid.\n";
 
-    cout << "Final cost = " << format_cost_with_commas(best.cost, 0) << "\n";
+    cout << "Final cost = " << format_cost_with_commas(best.cost, 2) << "\n";
 
     // Ghi tất cả log ra file
     SaveLogs(best);

@@ -1,0 +1,39 @@
+[ITER 1] [TS] New best cost=46159.35 (feasible=YES, time 4.05782s)
+[ITER 2] [TS] New best cost=44124.01 (feasible=YES, time 13.5417s)
+[ITER 3] [TS] New best cost=42163.68 (feasible=YES, time 25.2775s)
+[ITER 8] [TS] New best cost=41647.78 (feasible=YES, time 54.3639s)
+[ITER 10] bestGlobalCost=41647.78 (feasible=YES) bestThisIter=46372.56 feasibleAnts=0 noImprove=3 (elapsed 70.6486s)
+[ITER 17] [TS] New best cost=41637.09 (feasible=YES, time 113.267s)
+[ITER 18] [TS] New best cost=41609.00 (feasible=YES, time 114.343s)
+[ITER 19] [TS] New best cost=41582.73 (feasible=YES, time 120.452s)
+[ITER 20] [TS] New best cost=41547.42 (feasible=YES, time 127.038s)
+[ITER 20] bestGlobalCost=41547.42 (feasible=YES) bestThisIter=42567.64 feasibleAnts=2 noImprove=1 (elapsed 132.224s)
+[ITER 23] [TS] New best cost=40991.18 (feasible=YES, time 146.83s)
+[ITER 30] bestGlobalCost=40991.18 (feasible=YES) bestThisIter=43793.13 feasibleAnts=0 noImprove=8 (elapsed 195.352s)
+[ITER 34] [TS] New best cost=40650.27 (feasible=YES, time 220.593s)
+[ITER 35] [TS] New best cost=40613.73 (feasible=YES, time 234.589s)
+[ITER 40] [TS] New best cost=40564.86 (feasible=YES, time 264.566s)
+[ITER 40] bestGlobalCost=40564.86 (feasible=YES) bestThisIter=40613.73 feasibleAnts=1 noImprove=1 (elapsed 269.776s)
+7 25 28 74 81 104 140 141 160 164 200 208 246 
+22 23 44 48 111 120 161 196 199 236 251 252 255 
+14 45 92 98 107 117 128 143 174 178 212 240 
+4 34 76 87 95 108 115 154 155 182 188 244 258 
+21 33 68 70 72 99 100 138 145 172 186 202 209 234 254 
+9 11 27 57 64 82 101 125 131 193 203 214 241 
+24 32 40 51 55 67 78 127 147 159 201 245 
+43 62 69 122 146 157 163 177 223 224 235 237 249 250 
+6 15 16 37 52 75 85 165 169 171 181 219 222 243 
+35 50 77 86 88 91 94 119 149 151 192 218 247 
+20 29 41 59 60 97 105 109 110 132 134 158 210 227 
+36 58 65 83 106 150 170 173 183 195 206 217 220 230 
+5 12 49 53 61 79 124 133 191 205 211 228 257 
+18 19 30 54 73 96 137 166 185 198 207 261 262 
+38 39 47 84 102 136 162 176 225 226 233 242 
+10 17 42 56 66 80 103 113 168 175 194 197 256 259 
+3 8 112 116 118 123 126 135 190 204 213 215 
+2 13 26 89 114 121 148 153 167 189 238 248 253 
+1 31 71 90 129 130 139 142 221 229 231 232 
+46 63 93 144 152 156 179 180 184 187 216 239 260 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/gil262_20_4.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/gil262_20_4.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/gil262_20_4.txt

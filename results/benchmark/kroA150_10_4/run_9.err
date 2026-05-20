@@ -1,0 +1,47 @@
+[ITER 1] New best cost=684424.76 (feasible=NO, time 0.373145s)
+[ITER 2] New best cost=638254.56 (feasible=NO, time 0.700264s)
+[ITER 2] New best cost=664547.87 (feasible=YES, time 0.703211s)
+[ITER 3] New best cost=649647.52 (feasible=YES, time 0.902273s)
+[ITER 6] New best cost=644900.39 (feasible=YES, time 1.42678s)
+[ITER 8] New best cost=635075.55 (feasible=YES, time 1.79532s)
+[ITER 10] New best cost=623029.22 (feasible=YES, time 3.16645s)
+[ITER 10] bestGlobalCost=623029.22 (feasible=YES) bestThisIter=623029.22 feasibleAnts=8 noImprove=0 (elapsed 3.16882s)
+[ITER 20] bestGlobalCost=623029.22 (feasible=YES) bestThisIter=625385.66 feasibleAnts=8 noImprove=10 (elapsed 6.46706s)
+[ITER 30] bestGlobalCost=623029.22 (feasible=YES) bestThisIter=634531.67 feasibleAnts=10 noImprove=20 (elapsed 9.8361s)
+[ITER 40] bestGlobalCost=623029.22 (feasible=YES) bestThisIter=639308.89 feasibleAnts=9 noImprove=30 (elapsed 13.1564s)
+[ITER 42] New best cost=619809.71 (feasible=YES, time 13.6224s)
+[ITER 50] bestGlobalCost=619809.71 (feasible=YES) bestThisIter=624926.57 feasibleAnts=9 noImprove=8 (elapsed 16.5149s)
+[ITER 52] New best cost=612897.61 (feasible=YES, time 16.932s)
+[ITER 53] New best cost=608279.28 (feasible=YES, time 17.1053s)
+[ITER 60] bestGlobalCost=608279.28 (feasible=YES) bestThisIter=623184.94 feasibleAnts=8 noImprove=7 (elapsed 19.3166s)
+[ITER 70] bestGlobalCost=608279.28 (feasible=YES) bestThisIter=613345.73 feasibleAnts=7 noImprove=17 (elapsed 22.0201s)
+[ITER 80] bestGlobalCost=608279.28 (feasible=YES) bestThisIter=631453.94 feasibleAnts=8 noImprove=27 (elapsed 25.0217s)
+[ITER 81] New best cost=603539.21 (feasible=YES, time 25.2539s)
+[ITER 90] bestGlobalCost=603539.21 (feasible=YES) bestThisIter=616399.53 feasibleAnts=8 noImprove=9 (elapsed 27.8343s)
+[ITER 100] bestGlobalCost=603539.21 (feasible=YES) bestThisIter=627540.58 feasibleAnts=9 noImprove=19 (elapsed 31.1349s)
+[ITER 110] bestGlobalCost=603539.21 (feasible=YES) bestThisIter=629820.54 feasibleAnts=7 noImprove=29 (elapsed 34.137s)
+[ITER 120] bestGlobalCost=603539.21 (feasible=YES) bestThisIter=643177.04 feasibleAnts=7 noImprove=39 (elapsed 37.2299s)
+[ITER 130] bestGlobalCost=603539.21 (feasible=YES) bestThisIter=627517.59 feasibleAnts=8 noImprove=49 (elapsed 40.3312s)
+[ITER 140] bestGlobalCost=603539.21 (feasible=YES) bestThisIter=616435.63 feasibleAnts=9 noImprove=59 (elapsed 43.3677s)
+[ITER 150] bestGlobalCost=603539.21 (feasible=YES) bestThisIter=618543.38 feasibleAnts=7 noImprove=69 (elapsed 46.4928s)
+[ITER 160] bestGlobalCost=603539.21 (feasible=YES) bestThisIter=652799.32 feasibleAnts=8 noImprove=79 (elapsed 49.4849s)
+[ITER 170] bestGlobalCost=603539.21 (feasible=YES) bestThisIter=617800.07 feasibleAnts=9 noImprove=89 (elapsed 52.0763s)
+[ITER 180] bestGlobalCost=603539.21 (feasible=YES) bestThisIter=638107.07 feasibleAnts=7 noImprove=99 (elapsed 54.4759s)
+[RESET] no improvement for100-> reset pheromones
+[ITER 190] bestGlobalCost=603539.21 (feasible=YES) bestThisIter=625837.17 feasibleAnts=10 noImprove=9 (elapsed 56.6306s)
+[ITER 200] New best cost=602046.31 (feasible=YES, time 58.5733s)
+[ITER 200] bestGlobalCost=602046.31 (feasible=YES) bestThisIter=602046.31 feasibleAnts=10 noImprove=0 (elapsed 58.5785s)
+[ITER 210] bestGlobalCost=602046.31 (feasible=YES) bestThisIter=637088.96 feasibleAnts=9 noImprove=10 (elapsed 60.4631s)
+1 25 28 51 54 58 61 64 93 105 108 131 138 148 
+7 9 20 34 46 55 57 83 87 112 117 125 132 135 140 145 
+4 8 19 31 42 75 80 89 92 122 130 133 134 139 142 143 
+22 26 53 56 65 66 70 79 88 94 97 118 119 124 129 137 
+5 13 33 37 52 76 78 82 95 96 103 107 121 126 146 147 
+2 30 39 40 44 50 67 68 69 73 81 85 114 116 144 
+12 23 27 32 35 45 60 62 77 86 91 110 149 150 
+6 10 11 15 17 47 59 63 72 74 90 98 109 113 141 
+16 18 21 24 36 38 49 84 99 102 104 106 111 127 
+3 14 29 41 43 48 71 100 101 115 120 123 128 136 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/kroA150_10_4.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/kroA150_10_4.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/kroA150_10_4.txt

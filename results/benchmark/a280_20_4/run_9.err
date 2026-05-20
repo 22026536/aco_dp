@@ -1,0 +1,57 @@
+[ITER 1] New best cost=63154.13 (feasible=YES, time 1.321s)
+[ITER 2] New best cost=59474.95 (feasible=YES, time 4.29962s)
+[ITER 4] New best cost=59320.85 (feasible=YES, time 8.80852s)
+[ITER 5] New best cost=58253.07 (feasible=YES, time 10.6187s)
+[ITER 9] New best cost=57647.09 (feasible=YES, time 17.7153s)
+[TS] New best cost=57413.10 (feasible=YES, time 20.7264s)
+[ITER 10] bestGlobalCost=57413.10 (feasible=YES) bestThisIter=57413.10 feasibleAnts=10 noImprove=1 (elapsed 25.846s)
+[ITER 14] New best cost=56664.94 (feasible=YES, time 33.4836s)
+[TS] New best cost=56572.61 (feasible=YES, time 46.8101s)
+[ITER 20] bestGlobalCost=56572.61 (feasible=YES) bestThisIter=56664.94 feasibleAnts=10 noImprove=1 (elapsed 52.3417s)
+[ITER 21] New best cost=56464.29 (feasible=YES, time 53.6871s)
+[ITER 22] New best cost=56420.18 (feasible=YES, time 55.7892s)
+[ITER 23] New best cost=55720.22 (feasible=YES, time 57.8775s)
+[ITER 28] New best cost=55549.43 (feasible=YES, time 67.0273s)
+[ITER 30] bestGlobalCost=55549.43 (feasible=YES) bestThisIter=56279.63 feasibleAnts=10 noImprove=2 (elapsed 76.8703s)
+[ITER 31] New best cost=55543.95 (feasible=YES, time 78.2932s)
+[TS] New best cost=55418.96 (feasible=YES, time 93.0999s)
+[ITER 40] bestGlobalCost=55418.96 (feasible=YES) bestThisIter=55418.96 feasibleAnts=10 noImprove=1 (elapsed 98.3124s)
+[ITER 43] New best cost=55291.41 (feasible=YES, time 104.027s)
+[ITER 48] New best cost=55027.90 (feasible=YES, time 111.929s)
+[ITER 50] bestGlobalCost=55027.90 (feasible=YES) bestThisIter=55360.05 feasibleAnts=10 noImprove=2 (elapsed 121.44s)
+[ITER 53] New best cost=54908.39 (feasible=YES, time 125.742s)
+[ITER 60] bestGlobalCost=54908.39 (feasible=YES) bestThisIter=54908.39 feasibleAnts=10 noImprove=7 (elapsed 143.412s)
+[ITER 66] New best cost=54789.67 (feasible=YES, time 153.738s)
+[ITER 70] bestGlobalCost=54789.67 (feasible=YES) bestThisIter=55621.24 feasibleAnts=10 noImprove=4 (elapsed 166.887s)
+[ITER 80] bestGlobalCost=54789.67 (feasible=YES) bestThisIter=54789.67 feasibleAnts=11 noImprove=14 (elapsed 189.651s)
+[ITER 90] bestGlobalCost=54789.67 (feasible=YES) bestThisIter=55199.55 feasibleAnts=10 noImprove=24 (elapsed 211.624s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 100] bestGlobalCost=54789.67 (feasible=YES) bestThisIter=55330.53 feasibleAnts=10 noImprove=4 (elapsed 233.361s)
+[ITER 110] bestGlobalCost=54789.67 (feasible=YES) bestThisIter=54983.08 feasibleAnts=10 noImprove=14 (elapsed 254.878s)
+[TS] New best cost=54641.71 (feasible=YES, time 272.199s)
+[ITER 120] bestGlobalCost=54641.71 (feasible=YES) bestThisIter=54835.36 feasibleAnts=10 noImprove=1 (elapsed 275.711s)
+[ITER 126] New best cost=54558.48 (feasible=YES, time 284.392s)
+[ITER 130] bestGlobalCost=54558.48 (feasible=YES) bestThisIter=55084.32 feasibleAnts=10 noImprove=4 (elapsed 297.02s)
+73 75 76 77 78 79 80 82 88 89 90 95 97 104 
+17 133 134 135 136 137 262 263 264 267 268 269 271 272 
+61 83 106 108 109 110 111 112 113 114 115 117 157 174 
+81 91 92 93 94 96 98 99 100 101 102 169 170 
+18 19 20 21 22 23 25 27 28 126 127 130 131 132 270 
+138 159 160 161 162 163 175 176 177 180 181 182 183 184 
+208 209 226 227 229 230 232 233 234 235 236 237 238 239 
+1 3 4 5 6 248 250 259 274 275 277 278 279 
+43 44 45 47 54 55 56 57 58 59 60 63 64 68 116 
+139 140 141 142 143 144 145 146 147 198 202 204 205 266 
+206 207 210 211 214 252 253 254 255 257 258 260 265 
+7 8 9 10 11 12 13 14 15 16 24 261 273 276 
+34 35 36 37 38 39 40 42 46 48 49 50 51 52 71 
+119 120 121 148 149 150 151 152 153 154 156 158 178 179 
+203 212 213 215 216 217 218 219 220 221 222 223 224 225 228 
+103 105 107 164 165 166 167 168 171 172 173 186 188 189 
+185 187 190 191 192 193 194 195 196 197 199 200 201 
+53 62 65 66 67 69 70 72 74 84 85 86 87 118 
+26 29 30 31 32 33 41 122 123 124 125 128 129 155 
+2 231 240 241 242 243 244 245 246 247 249 251 256 280 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/a280_20_4.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/a280_20_4.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/a280_20_4.txt

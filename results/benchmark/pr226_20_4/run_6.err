@@ -1,0 +1,56 @@
+[ITER 1] New best cost=1425256.59 (feasible=YES, time 1.70881s)
+[ITER 2] New best cost=1393433.34 (feasible=YES, time 3.0736s)
+[ITER 4] New best cost=1364112.90 (feasible=YES, time 5.11828s)
+[ITER 7] New best cost=1333342.46 (feasible=YES, time 8.76923s)
+[ITER 8] New best cost=1329344.50 (feasible=YES, time 9.64468s)
+[ITER 10] bestGlobalCost=1329344.50 (feasible=YES) bestThisIter=1331601.79 feasibleAnts=10 noImprove=2 (elapsed 16.0209s)
+[ITER 12] New best cost=1321793.64 (feasible=YES, time 18.1356s)
+[ITER 13] New best cost=1320079.04 (feasible=YES, time 18.7259s)
+[ITER 15] New best cost=1311693.50 (feasible=YES, time 20.6719s)
+[ITER 16] New best cost=1292361.39 (feasible=YES, time 21.3554s)
+[ITER 20] New best cost=1283625.31 (feasible=YES, time 29.0915s)
+[ITER 20] bestGlobalCost=1283625.31 (feasible=YES) bestThisIter=1302611.94 feasibleAnts=10 noImprove=0 (elapsed 29.0998s)
+[ITER 22] New best cost=1281834.78 (feasible=YES, time 30.6201s)
+[ITER 30] bestGlobalCost=1281834.78 (feasible=YES) bestThisIter=1320057.98 feasibleAnts=10 noImprove=8 (elapsed 44.2012s)
+[ITER 40] bestGlobalCost=1281834.78 (feasible=YES) bestThisIter=1325051.30 feasibleAnts=10 noImprove=18 (elapsed 67.2323s)
+[ITER 50] bestGlobalCost=1281834.78 (feasible=YES) bestThisIter=1305426.82 feasibleAnts=10 noImprove=28 (elapsed 91.8411s)
+[ITER 60] bestGlobalCost=1281834.78 (feasible=YES) bestThisIter=1378891.01 feasibleAnts=10 noImprove=38 (elapsed 111.842s)
+[ITER 70] bestGlobalCost=1281834.78 (feasible=YES) bestThisIter=1324148.06 feasibleAnts=10 noImprove=48 (elapsed 136.546s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 80] bestGlobalCost=1281834.78 (feasible=YES) bestThisIter=1319997.66 feasibleAnts=10 noImprove=8 (elapsed 153.113s)
+[ITER 90] bestGlobalCost=1281834.78 (feasible=YES) bestThisIter=1327976.57 feasibleAnts=10 noImprove=18 (elapsed 175.724s)
+[ITER 100] bestGlobalCost=1281834.78 (feasible=YES) bestThisIter=1370758.84 feasibleAnts=10 noImprove=28 (elapsed 197.532s)
+[ITER 110] bestGlobalCost=1281834.78 (feasible=YES) bestThisIter=1366621.58 feasibleAnts=10 noImprove=38 (elapsed 222.799s)
+[ITER 120] bestGlobalCost=1281834.78 (feasible=YES) bestThisIter=1368519.46 feasibleAnts=10 noImprove=48 (elapsed 245.787s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 128] New best cost=1281252.25 (feasible=YES, time 252.892s)
+[ITER 130] bestGlobalCost=1281252.25 (feasible=YES) bestThisIter=1293604.64 feasibleAnts=10 noImprove=2 (elapsed 258.916s)
+[ITER 132] New best cost=1271097.72 (feasible=YES, time 261.235s)
+[ITER 133] New best cost=1248842.60 (feasible=YES, time 262.145s)
+[ITER 137] New best cost=1246906.99 (feasible=YES, time 265.297s)
+[ITER 140] bestGlobalCost=1246906.99 (feasible=YES) bestThisIter=1280956.33 feasibleAnts=10 noImprove=3 (elapsed 273s)
+[ITER 142] New best cost=1245614.48 (feasible=YES, time 274.071s)
+[ITER 150] bestGlobalCost=1245614.48 (feasible=YES) bestThisIter=1303545.82 feasibleAnts=10 noImprove=8 (elapsed 292.469s)
+88 89 90 91 92 96 97 98 99 100 101 102 
+165 169 170 171 172 173 175 176 177 179 180 
+103 104 106 107 109 110 112 113 114 115 117 118 
+31 32 33 35 36 37 45 48 49 55 
+192 193 194 195 196 197 198 199 201 204 216 
+1 2 3 4 6 7 10 17 74 75 81 
+18 19 20 54 63 64 65 66 67 68 70 
+211 214 215 218 219 220 221 222 223 224 225 226 
+73 76 77 78 79 80 82 83 84 85 86 
+153 154 155 156 157 158 160 161 162 163 164 167 
+21 22 23 24 25 26 27 28 29 30 34 
+200 202 203 205 206 207 208 209 210 212 213 217 
+105 108 111 116 119 120 125 127 128 129 130 131 
+50 51 52 53 56 57 58 59 60 61 62 
+121 122 123 124 126 132 133 134 135 136 191 
+93 94 143 146 151 152 159 166 168 174 
+38 39 40 41 42 43 44 46 47 87 95 
+5 8 9 11 12 13 14 15 16 69 71 72 
+178 181 182 183 184 185 186 187 188 189 190 
+137 138 139 140 141 142 144 145 147 148 149 150 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/pr226_20_4.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/pr226_20_4.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/pr226_20_4.txt

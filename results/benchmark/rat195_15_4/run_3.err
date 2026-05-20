@@ -1,0 +1,51 @@
+[ITER 1] New best cost=40105.21 (feasible=YES, time 1.94192s)
+[ITER 3] New best cost=39238.36 (feasible=YES, time 2.33282s)
+[ITER 6] New best cost=38441.33 (feasible=YES, time 2.805s)
+[ITER 10] bestGlobalCost=38441.33 (feasible=YES) bestThisIter=39099.78 feasibleAnts=11 noImprove=4 (elapsed 3.3781s)
+[ITER 14] New best cost=38289.64 (feasible=YES, time 5.4292s)
+[ITER 17] New best cost=37545.20 (feasible=YES, time 5.82642s)
+[ITER 20] New best cost=37536.90 (feasible=YES, time 6.23803s)
+[ITER 20] bestGlobalCost=37536.90 (feasible=YES) bestThisIter=38346.23 feasibleAnts=12 noImprove=0 (elapsed 6.24144s)
+[ITER 30] bestGlobalCost=37536.90 (feasible=YES) bestThisIter=38095.65 feasibleAnts=12 noImprove=10 (elapsed 9.18075s)
+[ITER 34] New best cost=37533.37 (feasible=YES, time 11.3108s)
+[ITER 40] bestGlobalCost=37533.37 (feasible=YES) bestThisIter=38494.17 feasibleAnts=9 noImprove=6 (elapsed 12.0785s)
+[ITER 48] New best cost=37423.01 (feasible=YES, time 14.7643s)
+[ITER 50] bestGlobalCost=37423.01 (feasible=YES) bestThisIter=37439.77 feasibleAnts=7 noImprove=2 (elapsed 15.0172s)
+[ITER 54] New best cost=37280.14 (feasible=YES, time 17.0736s)
+[ITER 57] New best cost=37257.81 (feasible=YES, time 17.4738s)
+[ITER 59] New best cost=37121.62 (feasible=YES, time 17.7363s)
+[ITER 60] bestGlobalCost=37121.62 (feasible=YES) bestThisIter=37412.74 feasibleAnts=9 noImprove=1 (elapsed 17.8591s)
+[ITER 70] bestGlobalCost=37121.62 (feasible=YES) bestThisIter=37656.95 feasibleAnts=12 noImprove=11 (elapsed 20.6859s)
+[ITER 80] bestGlobalCost=37121.62 (feasible=YES) bestThisIter=37692.53 feasibleAnts=12 noImprove=21 (elapsed 23.5963s)
+[ITER 90] bestGlobalCost=37121.62 (feasible=YES) bestThisIter=38452.08 feasibleAnts=11 noImprove=31 (elapsed 26.8606s)
+[ITER 100] bestGlobalCost=37121.62 (feasible=YES) bestThisIter=37993.32 feasibleAnts=12 noImprove=41 (elapsed 29.9859s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 110] bestGlobalCost=37121.62 (feasible=YES) bestThisIter=40604.29 feasibleAnts=11 noImprove=1 (elapsed 33.3282s)
+[ITER 120] bestGlobalCost=37121.62 (feasible=YES) bestThisIter=37442.83 feasibleAnts=11 noImprove=11 (elapsed 36.2167s)
+[ITER 130] bestGlobalCost=37121.62 (feasible=YES) bestThisIter=37972.07 feasibleAnts=13 noImprove=21 (elapsed 39.1278s)
+[ITER 138] New best cost=36968.30 (feasible=YES, time 41.9081s)
+[ITER 140] bestGlobalCost=36968.30 (feasible=YES) bestThisIter=37360.00 feasibleAnts=7 noImprove=2 (elapsed 42.1456s)
+[ITER 150] bestGlobalCost=36968.30 (feasible=YES) bestThisIter=37189.53 feasibleAnts=10 noImprove=12 (elapsed 44.9194s)
+[ITER 153] New best cost=36869.72 (feasible=YES, time 46.836s)
+[ITER 160] bestGlobalCost=36869.72 (feasible=YES) bestThisIter=37421.81 feasibleAnts=9 noImprove=7 (elapsed 47.7373s)
+[ITER 170] bestGlobalCost=36869.72 (feasible=YES) bestThisIter=37846.61 feasibleAnts=7 noImprove=17 (elapsed 50.6345s)
+[ITER 180] bestGlobalCost=36869.72 (feasible=YES) bestThisIter=37715.75 feasibleAnts=11 noImprove=27 (elapsed 53.6319s)
+[ITER 190] bestGlobalCost=36869.72 (feasible=YES) bestThisIter=37673.11 feasibleAnts=11 noImprove=37 (elapsed 57.5232s)
+27 40 41 42 43 44 53 54 55 56 57 68 69 
+66 67 79 80 81 92 93 94 95 96 105 106 107 
+101 102 103 113 114 115 116 117 126 127 128 129 130 
+8 9 11 12 13 22 24 25 26 35 36 37 38 39 52 
+98 108 109 110 111 112 122 123 124 125 139 148 
+144 145 146 157 158 159 161 163 170 171 172 173 183 184 
+137 138 140 141 142 143 152 153 154 155 156 165 166 169 
+70 72 82 83 84 85 86 87 88 97 99 100 
+118 119 120 121 131 132 133 134 135 136 147 149 
+150 151 160 162 164 174 175 176 177 185 186 187 188 189 
+46 47 48 49 58 59 60 61 62 71 73 74 
+50 51 63 64 65 75 76 77 78 89 90 91 104 
+6 7 10 19 20 21 23 28 31 32 33 34 45 
+1 2 3 4 5 14 15 16 17 18 29 30 
+167 168 178 179 180 181 182 190 191 192 193 194 195 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/rat195_15_4.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/rat195_15_4.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/rat195_15_4.txt

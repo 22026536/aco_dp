@@ -1,0 +1,60 @@
+[ITER 1] New best cost=179306.96 (feasible=NO, time 1.34823s)
+[ITER 1] New best cost=229791.71 (feasible=YES, time 1.35326s)
+[ITER 3] New best cost=228962.48 (feasible=YES, time 1.78339s)
+[ITER 4] New best cost=217188.39 (feasible=YES, time 1.98802s)
+[ITER 5] New best cost=213056.80 (feasible=YES, time 2.21238s)
+[ITER 7] New best cost=207912.68 (feasible=YES, time 2.57394s)
+[ITER 10] bestGlobalCost=207912.68 (feasible=YES) bestThisIter=206153.27 feasibleAnts=6 noImprove=3 (elapsed 3.00869s)
+[ITER 19] New best cost=207235.30 (feasible=YES, time 5.66474s)
+[ITER 20] bestGlobalCost=207235.30 (feasible=YES) bestThisIter=198952.22 feasibleAnts=0 noImprove=1 (elapsed 5.79486s)
+[ITER 24] New best cost=202602.13 (feasible=YES, time 7.46563s)
+[ITER 30] bestGlobalCost=202602.13 (feasible=YES) bestThisIter=209459.17 feasibleAnts=8 noImprove=6 (elapsed 8.37713s)
+[ITER 40] bestGlobalCost=202602.13 (feasible=YES) bestThisIter=201100.83 feasibleAnts=7 noImprove=16 (elapsed 11.2891s)
+[ITER 50] bestGlobalCost=202602.13 (feasible=YES) bestThisIter=215546.60 feasibleAnts=6 noImprove=26 (elapsed 14.5774s)
+[ITER 60] bestGlobalCost=202602.13 (feasible=YES) bestThisIter=203408.47 feasibleAnts=7 noImprove=36 (elapsed 17.7937s)
+[ITER 70] bestGlobalCost=202602.13 (feasible=YES) bestThisIter=212489.63 feasibleAnts=9 noImprove=46 (elapsed 20.6292s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 80] bestGlobalCost=202602.13 (feasible=YES) bestThisIter=207967.17 feasibleAnts=9 noImprove=6 (elapsed 23.423s)
+[ITER 90] bestGlobalCost=202602.13 (feasible=YES) bestThisIter=205355.53 feasibleAnts=7 noImprove=16 (elapsed 25.9072s)
+[ITER 93] New best cost=201866.46 (feasible=YES, time 27.4335s)
+[ITER 100] bestGlobalCost=201866.46 (feasible=YES) bestThisIter=205708.72 feasibleAnts=6 noImprove=7 (elapsed 28.3295s)
+[ITER 110] bestGlobalCost=201866.46 (feasible=YES) bestThisIter=203236.29 feasibleAnts=8 noImprove=17 (elapsed 30.8605s)
+[ITER 120] bestGlobalCost=201866.46 (feasible=YES) bestThisIter=210191.73 feasibleAnts=9 noImprove=27 (elapsed 33.4345s)
+[ITER 130] bestGlobalCost=201866.46 (feasible=YES) bestThisIter=206736.07 feasibleAnts=10 noImprove=37 (elapsed 36.3274s)
+[ITER 140] bestGlobalCost=201866.46 (feasible=YES) bestThisIter=210005.16 feasibleAnts=10 noImprove=47 (elapsed 39.1494s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 150] bestGlobalCost=201866.46 (feasible=YES) bestThisIter=209768.25 feasibleAnts=7 noImprove=7 (elapsed 42.0332s)
+[ITER 160] bestGlobalCost=201866.46 (feasible=YES) bestThisIter=209966.24 feasibleAnts=7 noImprove=17 (elapsed 44.5663s)
+[ITER 161] New best cost=200167.25 (feasible=YES, time 45.9005s)
+[ITER 170] bestGlobalCost=200167.25 (feasible=YES) bestThisIter=210052.99 feasibleAnts=7 noImprove=9 (elapsed 47.0884s)
+[ITER 174] New best cost=197403.26 (feasible=YES, time 48.865s)
+[ITER 180] bestGlobalCost=197403.26 (feasible=YES) bestThisIter=205109.22 feasibleAnts=4 noImprove=6 (elapsed 49.638s)
+[ITER 190] bestGlobalCost=197403.26 (feasible=YES) bestThisIter=201639.32 feasibleAnts=9 noImprove=16 (elapsed 52.1528s)
+[ITER 200] New best cost=196023.69 (feasible=YES, time 54.6561s)
+[ITER 200] bestGlobalCost=196023.69 (feasible=YES) bestThisIter=204214.90 feasibleAnts=9 noImprove=0 (elapsed 54.66s)
+[ITER 210] bestGlobalCost=196023.69 (feasible=YES) bestThisIter=203972.61 feasibleAnts=4 noImprove=10 (elapsed 57.0683s)
+[ITER 217] New best cost=194328.02 (feasible=YES, time 59.137s)
+[ITER 220] bestGlobalCost=194328.02 (feasible=YES) bestThisIter=201370.27 feasibleAnts=8 noImprove=3 (elapsed 59.5168s)
+1 12 27 40 53 85 125 
+44 48 84 92 96 103 105 128 
+70 76 91 95 111 121 123 129 
+18 24 29 46 61 120 137 142 
+17 22 25 90 106 109 112 
+6 62 83 108 113 134 138 
+10 14 19 49 99 140 141 143 
+5 38 50 71 86 119 124 133 
+8 42 47 54 55 67 75 149 
+7 9 26 32 78 82 117 132 
+13 15 20 64 79 107 110 130 
+34 58 88 98 114 145 148 
+2 23 35 68 94 102 131 
+21 30 41 59 89 122 139 
+31 65 77 80 104 115 116 147 
+16 37 51 63 66 127 135 146 
+3 4 60 69 73 93 118 
+33 36 57 74 81 100 136 
+11 45 52 87 97 144 150 
+28 39 43 56 72 101 126 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/kroB150_20_4.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/kroB150_20_4.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/kroB150_20_4.txt

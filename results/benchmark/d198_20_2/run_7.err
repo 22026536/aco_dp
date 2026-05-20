@@ -1,0 +1,42 @@
+[ITER 1] New best cost=131681.26 (feasible=YES, time 12.358s)
+[ITER 2] New best cost=128470.94 (feasible=YES, time 16.8692s)
+[ITER 4] New best cost=127507.56 (feasible=YES, time 22.7288s)
+[ITER 5] New best cost=127014.36 (feasible=YES, time 24.1044s)
+[ITER 6] New best cost=126770.91 (feasible=YES, time 24.8627s)
+[ITER 10] [TS] New best cost=126727.10 (feasible=YES, time 27.6718s)
+[ITER 10] bestGlobalCost=126727.10 (feasible=YES) bestThisIter=126727.10 feasibleAnts=11 noImprove=1 (elapsed 28.9653s)
+[ITER 19] New best cost=126606.81 (feasible=YES, time 34.0135s)
+[ITER 20] [TS] New best cost=126126.64 (feasible=YES, time 35.9107s)
+[ITER 20] bestGlobalCost=126126.64 (feasible=YES) bestThisIter=126897.33 feasibleAnts=10 noImprove=1 (elapsed 36.242s)
+[ITER 28] New best cost=126028.99 (feasible=YES, time 41.5588s)
+[ITER 30] [TS] New best cost=126016.17 (feasible=YES, time 43.0031s)
+[ITER 30] bestGlobalCost=126016.17 (feasible=YES) bestThisIter=126016.17 feasibleAnts=13 noImprove=1 (elapsed 44.345s)
+[ITER 34] New best cost=125924.44 (feasible=YES, time 46.5086s)
+[ITER 37] New best cost=125896.69 (feasible=YES, time 48.2513s)
+[ITER 40] bestGlobalCost=125896.69 (feasible=YES) bestThisIter=125896.69 feasibleAnts=11 noImprove=3 (elapsed 51.3219s)
+[ITER 45] New best cost=125820.20 (feasible=YES, time 54.2215s)
+[ITER 50] bestGlobalCost=125820.20 (feasible=YES) bestThisIter=125820.20 feasibleAnts=10 noImprove=5 (elapsed 58.513s)
+[ITER 52] New best cost=125776.17 (feasible=YES, time 59.6055s)
+137 141 150 151 163 164 165 166 171 172 
+65 74 75 82 83 88 89 97 98 99 
+127 186 187 188 189 190 191 192 193 
+22 24 25 26 27 28 29 30 33 34 35 36 39 
+10 11 12 13 40 41 57 86 
+48 49 50 51 63 64 76 78 79 80 81 
+1 2 3 4 5 6 7 8 9 
+178 179 184 185 194 195 196 197 198 
+108 109 124 125 126 167 168 169 170 
+128 129 130 131 132 133 134 135 136 140 
+58 67 68 69 71 72 84 85 87 100 
+173 174 175 176 177 180 181 182 183 
+103 104 105 106 107 111 112 113 114 
+142 143 144 145 146 147 148 149 152 153 160 162 
+110 115 116 117 118 119 120 121 122 123 
+38 42 43 44 55 56 59 60 70 73 
+14 15 16 17 18 19 20 21 23 32 
+31 37 45 46 47 52 53 54 61 62 66 
+138 139 154 155 156 157 158 159 161 
+77 90 91 92 93 94 95 96 101 102 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/d198_20_2.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/d198_20_2.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/d198_20_2.txt

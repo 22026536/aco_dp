@@ -1,0 +1,22 @@
+
+ Structure: Ant Colony Optimization (ACO) for the MCGP problem.
+   Each iteration, a colony of ants constructs independent solutions
+   guided by a pheromone matrix. Each solution is then refined by
+   Local Search and Tabu Search before pheromone update.
+   The global best solution is tracked continuously and saved to disk.
+Algorithm parameters:
+  - Search method        : ACO (Ant Colony Optimization)
+  - Termination criteria : tcpu = 60
+  - Max iterations       : 10000
+  - Log frequency        : every 1 iteration(s)
+Instance parameters:
+  - Path     : normalized_instances/tsplib/d198_15_5.txt
+  - Type     : t  (tsp-like — Euclidean coordinates)
+  - Nodes    : 198
+  - Clusters : 15
+  - Weights  : 5 dimension(s)
+Output:
+  - Log dir  : results/logs
+
+Final solution is valid.
+Final cost = 300026.42

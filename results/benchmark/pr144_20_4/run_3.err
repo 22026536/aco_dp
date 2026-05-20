@@ -1,0 +1,57 @@
+[ITER 1] New best cost=422538.45 (feasible=NO, time 1.81361s)
+[ITER 1] New best cost=586505.70 (feasible=YES, time 1.81693s)
+[ITER 4] New best cost=559181.86 (feasible=YES, time 2.55469s)
+[ITER 7] New best cost=549554.85 (feasible=YES, time 3.17652s)
+[ITER 10] bestGlobalCost=549554.85 (feasible=YES) bestThisIter=550235.56 feasibleAnts=5 noImprove=3 (elapsed 3.77191s)
+[ITER 17] New best cost=525563.76 (feasible=YES, time 6.03266s)
+[ITER 20] bestGlobalCost=525563.76 (feasible=YES) bestThisIter=532839.68 feasibleAnts=6 noImprove=3 (elapsed 6.48855s)
+[ITER 30] bestGlobalCost=525563.76 (feasible=YES) bestThisIter=550740.24 feasibleAnts=8 noImprove=13 (elapsed 9.02151s)
+[ITER 31] New best cost=520104.39 (feasible=YES, time 10.0626s)
+[ITER 38] New best cost=510473.67 (feasible=YES, time 11.0619s)
+[ITER 40] bestGlobalCost=510473.67 (feasible=YES) bestThisIter=494963.74 feasibleAnts=5 noImprove=2 (elapsed 11.3602s)
+[ITER 50] bestGlobalCost=510473.67 (feasible=YES) bestThisIter=553417.75 feasibleAnts=5 noImprove=12 (elapsed 13.7267s)
+[ITER 57] New best cost=489850.64 (feasible=YES, time 15.6907s)
+[ITER 60] bestGlobalCost=489850.64 (feasible=YES) bestThisIter=510756.48 feasibleAnts=2 noImprove=3 (elapsed 16.1049s)
+[ITER 70] bestGlobalCost=489850.64 (feasible=YES) bestThisIter=517377.11 feasibleAnts=7 noImprove=13 (elapsed 18.5055s)
+[ITER 80] bestGlobalCost=489850.64 (feasible=YES) bestThisIter=505932.16 feasibleAnts=2 noImprove=23 (elapsed 21.5587s)
+[ITER 90] bestGlobalCost=489850.64 (feasible=YES) bestThisIter=554064.65 feasibleAnts=6 noImprove=33 (elapsed 24.4218s)
+[ITER 100] bestGlobalCost=489850.64 (feasible=YES) bestThisIter=550796.92 feasibleAnts=9 noImprove=43 (elapsed 27.2446s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 110] bestGlobalCost=489850.64 (feasible=YES) bestThisIter=530902.61 feasibleAnts=4 noImprove=3 (elapsed 30.0458s)
+[ITER 120] bestGlobalCost=489850.64 (feasible=YES) bestThisIter=484754.22 feasibleAnts=7 noImprove=13 (elapsed 32.7751s)
+[ITER 130] bestGlobalCost=489850.64 (feasible=YES) bestThisIter=502428.66 feasibleAnts=7 noImprove=23 (elapsed 35.3675s)
+[ITER 140] bestGlobalCost=489850.64 (feasible=YES) bestThisIter=557400.14 feasibleAnts=3 noImprove=33 (elapsed 37.7918s)
+[ITER 150] bestGlobalCost=489850.64 (feasible=YES) bestThisIter=546264.37 feasibleAnts=8 noImprove=43 (elapsed 40.7844s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 160] bestGlobalCost=489850.64 (feasible=YES) bestThisIter=507851.91 feasibleAnts=7 noImprove=3 (elapsed 43.709s)
+[ITER 170] bestGlobalCost=489850.64 (feasible=YES) bestThisIter=532157.18 feasibleAnts=5 noImprove=13 (elapsed 45.9977s)
+[ITER 172] New best cost=485617.51 (feasible=YES, time 47.1631s)
+[ITER 180] bestGlobalCost=485617.51 (feasible=YES) bestThisIter=515813.75 feasibleAnts=6 noImprove=8 (elapsed 48.3426s)
+[ITER 190] bestGlobalCost=485617.51 (feasible=YES) bestThisIter=500928.26 feasibleAnts=7 noImprove=18 (elapsed 50.6702s)
+[ITER 200] bestGlobalCost=485617.51 (feasible=YES) bestThisIter=541324.32 feasibleAnts=1 noImprove=28 (elapsed 53.0911s)
+[ITER 210] bestGlobalCost=485617.51 (feasible=YES) bestThisIter=517377.16 feasibleAnts=6 noImprove=38 (elapsed 55.5651s)
+[ITER 220] bestGlobalCost=485617.51 (feasible=YES) bestThisIter=528515.89 feasibleAnts=8 noImprove=48 (elapsed 58.6421s)
+[RESET] no improvement for50-> reset pheromones
+124 125 126 127 128 129 130 
+4 22 23 30 36 37 40 
+6 11 20 21 38 39 
+61 62 63 64 65 69 70 
+10 13 14 15 16 17 41 42 
+68 73 74 75 76 77 89 92 95 
+43 44 45 66 67 71 72 
+79 80 81 82 84 86 87 88 
+116 117 119 120 121 122 123 
+111 112 113 114 141 143 
+78 94 99 100 101 102 103 
+5 27 31 32 33 34 49 
+115 131 132 133 134 135 136 
+7 8 9 12 18 19 
+24 46 47 48 57 59 60 
+50 51 52 53 54 55 56 58 
+107 137 138 139 140 142 144 
+90 91 93 96 97 98 118 
+83 85 104 105 106 108 109 110 
+1 2 3 25 26 28 29 35 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/pr144_20_4.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/pr144_20_4.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/pr144_20_4.txt

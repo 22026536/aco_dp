@@ -153,29 +153,29 @@ src/aco/ACO.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/ACO.cpp.s
 .PHONY : src/aco/ACO.cpp.s
 
-src/aco/Large_search.o: src/aco/Large_search.cpp.o
-.PHONY : src/aco/Large_search.o
+src/aco/Input.o: src/aco/Input.cpp.o
+.PHONY : src/aco/Input.o
 
 # target to build an object file
-src/aco/Large_search.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.o
-.PHONY : src/aco/Large_search.cpp.o
+src/aco/Input.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/Input.cpp.o
+.PHONY : src/aco/Input.cpp.o
 
-src/aco/Large_search.i: src/aco/Large_search.cpp.i
-.PHONY : src/aco/Large_search.i
+src/aco/Input.i: src/aco/Input.cpp.i
+.PHONY : src/aco/Input.i
 
 # target to preprocess a source file
-src/aco/Large_search.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.i
-.PHONY : src/aco/Large_search.cpp.i
+src/aco/Input.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/Input.cpp.i
+.PHONY : src/aco/Input.cpp.i
 
-src/aco/Large_search.s: src/aco/Large_search.cpp.s
-.PHONY : src/aco/Large_search.s
+src/aco/Input.s: src/aco/Input.cpp.s
+.PHONY : src/aco/Input.s
 
 # target to generate assembly for a file
-src/aco/Large_search.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/Large_search.cpp.s
-.PHONY : src/aco/Large_search.cpp.s
+src/aco/Input.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/Input.cpp.s
+.PHONY : src/aco/Input.cpp.s
 
 src/aco/Local_search.o: src/aco/Local_search.cpp.o
 .PHONY : src/aco/Local_search.o
@@ -225,78 +225,6 @@ src/aco/Tabu_search.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/aco/Tabu_search.cpp.s
 .PHONY : src/aco/Tabu_search.cpp.s
 
-src/algorithm/Algorithm.o: src/algorithm/Algorithm.cpp.o
-.PHONY : src/algorithm/Algorithm.o
-
-# target to build an object file
-src/algorithm/Algorithm.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/algorithm/Algorithm.cpp.o
-.PHONY : src/algorithm/Algorithm.cpp.o
-
-src/algorithm/Algorithm.i: src/algorithm/Algorithm.cpp.i
-.PHONY : src/algorithm/Algorithm.i
-
-# target to preprocess a source file
-src/algorithm/Algorithm.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/algorithm/Algorithm.cpp.i
-.PHONY : src/algorithm/Algorithm.cpp.i
-
-src/algorithm/Algorithm.s: src/algorithm/Algorithm.cpp.s
-.PHONY : src/algorithm/Algorithm.s
-
-# target to generate assembly for a file
-src/algorithm/Algorithm.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/algorithm/Algorithm.cpp.s
-.PHONY : src/algorithm/Algorithm.cpp.s
-
-src/algorithm/Island.o: src/algorithm/Island.cpp.o
-.PHONY : src/algorithm/Island.o
-
-# target to build an object file
-src/algorithm/Island.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/algorithm/Island.cpp.o
-.PHONY : src/algorithm/Island.cpp.o
-
-src/algorithm/Island.i: src/algorithm/Island.cpp.i
-.PHONY : src/algorithm/Island.i
-
-# target to preprocess a source file
-src/algorithm/Island.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/algorithm/Island.cpp.i
-.PHONY : src/algorithm/Island.cpp.i
-
-src/algorithm/Island.s: src/algorithm/Island.cpp.s
-.PHONY : src/algorithm/Island.s
-
-# target to generate assembly for a file
-src/algorithm/Island.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/algorithm/Island.cpp.s
-.PHONY : src/algorithm/Island.cpp.s
-
-src/algorithm/Metaheuristic.o: src/algorithm/Metaheuristic.cpp.o
-.PHONY : src/algorithm/Metaheuristic.o
-
-# target to build an object file
-src/algorithm/Metaheuristic.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/algorithm/Metaheuristic.cpp.o
-.PHONY : src/algorithm/Metaheuristic.cpp.o
-
-src/algorithm/Metaheuristic.i: src/algorithm/Metaheuristic.cpp.i
-.PHONY : src/algorithm/Metaheuristic.i
-
-# target to preprocess a source file
-src/algorithm/Metaheuristic.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/algorithm/Metaheuristic.cpp.i
-.PHONY : src/algorithm/Metaheuristic.cpp.i
-
-src/algorithm/Metaheuristic.s: src/algorithm/Metaheuristic.cpp.s
-.PHONY : src/algorithm/Metaheuristic.s
-
-# target to generate assembly for a file
-src/algorithm/Metaheuristic.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/algorithm/Metaheuristic.cpp.s
-.PHONY : src/algorithm/Metaheuristic.cpp.s
-
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -321,174 +249,6 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/metaheuristics/GRASP.o: src/metaheuristics/GRASP.cpp.o
-.PHONY : src/metaheuristics/GRASP.o
-
-# target to build an object file
-src/metaheuristics/GRASP.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/metaheuristics/GRASP.cpp.o
-.PHONY : src/metaheuristics/GRASP.cpp.o
-
-src/metaheuristics/GRASP.i: src/metaheuristics/GRASP.cpp.i
-.PHONY : src/metaheuristics/GRASP.i
-
-# target to preprocess a source file
-src/metaheuristics/GRASP.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/metaheuristics/GRASP.cpp.i
-.PHONY : src/metaheuristics/GRASP.cpp.i
-
-src/metaheuristics/GRASP.s: src/metaheuristics/GRASP.cpp.s
-.PHONY : src/metaheuristics/GRASP.s
-
-# target to generate assembly for a file
-src/metaheuristics/GRASP.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/metaheuristics/GRASP.cpp.s
-.PHONY : src/metaheuristics/GRASP.cpp.s
-
-src/solution/Solution.o: src/solution/Solution.cpp.o
-.PHONY : src/solution/Solution.o
-
-# target to build an object file
-src/solution/Solution.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/Solution.cpp.o
-.PHONY : src/solution/Solution.cpp.o
-
-src/solution/Solution.i: src/solution/Solution.cpp.i
-.PHONY : src/solution/Solution.i
-
-# target to preprocess a source file
-src/solution/Solution.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/Solution.cpp.i
-.PHONY : src/solution/Solution.cpp.i
-
-src/solution/Solution.s: src/solution/Solution.cpp.s
-.PHONY : src/solution/Solution.s
-
-# target to generate assembly for a file
-src/solution/Solution.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/Solution.cpp.s
-.PHONY : src/solution/Solution.cpp.s
-
-src/solution/constructives.o: src/solution/constructives.cpp.o
-.PHONY : src/solution/constructives.o
-
-# target to build an object file
-src/solution/constructives.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/constructives.cpp.o
-.PHONY : src/solution/constructives.cpp.o
-
-src/solution/constructives.i: src/solution/constructives.cpp.i
-.PHONY : src/solution/constructives.i
-
-# target to preprocess a source file
-src/solution/constructives.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/constructives.cpp.i
-.PHONY : src/solution/constructives.cpp.i
-
-src/solution/constructives.s: src/solution/constructives.cpp.s
-.PHONY : src/solution/constructives.s
-
-# target to generate assembly for a file
-src/solution/constructives.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/constructives.cpp.s
-.PHONY : src/solution/constructives.cpp.s
-
-src/solution/dp_explore.o: src/solution/dp_explore.cpp.o
-.PHONY : src/solution/dp_explore.o
-
-# target to build an object file
-src/solution/dp_explore.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/dp_explore.cpp.o
-.PHONY : src/solution/dp_explore.cpp.o
-
-src/solution/dp_explore.i: src/solution/dp_explore.cpp.i
-.PHONY : src/solution/dp_explore.i
-
-# target to preprocess a source file
-src/solution/dp_explore.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/dp_explore.cpp.i
-.PHONY : src/solution/dp_explore.cpp.i
-
-src/solution/dp_explore.s: src/solution/dp_explore.cpp.s
-.PHONY : src/solution/dp_explore.s
-
-# target to generate assembly for a file
-src/solution/dp_explore.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/dp_explore.cpp.s
-.PHONY : src/solution/dp_explore.cpp.s
-
-src/solution/exchange.o: src/solution/exchange.cpp.o
-.PHONY : src/solution/exchange.o
-
-# target to build an object file
-src/solution/exchange.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/exchange.cpp.o
-.PHONY : src/solution/exchange.cpp.o
-
-src/solution/exchange.i: src/solution/exchange.cpp.i
-.PHONY : src/solution/exchange.i
-
-# target to preprocess a source file
-src/solution/exchange.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/exchange.cpp.i
-.PHONY : src/solution/exchange.cpp.i
-
-src/solution/exchange.s: src/solution/exchange.cpp.s
-.PHONY : src/solution/exchange.s
-
-# target to generate assembly for a file
-src/solution/exchange.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/exchange.cpp.s
-.PHONY : src/solution/exchange.cpp.s
-
-src/solution/extended.o: src/solution/extended.cpp.o
-.PHONY : src/solution/extended.o
-
-# target to build an object file
-src/solution/extended.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/extended.cpp.o
-.PHONY : src/solution/extended.cpp.o
-
-src/solution/extended.i: src/solution/extended.cpp.i
-.PHONY : src/solution/extended.i
-
-# target to preprocess a source file
-src/solution/extended.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/extended.cpp.i
-.PHONY : src/solution/extended.cpp.i
-
-src/solution/extended.s: src/solution/extended.cpp.s
-.PHONY : src/solution/extended.s
-
-# target to generate assembly for a file
-src/solution/extended.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/extended.cpp.s
-.PHONY : src/solution/extended.cpp.s
-
-src/solution/insert.o: src/solution/insert.cpp.o
-.PHONY : src/solution/insert.o
-
-# target to build an object file
-src/solution/insert.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/insert.cpp.o
-.PHONY : src/solution/insert.cpp.o
-
-src/solution/insert.i: src/solution/insert.cpp.i
-.PHONY : src/solution/insert.i
-
-# target to preprocess a source file
-src/solution/insert.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/insert.cpp.i
-.PHONY : src/solution/insert.cpp.i
-
-src/solution/insert.s: src/solution/insert.cpp.s
-.PHONY : src/solution/insert.s
-
-# target to generate assembly for a file
-src/solution/insert.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MCGP.dir/build.make CMakeFiles/MCGP.dir/src/solution/insert.cpp.s
-.PHONY : src/solution/insert.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -501,48 +261,18 @@ help:
 	@echo "... src/aco/ACO.o"
 	@echo "... src/aco/ACO.i"
 	@echo "... src/aco/ACO.s"
-	@echo "... src/aco/Large_search.o"
-	@echo "... src/aco/Large_search.i"
-	@echo "... src/aco/Large_search.s"
+	@echo "... src/aco/Input.o"
+	@echo "... src/aco/Input.i"
+	@echo "... src/aco/Input.s"
 	@echo "... src/aco/Local_search.o"
 	@echo "... src/aco/Local_search.i"
 	@echo "... src/aco/Local_search.s"
 	@echo "... src/aco/Tabu_search.o"
 	@echo "... src/aco/Tabu_search.i"
 	@echo "... src/aco/Tabu_search.s"
-	@echo "... src/algorithm/Algorithm.o"
-	@echo "... src/algorithm/Algorithm.i"
-	@echo "... src/algorithm/Algorithm.s"
-	@echo "... src/algorithm/Island.o"
-	@echo "... src/algorithm/Island.i"
-	@echo "... src/algorithm/Island.s"
-	@echo "... src/algorithm/Metaheuristic.o"
-	@echo "... src/algorithm/Metaheuristic.i"
-	@echo "... src/algorithm/Metaheuristic.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/metaheuristics/GRASP.o"
-	@echo "... src/metaheuristics/GRASP.i"
-	@echo "... src/metaheuristics/GRASP.s"
-	@echo "... src/solution/Solution.o"
-	@echo "... src/solution/Solution.i"
-	@echo "... src/solution/Solution.s"
-	@echo "... src/solution/constructives.o"
-	@echo "... src/solution/constructives.i"
-	@echo "... src/solution/constructives.s"
-	@echo "... src/solution/dp_explore.o"
-	@echo "... src/solution/dp_explore.i"
-	@echo "... src/solution/dp_explore.s"
-	@echo "... src/solution/exchange.o"
-	@echo "... src/solution/exchange.i"
-	@echo "... src/solution/exchange.s"
-	@echo "... src/solution/extended.o"
-	@echo "... src/solution/extended.i"
-	@echo "... src/solution/extended.s"
-	@echo "... src/solution/insert.o"
-	@echo "... src/solution/insert.i"
-	@echo "... src/solution/insert.s"
 .PHONY : help
 
 

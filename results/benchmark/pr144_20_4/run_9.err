@@ -1,0 +1,57 @@
+[ITER 1] New best cost=410770.42 (feasible=NO, time 1.85279s)
+[ITER 1] New best cost=638509.77 (feasible=YES, time 1.85824s)
+[ITER 2] New best cost=616179.21 (feasible=YES, time 2.08022s)
+[ITER 4] New best cost=578451.08 (feasible=YES, time 2.52504s)
+[ITER 6] New best cost=572147.88 (feasible=YES, time 2.8678s)
+[ITER 8] New best cost=566466.95 (feasible=YES, time 3.28023s)
+[ITER 9] New best cost=535658.44 (feasible=YES, time 3.4817s)
+[ITER 10] bestGlobalCost=535658.44 (feasible=YES) bestThisIter=566537.99 feasibleAnts=4 noImprove=1 (elapsed 3.69804s)
+[ITER 20] bestGlobalCost=535658.44 (feasible=YES) bestThisIter=530762.10 feasibleAnts=2 noImprove=11 (elapsed 6.58603s)
+[ITER 21] New best cost=527940.47 (feasible=YES, time 7.96158s)
+[ITER 25] New best cost=518007.90 (feasible=YES, time 8.69933s)
+[ITER 30] bestGlobalCost=518007.90 (feasible=YES) bestThisIter=534831.33 feasibleAnts=4 noImprove=5 (elapsed 9.62778s)
+[ITER 40] bestGlobalCost=518007.90 (feasible=YES) bestThisIter=548969.65 feasibleAnts=6 noImprove=15 (elapsed 12.1675s)
+[ITER 50] bestGlobalCost=518007.90 (feasible=YES) bestThisIter=546750.90 feasibleAnts=5 noImprove=25 (elapsed 14.7365s)
+[ITER 57] New best cost=514848.05 (feasible=YES, time 17.3382s)
+[ITER 60] bestGlobalCost=514848.05 (feasible=YES) bestThisIter=514858.16 feasibleAnts=5 noImprove=3 (elapsed 17.8573s)
+[ITER 70] bestGlobalCost=514848.05 (feasible=YES) bestThisIter=550279.87 feasibleAnts=5 noImprove=13 (elapsed 20.6708s)
+[ITER 80] bestGlobalCost=514848.05 (feasible=YES) bestThisIter=561015.32 feasibleAnts=4 noImprove=23 (elapsed 23.139s)
+[ITER 82] New best cost=499035.45 (feasible=YES, time 24.5503s)
+[ITER 90] bestGlobalCost=499035.45 (feasible=YES) bestThisIter=530698.63 feasibleAnts=6 noImprove=8 (elapsed 25.957s)
+[ITER 100] bestGlobalCost=499035.45 (feasible=YES) bestThisIter=508433.70 feasibleAnts=6 noImprove=18 (elapsed 28.4389s)
+[ITER 110] bestGlobalCost=499035.45 (feasible=YES) bestThisIter=532353.91 feasibleAnts=1 noImprove=28 (elapsed 30.7149s)
+[ITER 120] bestGlobalCost=499035.45 (feasible=YES) bestThisIter=523373.36 feasibleAnts=7 noImprove=38 (elapsed 33.2121s)
+[ITER 130] bestGlobalCost=499035.45 (feasible=YES) bestThisIter=501626.28 feasibleAnts=8 noImprove=48 (elapsed 36.0103s)
+[ITER 132] New best cost=491917.88 (feasible=YES, time 37.5106s)
+[ITER 140] bestGlobalCost=491917.88 (feasible=YES) bestThisIter=537677.91 feasibleAnts=4 noImprove=8 (elapsed 38.9043s)
+[ITER 150] bestGlobalCost=491917.88 (feasible=YES) bestThisIter=517099.53 feasibleAnts=2 noImprove=18 (elapsed 41.19s)
+[ITER 160] bestGlobalCost=491917.88 (feasible=YES) bestThisIter=537832.26 feasibleAnts=6 noImprove=28 (elapsed 43.713s)
+[ITER 170] bestGlobalCost=491917.88 (feasible=YES) bestThisIter=510984.68 feasibleAnts=4 noImprove=38 (elapsed 46.8094s)
+[ITER 180] bestGlobalCost=491917.88 (feasible=YES) bestThisIter=557687.18 feasibleAnts=7 noImprove=48 (elapsed 49.5127s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 190] bestGlobalCost=491917.88 (feasible=YES) bestThisIter=524118.31 feasibleAnts=6 noImprove=8 (elapsed 52.34s)
+[ITER 200] bestGlobalCost=491917.88 (feasible=YES) bestThisIter=527909.95 feasibleAnts=4 noImprove=18 (elapsed 55.0786s)
+[ITER 210] bestGlobalCost=491917.88 (feasible=YES) bestThisIter=529943.02 feasibleAnts=6 noImprove=28 (elapsed 57.668s)
+115 131 132 133 134 135 137 
+24 46 47 48 57 59 60 
+3 4 5 23 25 39 40 
+2 27 28 29 30 35 36 
+79 80 81 82 84 85 86 
+83 87 104 105 106 108 109 110 
+1 26 31 32 33 34 49 
+61 62 63 64 65 69 70 
+9 18 20 21 22 37 38 
+91 116 117 118 119 120 121 122 
+43 44 45 66 67 71 72 
+111 112 113 114 136 143 
+123 125 126 127 128 129 130 
+89 93 94 95 96 98 99 
+50 51 52 53 54 55 56 58 
+68 73 74 75 76 77 78 90 92 
+107 138 139 140 141 142 144 
+6 7 8 11 12 19 
+10 13 14 15 16 17 41 42 
+88 97 100 101 102 103 124 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/pr144_20_4.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/pr144_20_4.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/pr144_20_4.txt

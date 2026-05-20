@@ -1,0 +1,20 @@
+
+ Structure: There are multiple islands, each containing one or more metaheuristic GRASP algorithms (by default, the code assigns one metaheuristic per island; this cannot be changed in the configuration file and must be modified directly in the code).
+
+ Operation: For each global iteration, one iteration is executed on every island. When an island performs an iteration, it means that all metaheuristics within that island also execute an iteration. When a metaheuristic performs an iteration, it refers to running the entire algorithm process once — including generating a new solution, validating it, and optimizing it.
+
+Algorithm parameters:
+  - Search method: grasp
+  - Termination criteria: tcpu = 60
+  - Number of islands: 1
+  - Migration rate: 1
+  - Logs frequency: 1
+Meta-heuristic parameters:
+  - Schema: 2P-ACO-DP
+  - GRASP version: rnd-grd
+  - Alpha: 0.5
+  - Number of alphas (m): 8
+  - Block size: 38
+  - Delta iterations: 5
+Final solution is valid.
+Final cost = 1616440.60

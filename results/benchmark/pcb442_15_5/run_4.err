@@ -1,0 +1,47 @@
+[ITER 1] New best cost=3347337.84 (feasible=YES, time 10.86s)
+[ITER 2] New best cost=3289055.21 (feasible=YES, time 16.2707s)
+[ITER 4] New best cost=3178519.67 (feasible=YES, time 31.4143s)
+[ITER 10] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3214930.13 feasibleAnts=10 noImprove=6 (elapsed 77.7253s)
+[ITER 20] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3194412.72 feasibleAnts=10 noImprove=16 (elapsed 152.357s)
+[ITER 30] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3243981.04 feasibleAnts=10 noImprove=26 (elapsed 216.989s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 40] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3216872.18 feasibleAnts=10 noImprove=6 (elapsed 291.359s)
+[ITER 50] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3236216.30 feasibleAnts=10 noImprove=16 (elapsed 361.189s)
+[ITER 60] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3233880.78 feasibleAnts=10 noImprove=26 (elapsed 433.643s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 70] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3197339.47 feasibleAnts=10 noImprove=6 (elapsed 506.97s)
+[ITER 80] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3201270.34 feasibleAnts=10 noImprove=16 (elapsed 579.889s)
+[ITER 90] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3236443.04 feasibleAnts=10 noImprove=26 (elapsed 651.01s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 100] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3216006.10 feasibleAnts=10 noImprove=6 (elapsed 721.765s)
+[ITER 110] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3188227.58 feasibleAnts=10 noImprove=16 (elapsed 789.041s)
+[ITER 120] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3227655.56 feasibleAnts=10 noImprove=26 (elapsed 859.644s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 130] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3265255.38 feasibleAnts=10 noImprove=6 (elapsed 933.074s)
+[ITER 140] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3230441.04 feasibleAnts=9 noImprove=16 (elapsed 1002.18s)
+[ITER 150] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3241124.30 feasibleAnts=10 noImprove=26 (elapsed 1077.52s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 160] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3203397.08 feasibleAnts=10 noImprove=6 (elapsed 1151.83s)
+[ITER 170] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3219039.81 feasibleAnts=10 noImprove=16 (elapsed 1218.93s)
+[ITER 180] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3211811.24 feasibleAnts=10 noImprove=26 (elapsed 1292.53s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 190] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3207638.56 feasibleAnts=10 noImprove=6 (elapsed 1366.1s)
+[ITER 200] bestGlobalCost=3178519.67 (feasible=YES) bestThisIter=3251449.72 feasibleAnts=10 noImprove=16 (elapsed 1443.34s)
+9 10 11 12 13 14 15 40 44 45 46 47 52 70 73 75 76 77 78 79 80 99 105 106 107 128 129 138 142 392 
+26 27 28 29 30 32 33 60 61 62 63 64 65 95 96 97 98 111 112 113 122 124 125 376 377 379 380 383 384 
+152 161 234 238 239 240 241 242 243 266 267 269 270 271 274 276 277 279 280 281 282 283 308 309 341 342 426 440 
+156 167 177 178 179 180 181 190 191 192 193 194 195 203 204 205 206 207 215 216 217 223 225 231 232 233 258 394 395 398 404 
+218 219 226 236 260 261 262 263 264 265 268 272 275 303 304 408 409 410 411 412 413 414 416 419 420 422 438 
+117 139 140 141 151 153 154 163 164 165 175 176 188 189 200 201 202 211 212 213 214 221 222 229 230 244 245 248 250 251 393 397 402 
+224 246 247 249 252 253 254 255 256 257 278 289 293 294 295 297 313 315 316 317 319 320 321 354 415 417 418 421 425 
+1 2 3 4 5 6 7 8 34 35 36 37 38 39 41 42 43 66 67 68 69 71 72 74 103 115 387 389 441 442 
+284 285 286 287 288 290 291 292 310 311 312 314 318 339 340 343 346 347 348 349 350 351 352 353 355 424 428 433 
+102 104 114 116 126 127 136 137 149 150 162 172 173 174 185 186 187 227 228 235 273 386 396 399 400 401 403 405 406 407 
+16 17 18 19 48 49 50 51 53 81 82 83 84 85 86 100 108 109 118 119 121 130 131 143 144 155 166 381 388 390 439 
+305 306 307 328 329 330 331 332 333 334 335 336 337 338 345 366 367 368 369 370 371 372 373 374 375 423 427 432 437 
+237 259 296 298 299 300 301 302 322 323 324 325 326 327 344 356 357 358 359 360 361 362 363 364 365 429 430 431 434 435 
+110 123 132 134 135 145 146 147 148 157 158 159 160 168 169 170 171 182 183 184 196 197 198 199 208 209 210 220 391 
+20 21 22 23 24 25 31 54 55 56 57 58 59 87 88 89 90 91 92 93 94 101 120 133 378 382 385 436 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/pcb442_15_5.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/pcb442_15_5.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/pcb442_15_5.txt

@@ -1,0 +1,37 @@
+[ITER 1] New best cost=398345.82 (feasible=YES, time 2.273s)
+[ITER 2] New best cost=395932.28 (feasible=YES, time 3.80145s)
+[ITER 3] New best cost=395840.51 (feasible=YES, time 5.32816s)
+[ITER 4] New best cost=395702.70 (feasible=YES, time 6.79505s)
+[ITER 10] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=11 noImprove=6 (elapsed 17.0784s)
+[ITER 20] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=10 noImprove=16 (elapsed 32.8711s)
+[ITER 30] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=11 noImprove=26 (elapsed 48.2216s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 40] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=10 noImprove=6 (elapsed 63.9892s)
+[ITER 50] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=12 noImprove=16 (elapsed 79.1067s)
+[ITER 60] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=10 noImprove=26 (elapsed 94.3785s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 70] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=10 noImprove=6 (elapsed 111.223s)
+[ITER 80] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=14 noImprove=16 (elapsed 127.21s)
+[ITER 90] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=10 noImprove=26 (elapsed 142.058s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 100] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=11 noImprove=6 (elapsed 159.744s)
+[ITER 110] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=11 noImprove=16 (elapsed 176.335s)
+[ITER 120] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=10 noImprove=26 (elapsed 191.06s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 130] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=12 noImprove=6 (elapsed 208.224s)
+[ITER 140] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=11 noImprove=16 (elapsed 223.679s)
+[ITER 150] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=10 noImprove=26 (elapsed 238.546s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 160] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=12 noImprove=6 (elapsed 255.48s)
+[ITER 170] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=10 noImprove=16 (elapsed 271.532s)
+[ITER 180] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=12 noImprove=26 (elapsed 286.472s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 190] bestGlobalCost=395702.70 (feasible=YES) bestThisIter=395702.70 feasibleAnts=12 noImprove=6 (elapsed 303.154s)
+21 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 117 118 119 120 123 124 125 126 128 129 157 159 
+121 122 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 155 156 158 160 161 164 165 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 205 
+1 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 22 23 24 25 26 27 28 127 130 131 132 133 134 135 136 137 154 258 259 260 261 262 263 264 265 266 267 268 269 270 271 272 273 274 275 276 277 278 279 
+71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 162 163 166 167 168 169 170 171 172 173 
+2 3 204 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 224 225 226 227 228 229 230 231 232 233 234 235 236 237 238 239 240 241 242 243 244 245 246 247 248 249 250 251 252 253 254 255 256 257 280 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/a280_05_3.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/a280_05_3.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/a280_05_3.txt

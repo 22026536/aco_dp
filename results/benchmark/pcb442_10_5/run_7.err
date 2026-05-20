@@ -1,0 +1,36 @@
+[ITER 1] New best cost=5820977.69 (feasible=YES, time 14.8228s)
+[ITER 2] New best cost=5748062.71 (feasible=YES, time 31.7367s)
+[ITER 3] New best cost=5737722.35 (feasible=YES, time 43.4945s)
+[ITER 5] New best cost=5730388.15 (feasible=YES, time 69.7255s)
+[ITER 6] New best cost=5716264.10 (feasible=YES, time 83.8512s)
+[ITER 10] bestGlobalCost=5716264.10 (feasible=YES) bestThisIter=5732609.99 feasibleAnts=10 noImprove=4 (elapsed 144.82s)
+[ITER 17] New best cost=5710562.29 (feasible=YES, time 222.493s)
+[ITER 20] bestGlobalCost=5710562.29 (feasible=YES) bestThisIter=5739895.42 feasibleAnts=10 noImprove=3 (elapsed 260.525s)
+[ITER 23] New best cost=5698977.65 (feasible=YES, time 299.137s)
+[ITER 27] New best cost=5690556.12 (feasible=YES, time 353.431s)
+[ITER 30] bestGlobalCost=5690556.12 (feasible=YES) bestThisIter=5757568.67 feasibleAnts=10 noImprove=3 (elapsed 402.583s)
+[ITER 40] bestGlobalCost=5690556.12 (feasible=YES) bestThisIter=5723415.44 feasibleAnts=10 noImprove=13 (elapsed 528.37s)
+[ITER 50] bestGlobalCost=5690556.12 (feasible=YES) bestThisIter=5728567.29 feasibleAnts=10 noImprove=23 (elapsed 635.922s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 60] bestGlobalCost=5690556.12 (feasible=YES) bestThisIter=5724517.95 feasibleAnts=10 noImprove=3 (elapsed 766.364s)
+[ITER 70] bestGlobalCost=5690556.12 (feasible=YES) bestThisIter=5710528.40 feasibleAnts=10 noImprove=13 (elapsed 896.618s)
+[ITER 80] bestGlobalCost=5690556.12 (feasible=YES) bestThisIter=5712541.53 feasibleAnts=10 noImprove=23 (elapsed 1023.31s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 90] bestGlobalCost=5690556.12 (feasible=YES) bestThisIter=5733611.05 feasibleAnts=10 noImprove=3 (elapsed 1165.66s)
+[ITER 100] bestGlobalCost=5690556.12 (feasible=YES) bestThisIter=5778300.79 feasibleAnts=10 noImprove=13 (elapsed 1287.14s)
+[ITER 105] New best cost=5682622.70 (feasible=YES, time 1341.36s)
+[ITER 110] bestGlobalCost=5682622.70 (feasible=YES) bestThisIter=5725124.61 feasibleAnts=10 noImprove=5 (elapsed 1395.88s)
+[ITER 120] bestGlobalCost=5682622.70 (feasible=YES) bestThisIter=5693353.80 feasibleAnts=10 noImprove=15 (elapsed 1505.91s)
+1 2 3 4 5 6 7 8 9 10 12 34 35 36 37 38 39 41 42 43 66 67 68 69 70 71 72 73 74 76 77 102 103 104 115 117 126 127 137 138 387 389 392 441 442 
+20 22 23 24 25 26 27 28 29 30 31 32 33 51 54 55 56 57 58 59 60 61 62 63 64 65 86 87 88 89 90 91 92 93 94 96 101 120 376 377 378 382 436 
+95 97 98 110 111 112 113 122 123 124 125 131 132 133 134 135 144 145 146 147 148 157 158 159 160 168 169 170 171 182 183 184 196 198 199 209 210 220 379 380 383 384 385 391 
+226 237 265 268 272 275 303 304 305 306 307 328 329 330 331 332 333 334 335 336 337 338 345 366 367 368 369 370 371 372 373 374 375 414 416 420 423 427 429 432 437 438 
+239 246 274 276 282 284 285 286 287 288 290 291 292 308 309 310 311 312 313 314 315 316 318 339 340 341 342 343 346 347 348 349 350 351 352 353 355 424 425 426 428 433 
+114 116 136 149 150 152 161 162 172 173 174 175 185 186 187 227 228 229 234 235 238 240 241 242 243 266 267 269 270 271 273 277 279 280 281 283 386 396 399 400 401 403 405 406 440 
+11 13 14 15 16 17 18 19 21 40 44 45 46 47 48 49 50 52 53 75 78 79 80 81 82 83 84 85 99 100 105 107 108 109 118 119 121 129 130 142 143 381 388 390 439 
+106 128 139 140 141 151 153 154 155 163 164 165 166 176 177 178 188 189 191 200 201 202 211 212 213 214 221 222 223 224 230 231 244 245 247 248 249 250 251 252 393 397 402 407 415 418 421 
+156 167 179 180 181 190 192 193 194 195 197 203 204 205 206 207 208 215 216 217 218 219 225 232 233 236 256 258 260 261 262 263 264 394 395 398 404 408 409 410 411 412 413 419 422 
+253 254 255 257 259 278 289 293 294 295 296 297 298 299 300 301 302 317 319 320 321 322 323 324 325 326 327 344 354 356 357 358 359 360 361 362 363 364 365 417 430 431 434 435 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/pcb442_10_5.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/pcb442_10_5.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/pcb442_10_5.txt

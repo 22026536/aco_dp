@@ -1,0 +1,53 @@
+[ITER 1] New best cost=49420.86 (feasible=YES, time 1.15224s)
+[ITER 2] New best cost=46810.62 (feasible=YES, time 2.78576s)
+[ITER 3] New best cost=45363.49 (feasible=YES, time 4.03076s)
+[ITER 6] New best cost=45286.41 (feasible=YES, time 6.23486s)
+[ITER 7] New best cost=44838.40 (feasible=YES, time 6.95389s)
+[ITER 10] New best cost=44585.05 (feasible=YES, time 16.1612s)
+[ITER 10] bestGlobalCost=44585.05 (feasible=YES) bestThisIter=44585.05 feasibleAnts=5 noImprove=0 (elapsed 16.1646s)
+[ITER 15] New best cost=43906.54 (feasible=YES, time 21.3101s)
+[ITER 20] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=44194.68 feasibleAnts=5 noImprove=5 (elapsed 30.4448s)
+[ITER 30] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=45155.30 feasibleAnts=5 noImprove=15 (elapsed 46.5136s)
+[ITER 40] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=46077.86 feasibleAnts=5 noImprove=25 (elapsed 61.2081s)
+[ITER 50] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=45836.89 feasibleAnts=5 noImprove=35 (elapsed 76.6928s)
+[ITER 60] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=44916.08 feasibleAnts=5 noImprove=45 (elapsed 91.7531s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 70] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=44176.08 feasibleAnts=5 noImprove=5 (elapsed 109.125s)
+[ITER 80] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=45290.87 feasibleAnts=5 noImprove=15 (elapsed 124.225s)
+[ITER 90] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=44762.08 feasibleAnts=5 noImprove=25 (elapsed 140.97s)
+[ITER 100] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=45929.99 feasibleAnts=5 noImprove=35 (elapsed 154.664s)
+[ITER 110] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=45908.33 feasibleAnts=5 noImprove=45 (elapsed 168.737s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 120] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=44426.56 feasibleAnts=5 noImprove=5 (elapsed 182.222s)
+[ITER 130] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=44521.56 feasibleAnts=5 noImprove=15 (elapsed 197.418s)
+[ITER 140] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=46477.56 feasibleAnts=5 noImprove=25 (elapsed 214.233s)
+[ITER 150] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=44963.56 feasibleAnts=5 noImprove=35 (elapsed 228.739s)
+[ITER 160] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=47645.04 feasibleAnts=5 noImprove=45 (elapsed 241.497s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 170] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=45380.29 feasibleAnts=5 noImprove=5 (elapsed 253.88s)
+[ITER 180] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=46766.49 feasibleAnts=5 noImprove=15 (elapsed 269.07s)
+[ITER 190] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=45913.77 feasibleAnts=5 noImprove=25 (elapsed 284.282s)
+[ITER 200] bestGlobalCost=43906.54 (feasible=YES) bestThisIter=45399.41 feasibleAnts=5 noImprove=35 (elapsed 296.012s)
+54 73 96 112 163 166 173 190 198 204 207 213 261 
+17 24 32 40 51 55 67 78 127 134 201 226 259 
+22 23 44 46 48 63 91 93 179 187 200 216 246 
+1 31 68 71 99 139 142 202 205 221 229 231 232 
+10 42 47 66 80 103 113 168 175 194 197 203 256 
+3 6 8 16 52 84 116 118 123 146 165 169 181 243 
+35 50 86 88 94 119 149 151 184 192 218 247 
+14 45 77 98 107 111 117 128 161 174 212 236 240 
+7 25 74 79 104 126 140 141 152 180 199 215 251 
+37 85 92 97 120 132 143 178 196 219 222 252 255 
+19 21 33 70 72 138 172 185 186 191 209 211 254 
+5 12 18 30 49 53 61 90 124 129 130 133 228 257 262 
+4 28 34 81 144 156 160 164 182 208 239 258 260 
+20 29 41 60 105 109 110 147 158 159 210 227 245 
+15 38 39 56 59 75 102 135 136 162 171 176 233 237 
+11 13 27 57 64 101 114 131 170 193 214 238 242 
+2 58 65 83 125 137 150 153 195 206 217 220 
+76 87 95 100 108 115 145 154 155 188 234 244 
+9 26 36 89 106 121 148 167 183 189 230 248 253 
+43 62 69 82 122 157 177 223 224 225 235 241 249 250 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/gil262_20_5.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/gil262_20_5.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/gil262_20_5.txt

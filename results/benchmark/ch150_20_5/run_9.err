@@ -1,0 +1,48 @@
+[ITER 1] New best cost=60418.28 (feasible=YES, time 0.821037s)
+[ITER 2] New best cost=55725.14 (feasible=YES, time 1.40289s)
+[ITER 4] New best cost=53064.86 (feasible=YES, time 2.59955s)
+[ITER 9] New best cost=51998.11 (feasible=YES, time 6.11046s)
+[ITER 10] bestGlobalCost=51998.11 (feasible=YES) bestThisIter=52610.51 feasibleAnts=11 noImprove=1 (elapsed 8.59779s)
+[ITER 11] New best cost=51939.64 (feasible=YES, time 9.14732s)
+[ITER 12] New best cost=51909.24 (feasible=YES, time 9.65372s)
+[ITER 18] New best cost=51845.03 (feasible=YES, time 12.672s)
+[ITER 19] New best cost=51552.15 (feasible=YES, time 13.1342s)
+[ITER 20] bestGlobalCost=51552.15 (feasible=YES) bestThisIter=51583.28 feasibleAnts=15 noImprove=1 (elapsed 15.193s)
+[ITER 27] New best cost=51482.14 (feasible=YES, time 18.9602s)
+[ITER 29] New best cost=51398.63 (feasible=YES, time 19.7772s)
+[TS] New best cost=51363.39 (feasible=YES, time 20.7027s)
+[ITER 30] bestGlobalCost=51363.39 (feasible=YES) bestThisIter=51363.39 feasibleAnts=12 noImprove=1 (elapsed 21.7031s)
+[ITER 31] New best cost=51079.45 (feasible=YES, time 22.3033s)
+[ITER 34] New best cost=51048.32 (feasible=YES, time 24.0116s)
+[ITER 40] bestGlobalCost=51048.32 (feasible=YES) bestThisIter=51048.32 feasibleAnts=11 noImprove=6 (elapsed 30.1131s)
+[ITER 43] New best cost=51036.87 (feasible=YES, time 32.2524s)
+[ITER 47] New best cost=50941.72 (feasible=YES, time 34.8214s)
+[TS] New best cost=50628.25 (feasible=YES, time 37.191s)
+[ITER 50] bestGlobalCost=50628.25 (feasible=YES) bestThisIter=51036.87 feasibleAnts=10 noImprove=1 (elapsed 38.5653s)
+[ITER 60] bestGlobalCost=50628.25 (feasible=YES) bestThisIter=50628.25 feasibleAnts=14 noImprove=11 (elapsed 47.0684s)
+[ITER 70] bestGlobalCost=50628.25 (feasible=YES) bestThisIter=50628.25 feasibleAnts=16 noImprove=21 (elapsed 54.4742s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 80] bestGlobalCost=50628.25 (feasible=YES) bestThisIter=61718.57 feasibleAnts=9 noImprove=1 (elapsed 61.263s)
+44 64 71 74 112 115 123 
+39 57 60 101 117 130 
+15 16 59 78 80 111 122 133 
+46 51 54 92 105 109 134 138 
+11 17 36 66 69 140 148 
+5 26 95 97 100 107 143 
+50 58 65 85 108 132 135 137 
+3 21 22 48 73 88 94 121 
+6 9 28 37 40 47 53 120 139 
+10 30 34 63 84 87 96 
+23 27 31 49 144 145 147 
+19 20 25 81 90 110 114 
+33 35 52 79 89 93 124 126 
+14 32 38 67 72 77 129 131 
+1 7 8 76 82 98 103 113 
+4 45 62 104 125 149 150 
+18 55 56 75 83 141 142 146 
+13 68 91 106 119 128 136 
+12 24 41 43 61 116 118 127 
+2 29 42 70 86 99 102 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/ch150_20_5.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/ch150_20_5.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/ch150_20_5.txt

@@ -1,0 +1,17 @@
+Instance:           rd400_20_3
+Instance path:      normalized_instances/tsplib/rd400_20_3.txt
+Num runs:           10
+Time limit (s):     1500
+Date:               2026-05-12 04:18:39
+---
+Valid runs:         10 / 10
+Feasible runs:      10
+Infeasible runs:    0
+---
+Best cost:          469405.870000
+Worst cost:         479049.010000
+Avg cost:           474282.926000
+Std dev cost:       2990.765629
+---
+Avg time-to-best:   939.5030 s
+Best time-to-best:  445.1610 s

@@ -1,0 +1,51 @@
+[ITER 1] New best cost=40006.53 (feasible=YES, time 1.57076s)
+[ITER 2] New best cost=39229.31 (feasible=YES, time 3.50277s)
+[ITER 4] New best cost=39146.99 (feasible=YES, time 6.69339s)
+[ITER 5] New best cost=39026.07 (feasible=YES, time 7.97567s)
+[ITER 6] New best cost=38771.48 (feasible=YES, time 9.61884s)
+[ITER 8] New best cost=38766.70 (feasible=YES, time 12.0128s)
+[ITER 9] New best cost=38537.22 (feasible=YES, time 12.9796s)
+[ITER 10] bestGlobalCost=38537.22 (feasible=YES) bestThisIter=38680.60 feasibleAnts=10 noImprove=1 (elapsed 18.5644s)
+[ITER 12] New best cost=38241.52 (feasible=YES, time 21.7656s)
+[ITER 17] New best cost=38073.16 (feasible=YES, time 28.1678s)
+[ITER 20] bestGlobalCost=38073.16 (feasible=YES) bestThisIter=39351.08 feasibleAnts=10 noImprove=3 (elapsed 36.4567s)
+[ITER 22] New best cost=37873.95 (feasible=YES, time 38.2772s)
+[ITER 25] New best cost=37640.20 (feasible=YES, time 42.4924s)
+[ITER 29] New best cost=37529.50 (feasible=YES, time 47.3981s)
+[ITER 30] bestGlobalCost=37529.50 (feasible=YES) bestThisIter=38206.53 feasibleAnts=10 noImprove=1 (elapsed 52.7391s)
+[ITER 40] bestGlobalCost=37529.50 (feasible=YES) bestThisIter=38952.43 feasibleAnts=10 noImprove=11 (elapsed 70.7858s)
+[ITER 50] bestGlobalCost=37529.50 (feasible=YES) bestThisIter=39653.15 feasibleAnts=10 noImprove=21 (elapsed 86.9926s)
+[ITER 60] bestGlobalCost=37529.50 (feasible=YES) bestThisIter=40720.98 feasibleAnts=10 noImprove=31 (elapsed 103.273s)
+[ITER 70] bestGlobalCost=37529.50 (feasible=YES) bestThisIter=38695.69 feasibleAnts=10 noImprove=41 (elapsed 120.866s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 80] bestGlobalCost=37529.50 (feasible=YES) bestThisIter=41249.51 feasibleAnts=10 noImprove=1 (elapsed 138.171s)
+[ITER 84] New best cost=37473.88 (feasible=YES, time 142.949s)
+[ITER 90] bestGlobalCost=37473.88 (feasible=YES) bestThisIter=38319.48 feasibleAnts=10 noImprove=6 (elapsed 154.864s)
+[ITER 100] bestGlobalCost=37473.88 (feasible=YES) bestThisIter=39102.79 feasibleAnts=10 noImprove=16 (elapsed 172.859s)
+[ITER 110] bestGlobalCost=37473.88 (feasible=YES) bestThisIter=39719.62 feasibleAnts=9 noImprove=26 (elapsed 195.033s)
+[ITER 120] bestGlobalCost=37473.88 (feasible=YES) bestThisIter=40403.42 feasibleAnts=10 noImprove=36 (elapsed 212.976s)
+[ITER 130] bestGlobalCost=37473.88 (feasible=YES) bestThisIter=41180.62 feasibleAnts=10 noImprove=46 (elapsed 228.559s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 139] New best cost=37339.26 (feasible=YES, time 238.873s)
+[ITER 140] bestGlobalCost=37339.26 (feasible=YES) bestThisIter=37473.88 feasibleAnts=11 noImprove=1 (elapsed 244.415s)
+[ITER 150] bestGlobalCost=37339.26 (feasible=YES) bestThisIter=39292.14 feasibleAnts=10 noImprove=11 (elapsed 259.743s)
+[ITER 160] bestGlobalCost=37339.26 (feasible=YES) bestThisIter=39686.64 feasibleAnts=9 noImprove=21 (elapsed 279.549s)
+[ITER 170] bestGlobalCost=37339.26 (feasible=YES) bestThisIter=39033.54 feasibleAnts=10 noImprove=31 (elapsed 297.343s)
+42 43 44 47 48 49 50 183 187 188 189 190 192 194 195 196 197 
+109 111 114 120 124 125 126 127 128 130 131 136 138 139 160 171 
+133 134 135 137 150 152 153 154 159 161 162 163 172 174 200 
+24 59 63 65 67 68 69 70 76 77 78 80 81 82 84 88 
+32 38 39 40 41 165 166 167 168 169 170 177 179 181 182 
+1 2 3 4 7 10 12 13 14 15 16 18 20 53 55 
+91 96 97 98 99 100 102 104 105 106 107 110 112 113 119 
+108 116 117 118 121 122 123 140 141 142 143 147 151 155 201 
+25 37 71 72 73 74 75 79 87 89 90 94 101 103 115 
+203 207 208 209 210 213 214 215 216 219 220 221 222 223 
+11 17 19 21 23 51 54 56 57 58 60 61 64 66 83 85 
+5 6 8 9 52 62 217 218 224 225 226 227 228 229 
+45 46 164 173 175 176 178 180 184 185 186 191 193 198 199 
+129 132 144 145 146 148 149 156 157 158 202 204 205 206 211 212 
+22 26 27 28 29 30 31 33 34 35 36 86 92 93 95 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/gr229_15_5.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/gr229_15_5.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/gr229_15_5.txt

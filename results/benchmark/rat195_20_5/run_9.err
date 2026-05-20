@@ -1,0 +1,37 @@
+[ITER 1] New best cost=38928.32 (feasible=YES, time 0.293843s)
+[ITER 2] New best cost=32643.03 (feasible=YES, time 1.29103s)
+[ITER 3] New best cost=32265.47 (feasible=YES, time 2.026s)
+[ITER 5] New best cost=31424.86 (feasible=YES, time 3.23086s)
+[ITER 9] New best cost=31043.68 (feasible=YES, time 5.55755s)
+[TS] New best cost=30897.81 (feasible=YES, time 10.884s)
+[ITER 10] bestGlobalCost=30897.81 (feasible=YES) bestThisIter=31917.51 feasibleAnts=5 noImprove=1 (elapsed 10.8873s)
+[ITER 20] bestGlobalCost=30897.81 (feasible=YES) bestThisIter=32342.01 feasibleAnts=5 noImprove=11 (elapsed 20.2155s)
+[ITER 30] bestGlobalCost=30897.81 (feasible=YES) bestThisIter=33786.09 feasibleAnts=5 noImprove=21 (elapsed 30.4688s)
+[ITER 40] bestGlobalCost=30897.81 (feasible=YES) bestThisIter=35010.89 feasibleAnts=5 noImprove=31 (elapsed 40.2742s)
+[ITER 50] bestGlobalCost=30897.81 (feasible=YES) bestThisIter=35765.89 feasibleAnts=5 noImprove=41 (elapsed 48.266s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 60] bestGlobalCost=30897.81 (feasible=YES) bestThisIter=35205.76 feasibleAnts=5 noImprove=1 (elapsed 56.5132s)
+[ITER 64] New best cost=30505.34 (feasible=YES, time 58.3266s)
+118 121 131 132 133 144 145 146 157 159 
+87 114 116 127 128 129 130 140 142 143 
+147 158 170 171 172 173 183 185 186 188 
+178 180 181 182 190 191 192 193 194 195 
+84 98 100 108 111 112 113 122 123 126 
+41 43 44 45 46 57 59 69 70 72 
+2 5 8 10 16 18 19 22 31 32 
+58 62 73 74 81 83 85 86 97 99 
+153 163 165 167 169 176 177 179 184 189 
+148 150 151 152 160 161 162 174 175 187 
+138 139 141 154 155 156 164 166 168 
+40 53 54 55 56 66 67 68 80 
+64 78 90 91 101 102 103 104 115 117 
+82 92 93 94 95 96 105 106 107 119 
+1 11 14 15 17 27 28 29 42 
+48 50 61 71 75 76 77 88 89 
+24 25 26 38 39 49 51 52 60 65 
+3 4 6 7 13 20 30 34 47 
+9 12 21 23 33 35 36 37 63 79 
+109 110 120 124 125 134 135 136 137 149 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/rat195_20_5.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/rat195_20_5.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/rat195_20_5.txt

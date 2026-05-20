@@ -1,0 +1,38 @@
+[ITER 1] New best cost=5891291.55 (feasible=YES, time 17.6109s)
+[ITER 2] New best cost=5848322.24 (feasible=YES, time 30.3593s)
+[ITER 3] New best cost=5810597.21 (feasible=YES, time 43.0893s)
+[ITER 4] New best cost=5809202.73 (feasible=YES, time 58.3927s)
+[ITER 5] New best cost=5742246.71 (feasible=YES, time 72.042s)
+[ITER 10] bestGlobalCost=5742246.71 (feasible=YES) bestThisIter=5775159.01 feasibleAnts=10 noImprove=5 (elapsed 146.674s)
+[ITER 11] New best cost=5741366.95 (feasible=YES, time 160.559s)
+[ITER 15] New best cost=5715015.76 (feasible=YES, time 209.86s)
+[ITER 20] bestGlobalCost=5715015.76 (feasible=YES) bestThisIter=5772083.66 feasibleAnts=10 noImprove=5 (elapsed 289.349s)
+[ITER 24] New best cost=5708889.50 (feasible=YES, time 333.598s)
+[ITER 30] bestGlobalCost=5708889.50 (feasible=YES) bestThisIter=5751425.65 feasibleAnts=10 noImprove=6 (elapsed 410.31s)
+[ITER 33] New best cost=5704867.48 (feasible=YES, time 445.98s)
+[ITER 38] New best cost=5693957.36 (feasible=YES, time 503.163s)
+[ITER 40] bestGlobalCost=5693957.36 (feasible=YES) bestThisIter=5727941.74 feasibleAnts=10 noImprove=2 (elapsed 531.292s)
+[ITER 50] bestGlobalCost=5693957.36 (feasible=YES) bestThisIter=5720097.77 feasibleAnts=10 noImprove=12 (elapsed 646.045s)
+[ITER 60] bestGlobalCost=5693957.36 (feasible=YES) bestThisIter=5728571.43 feasibleAnts=10 noImprove=22 (elapsed 766.748s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 70] bestGlobalCost=5693957.36 (feasible=YES) bestThisIter=5769060.09 feasibleAnts=10 noImprove=2 (elapsed 882.228s)
+[ITER 80] bestGlobalCost=5693957.36 (feasible=YES) bestThisIter=5732840.18 feasibleAnts=10 noImprove=12 (elapsed 1014.9s)
+[ITER 89] New best cost=5693211.50 (feasible=YES, time 1130.5s)
+[ITER 90] bestGlobalCost=5693211.50 (feasible=YES) bestThisIter=5734405.37 feasibleAnts=10 noImprove=1 (elapsed 1151.66s)
+[ITER 100] bestGlobalCost=5693211.50 (feasible=YES) bestThisIter=5755737.47 feasibleAnts=10 noImprove=11 (elapsed 1281s)
+[ITER 110] bestGlobalCost=5693211.50 (feasible=YES) bestThisIter=5698091.55 feasibleAnts=10 noImprove=21 (elapsed 1358.18s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 120] bestGlobalCost=5693211.50 (feasible=YES) bestThisIter=5867065.79 feasibleAnts=10 noImprove=1 (elapsed 1434.03s)
+11 13 14 15 16 17 18 19 20 21 22 45 47 48 49 50 51 52 53 54 55 78 79 80 81 82 83 84 85 86 88 89 90 91 92 99 101 105 107 108 109 118 378 381 439 
+106 128 138 139 140 151 153 163 164 165 176 177 188 189 200 201 202 211 212 213 214 215 221 222 223 224 229 230 231 232 243 244 245 246 247 248 249 250 251 252 253 393 397 402 407 415 418 421 
+59 100 110 119 120 121 123 129 130 131 132 141 142 143 144 145 146 154 155 156 157 166 167 168 178 179 180 181 190 191 192 193 194 195 203 204 216 256 385 388 390 391 394 395 398 
+102 114 116 127 136 137 149 150 152 161 162 172 173 174 175 185 186 187 227 228 235 238 240 241 242 266 267 269 270 271 273 276 277 279 309 386 387 396 399 400 401 403 405 406 440 
+237 265 272 275 300 303 304 305 306 307 328 329 330 331 332 333 334 335 336 337 338 345 364 365 366 367 368 369 370 371 372 373 374 375 416 419 422 423 427 431 432 437 438 
+23 24 25 26 27 28 29 30 31 32 33 56 57 58 60 61 62 63 64 65 87 93 94 95 96 97 98 111 112 113 122 124 133 134 376 377 379 380 382 383 384 436 
+234 239 274 280 281 282 283 284 285 286 287 288 290 291 292 308 310 311 312 313 314 315 316 339 340 341 342 343 346 347 348 349 350 351 352 353 355 424 425 426 428 433 
+125 135 147 148 158 159 160 169 170 171 182 183 184 196 197 198 199 205 206 207 208 209 210 217 218 219 220 225 226 236 262 263 264 268 404 408 409 410 411 412 413 414 420 
+1 2 3 4 5 6 7 8 9 10 12 34 35 36 37 38 39 40 41 42 43 44 46 66 67 68 69 70 71 72 73 74 75 76 77 103 104 115 117 126 389 392 441 442 
+233 254 255 257 258 259 260 261 278 289 293 294 295 296 297 298 299 301 302 317 318 319 320 321 322 323 324 325 326 327 344 354 356 357 358 359 360 361 362 363 417 429 430 434 435 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/pcb442_10_5.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/pcb442_10_5.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/pcb442_10_5.txt

@@ -1,588 +1,736 @@
+// ═══════════════════════════════════════════════════════════════════════════
+// FILE: Local_search.cpp
+//
+// MỤC ĐÍCH:
+//   Cải thiện nghiệm sau bước construction của ACO bằng cách di chuyển
+//   các node giữa các cluster để giảm chi phí intra-cluster và đưa nghiệm
+//   về trạng thái khả thi (feasible) nếu có thể.
+//
+// HAI LOẠI MOVE ĐƯỢC THỰC HIỆN:
+//   - Relocate (Phase A): di chuyển 1 node từ cluster này sang cluster khác.
+//   - Swap     (Phase B): hoán đổi cluster của 2 node thuộc 2 cluster khác nhau.
+//
+// CHIẾN LƯỢC CHÍNH (Phase A — Relocate):
+//   Mỗi "pass" duyệt N đỉnh theo thứ tự ngẫu nhiên.
+//   Với mỗi đỉnh u:
+//     → Duyệt hết K cụm, tìm cụm tốt NHẤT cho u (best-of-K).
+//     → Nếu score tốt nhất đó < -EPS (có cải thiện):
+//         apply ngay và KẾT THÚC pass (break khỏi vòng for đỉnh).
+//     → Nếu không có cải thiện: bỏ qua đỉnh này, thử đỉnh tiếp theo.
+//   Nếu toàn bộ N đỉnh đều không cho cải thiện → chuyển Phase B (Swap).
+//
+// CHIẾN LƯỢC PHASE B (Swap):
+//   Duyệt N đỉnh, mỗi đỉnh thử hoán đổi với candidate list (CL).
+//   First-improvement: swap đầu tiên cải thiện → apply, kết thúc pass.
+//
+// ═══════════════════════════════════════════════════════════════════════════
+
 #include "ACO.h"
 #include "Local_search.h"
 
-// ═══════════════════════════════════════════════════════════════════════════
-// HÀM LOCAL SEARCH: Cải thiện nghiệm clustering hiện tại
-//
-// Bài toán: Gán N node vào K cluster, mỗi cluster có ràng buộc trọng số
-//           (lower/upper bound trên M_weights chiều), tối thiểu tổng
-//           khoảng cách intra-cluster.
-//
-// Chiến lược:
-//   1. RELOCATE: chuyển 1 node từ cluster này sang cluster khác
-//   2. SWAP:     đổi chỗ 2 node ở 2 cluster khác nhau
-//
-// Tham số:
-//   sol      — nghiệm hiện tại (sẽ bị thay đổi in-place)
-//   rng      — bộ sinh số ngẫu nhiên (Mersenne Twister 64-bit)
-//   maxMoves — giới hạn số lần thay đổi tối đa
-// ═══════════════════════════════════════════════════════════════════════════
+// Tham chiếu đến danh sách ứng viên (candidate list) toàn cục được xây trong ACO_tuned().
+// globalCL[i] = danh sách GLOBAL_CL_SIZE node gần node i nhất (theo trung bình dist).
+// Được dùng trong Phase B (Swap) để thu hẹp lân cận cần xét.
+extern vector<vector<int>> globalCL;
+extern int                 GLOBAL_CL_SIZE; // số phần tử mỗi hàng của globalCL (= 20)
 
+// ═══════════════════════════════════════════════════════════════════════════
+// HÀM CHÍNH: local_search
+//
+// THAM SỐ:
+//   sol      : nghiệm đầu vào (được sửa trực tiếp — pass by reference)
+//   rng      : bộ sinh số ngẫu nhiên Mersenne Twister 64-bit
+//   maxMoves : số lượng move tối đa được phép thực hiện
+//
+// KẾT QUẢ:
+//   sol được cập nhật thành nghiệm tốt nhất tìm được trong quá trình LS.
+//   Nếu tìm được nghiệm feasible → trả nghiệm feasible tốt nhất.
+//   Nếu không → trả nghiệm hiện tại với cost được tính lại.
+// ═══════════════════════════════════════════════════════════════════════════
 void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
 {
-    // ─────────────────────────────────────────────────────────────────────
-    // 0. GUARD: nếu không cho phép move nào → thoát ngay
-    // ─────────────────────────────────────────────────────────────────────
+    // Nếu không được phép thực hiện move nào → thoát ngay
     if (maxMoves <= 0) return;
 
-    // ─────────────────────────────────────────────────────────────────────
-    // 1. LẤY THAM CHIẾU ĐẾN DỮ LIỆU TRONG SOLUTION
-    //    (tránh copy, thao tác trực tiếp trên nghiệm)
-    // ─────────────────────────────────────────────────────────────────────
+    // ── Tạo alias (tham chiếu) đến các thành phần của nghiệm ──
+    // Mục đích: viết ngắn gọn hơn, tránh gọi sol.xxx mỗi lần.
+    // Tất cả đều là reference → sửa alias = sửa trực tiếp sol.
+    auto &assign    = sol.assign;       // assign[i]    = cluster của node i (0-indexed)
+    auto &members   = sol.members;      // members[k]   = danh sách node thuộc cluster k
+    auto &clusterWt = sol.clusterWeight; // clusterWt[k][t] = tổng trọng số chiều t của cluster k
+    auto &sumDist   = sol.clusterSumDist;// sumDist[i][k]   = tổng dist(i, j) với mọi j ∈ cluster k
 
-    // assign[i] = cluster mà node i đang thuộc (0-indexed)
-    auto &assign = sol.assign;
-
-    // members[k] = vector chứa danh sách node thuộc cluster k
-    auto &members = sol.members;
-
-    // clusterWt[k][w] = tổng trọng số chiều w của tất cả node trong cluster k
-    //   Ví dụ: cluster 2 có node {0,3,5}, thì clusterWt[2][w] = Wmat[0][w] + Wmat[3][w] + Wmat[5][w]
-    auto &clusterWt = sol.clusterWeight;
-
-    // sumDist[i][k] = tổng khoảng cách từ node i đến MỌI node hiện tại trong cluster k
-    //   Ví dụ: cluster 1 = {2,4,7}, thì sumDist[i][1] = dist(i,2) + dist(i,4) + dist(i,7)
-    //   Dùng để tính nhanh delta distance khi relocate/swap
-    auto &sumDist = sol.clusterSumDist;
-
-    // ─────────────────────────────────────────────────────────────────────
-    // 2. PRE-ALLOCATE BUFFER (tránh cấp phát heap trong vòng lặp nóng)
+    // ══════════════════════════════════════════════════════════════════════
+    // BƯỚC 1: VIOLATION CACHE
     //
-    //    Mỗi lần thử 1 move, ta cần "giả lập" trọng số cluster sau move.
-    //    Thay vì tạo vector<double> mới mỗi lần (chậm vì malloc),
-    //    ta tạo sẵn buffer 1 lần rồi ghi đè giá trị.
-    // ─────────────────────────────────────────────────────────────────────
-
-    // Buffer cho RELOCATE: trọng số giả lập của cluster nguồn & đích
-    vector<double> simFrom(M_weights);  // simulated weight cluster nguồn
-    vector<double> simTo(M_weights);    // simulated weight cluster đích
-
-    // Buffer cho SWAP: trọng số giả lập của 2 cluster khi đổi node
-    vector<double> simA(M_weights);     // simulated weight cluster A
-    vector<double> simB(M_weights);     // simulated weight cluster B
-
-    // ─────────────────────────────────────────────────────────────────────
-    // 3. CACHE VIOLATION CHO TỪNG CLUSTER
+    // Thay vì tính lại vi phạm từ đầu sau mỗi move (O(N × M_weights)),
+    // ta lưu vi phạm của mỗi cluster vào violCache[k] và cập nhật
+    // incremental sau mỗi move → O(M_weights) mỗi lần.
     //
-    //    violation[k] = tổng mức vi phạm ràng buộc trọng số của cluster k
-    //    = Σ max(0, clusterWt[k][w] - WUmat[k][w])       (vượt upper bound)
-    //    + Σ max(0, WLmat[k][w] - clusterWt[k][w])       (dưới lower bound)
+    // violCache[k] = tổng vi phạm ràng buộc trọng số của cluster k
+    //   = Σ_t max(0, clusterWt[k][t] - WUmat[k][t])   (vi phạm upper)
+    //   + Σ_t max(0, WLmat[k][t] - clusterWt[k][t])   (vi phạm lower)
     //
-    //    Cache lại để không phải tính lại mỗi lần evaluate move.
-    //    Chỉ update khi cluster thực sự thay đổi.
-    // ─────────────────────────────────────────────────────────────────────
+    // totalViol = Σ_k violCache[k] = tổng vi phạm toàn bộ nghiệm
+    //   totalViol = 0 ↔ nghiệm feasible
+    // ══════════════════════════════════════════════════════════════════════
 
-    // Hàm tính violation từ vector trọng số (có thể là thật hoặc giả lập)
-    // cluster: index của cluster (dùng để tra WUmat, WLmat)
-    // wt:      vector trọng số (M_weights chiều)
-    // return:  tổng lượng vi phạm (>= 0, == 0 nghĩa là feasible)
-    auto computeViolation = [&](int cluster, const vector<double> &wt) -> double
-    {
-        double viol = 0.0;               // tích lũy tổng vi phạm
+    // Hàm tính lại vi phạm của cluster k từ clusterWt hiện tại — O(M_weights)
+    // Được gọi sau mỗi move để cập nhật violCache[k] cho 2 cluster bị ảnh hưởng.
+    auto recomputeViol = [&](int k) -> double {
+        double v = 0.0;                        // tích lũy tổng vi phạm của cluster k
+        for (int t = 0; t < M_weights; ++t) {  // duyệt mỗi chiều trọng số
+            double w = clusterWt[k][t];         // tổng trọng số chiều t của cluster k
+            if (w > WUmat[k][t]) v += w - WUmat[k][t]; // vượt upper → vi phạm = lượng thừa
+            if (w < WLmat[k][t]) v += WLmat[k][t] - w; // dưới lower → vi phạm = lượng thiếu
+        }
+        return v; // tổng vi phạm của cluster k (≥ 0)
+    };
 
-        for (int w = 0; w < M_weights; ++w) // duyệt từng chiều trọng số
-        {
-            // Kiểm tra vượt upper bound
-            if (wt[w] > WUmat[cluster][w] + VALID_EPS)
-                viol += wt[w] - WUmat[cluster][w];    // phần vượt quá
+    // Khởi tạo violCache và tính totalViol ban đầu — O(K × M_weights)
+    vector<double> violCache(K, 0.0); // violCache[k] = 0.0 cho tất cả cluster
+    double totalViol = 0.0;           // tổng vi phạm toàn nghiệm
+    for (int k = 0; k < K; ++k) {
+        violCache[k] = recomputeViol(k); // tính vi phạm cluster k từ trạng thái đầu vào
+        totalViol   += violCache[k];     // cộng dồn vào tổng
+    }
+    totalViol = max(totalViol, 0.0); // đảm bảo không âm (phòng ngừa sai số floating-point)
 
-            // Kiểm tra dưới lower bound
-            if (wt[w] < WLmat[cluster][w] - VALID_EPS)
-                viol += WLmat[cluster][w] - wt[w];    // phần thiếu
+    // ══════════════════════════════════════════════════════════════════════
+    // BƯỚC 2: DUAL INCUMBENT + curDist TRACKING
+    //
+    // Dual incumbent (hai nghiệm lưu song song):
+    //   (a) sol       : nghiệm đang làm việc (working solution)
+    //                   Có thể infeasible để thuật toán thoát local optima.
+    //   (b) feasBest  : snapshot nghiệm FEASIBLE tốt nhất từng tìm được
+    //                   Luôn feasible (totalViol ≈ 0) và có curDist nhỏ nhất.
+    //
+    // curDist tracking:
+    //   curDist = tổng intra-distance của sol hiện tại
+    //   Thay vì tính lại O(N²) sau mỗi move, ta duy trì curDist bằng cách
+    //   cộng/trừ deltaDist sau mỗi relocate/swap → O(1).
+    //   curDist = Σ_i sumDist[i][assign[i]]
+    // ══════════════════════════════════════════════════════════════════════
+
+    // Tính curDist một lần duy nhất từ sumDist hiện tại — O(N)
+    // sumDist[i][assign[i]] = tổng dist(i, j) với mọi j trong cùng cluster với i
+    // Σ tất cả = tổng intra-distance (mỗi cặp (i,j) được đếm 2 lần từ i và j)
+    double curDist = 0.0;
+    for (int i = 0; i < N; ++i)
+        curDist += sumDist[i][assign[i]]; // cộng dồn dist từ i đến tất cả node cùng cluster
+
+    // feasBest: snapshot nghiệm feasible tốt nhất tìm được cho đến hiện tại
+    ACOSolution feasBest;          // chứa nghiệm feasible tốt nhất (copy của sol)
+    double      feasBestDist = 1e300; // intra-distance của feasBest (khởi tạo = vô cực)
+    bool        feasFound    = false;  // đã tìm được ít nhất 1 nghiệm feasible chưa?
+
+    // Nếu nghiệm đầu vào đã feasible → lưu ngay làm feasBest ban đầu
+    if (totalViol < VALID_EPS) {   // VALID_EPS = epsilon nhỏ, totalViol ≈ 0 ↔ feasible
+        feasFound    = true;        // đánh dấu đã có nghiệm feasible
+        feasBestDist = curDist;     // lưu intra-distance
+        feasBest     = sol;         // lưu snapshot toàn bộ nghiệm (deep copy)
+    }
+
+    // tryUpdateFeasBest: kiểm tra và cập nhật feasBest nếu nghiệm hiện tại tốt hơn
+    // Được gọi sau mỗi move để cập nhật feasBest — O(1) nhờ curDist tracking.
+    // Trả về true nếu feasBest được cập nhật (dùng để reset noFeasImprove).
+    auto tryUpdateFeasBest = [&]() -> bool {
+        if (totalViol >= VALID_EPS) return false; // nghiệm hiện tại infeasible → bỏ qua
+        // Cập nhật nếu: chưa có feasBest, hoặc curDist nhỏ hơn feasBestDist
+        if (!feasFound || curDist < feasBestDist - 1e-9) {
+            feasFound    = true;       // đánh dấu đã tìm được nghiệm feasible
+            feasBestDist = curDist;    // cập nhật distance tốt nhất
+            feasBest     = sol;        // lưu snapshot (deep copy)
+            return true;               // thông báo có cải thiện
+        }
+        return false; // không cải thiện feasBest
+    };
+
+    // ══════════════════════════════════════════════════════════════════════
+    // BƯỚC 3: DYNAMIC PENALTY (Hệ số phạt động)
+    //
+    // Hàm mục tiêu trong LS: score = deltaDist + localPenalty × deltaViol
+    //
+    // localPenalty là hệ số phạt cho vi phạm ràng buộc — THAY ĐỔI ĐỘNG:
+    //
+    // Ý tưởng: khi nghiệm đang infeasible lâu → tăng penalty → ép về feasible.
+    //          Khi nghiệm đã feasible và bị kẹt → giảm penalty → mở không gian
+    //          tìm kiếm cho phép tạm thời vi phạm nhẹ để thoát local opt.
+    //
+    // Quy tắc cập nhật sau mỗi MOVE:
+    //   - Feasible → penalty GIỮ NGUYÊN (đang khai thác vùng tốt)
+    //   - Infeasible, mỗi gradSteps move → penalty × PEN_UP (tăng dần)
+
+    // Quy tắc cập nhật khi KHÔNG CÓ MOVE (idle):
+    //   - Feasible idle → penalty ÷ PEN_DOWN NGAY LẬP TỨC (mở rộng landscape)
+    //   - Infeasible idle → penalty × PEN_UP NGAY LẬP TỨC (ép về feasible)
+    //   Sau 3 pass idle liên tiếp (2 lần đổi penalty + 1 vòng kết thúc) → dừng.
+    // ══════════════════════════════════════════════════════════════════════
+
+    double localPenalty            = PENALTY_SCALE;       // bắt đầu bằng hệ số phạt toàn cục
+    const double PEN_UP            = 1.5;                 // hệ số tăng penalty mỗi gradSteps move khi infeasible
+    const double PEN_DOWN          = 2.0;                 // hệ số tăng penalty giảm khi kẹt tại feasible
+    const double PEN_MIN           = PENALTY_SCALE * 0.3; // ngưỡng dưới: penalty không giảm dưới đây
+    const double PEN_MAX           = PENALTY_SCALE * 3.0; // ngưỡng trên: penalty không tăng vượt đây
+    const int    gradSteps         = 5;                   // số move giữa 2 lần tăng penalty
+
+    int stepsInfeas  = 0; // đếm move infeasible cho lần tăng penalty tiếp theo
+
+    // updatePenalty: gọi sau mỗi move được apply
+    auto updatePenalty = [&]() {
+        if (totalViol < VALID_EPS) {
+            // ── Trạng thái FEASIBLE ──
+            // Không thay đổi penalty: đang khai thác vùng feasible tốt
+            stepsInfeas  = 0; // reset đếm steps infeasible
+        } else {
+            // ── Trạng thái INFEASIBLE ──
+            ++stepsInfeas;  // tăng đếm move infeasible kể từ lần tăng cuối
+            if (stepsInfeas >= gradSteps) {
+                // Đủ gradSteps move infeasible → tăng penalty × PEN_CHANGE (tăng dần)
+                localPenalty  = min(localPenalty * PEN_UP, PEN_MAX);
+                stepsInfeas   = 0; // reset đếm steps
+            }
+        }
+    };
+
+    // updatePenaltyIdle: gọi khi toàn bộ 1 pass không tìm được move nào.
+    // Thay đổi penalty NGAY LẬP TỨC (không chờ gradSteps) vì đây là tín hiệu
+    // rõ ràng rằng landscape hiện tại đã cạn kiệt move.
+    auto updatePenaltyIdle = [&]() {
+        if (totalViol < VALID_EPS) {
+            // ── Feasible + không có move ──
+            // Bị kẹt tại local opt feasible → giảm penalty ngay để "mở cửa sổ",
+            // cho phép tạm vi phạm nhẹ và khám phá vùng mới.
+            localPenalty = max(localPenalty / PEN_DOWN, PEN_MIN);
+            stepsInfeas  = 0;
+        } else {
+            // ── Infeasible + không có move ──
+            // Vẫn infeasible nhưng bị kẹt → tăng penalty ngay để đẩy mạnh về feasible.
+            localPenalty = min(localPenalty * PEN_UP, PEN_MAX);
+            stepsInfeas  = 0;
+        }
+    };
+
+    // ══════════════════════════════════════════════════════════════════════
+    // BƯỚC 4: ĐIỀU KIỆN DỪNG (Stopping Criteria)
+    //
+    // Local search dừng khi thỏa MỘT TRONG CÁC điều kiện sau:
+    //   [A] moveCount >= maxMoves: đã dùng hết budget move
+    //   [B] noFeasImprove >= MAX_NO_FEAS_IMPROVE: đã thực hiện nhiều move
+    //       mà không cải thiện được feasBest → khả năng cao đã hội tụ
+    //   [C] Feasible + penalty về PEN_MIN + có ít nhất 1 pass idle:
+    //       nghiệm feasible, đã giảm penalty tối đa, vẫn không có move
+    //       → thuật toán hội tụ hoàn toàn
+    //   [D] noMoveStreak >= PATIENCE (= 3): liên tiếp 3 pass không có move
+    //       → đã thay đổi penalty 2 lần mà vẫn kẹt → dừng thuật toán
+    // ══════════════════════════════════════════════════════════════════════
+
+    // PATIENCE = 3: dừng sau 3 pass idle liên tiếp không có move.
+    // Tức là: pass idle 1 → đổi penalty, pass idle 2 → đổi penalty lần 2,
+    //         pass idle 3 → kết thúc (đã thay đổi penalty 2 lần mà vẫn kẹt).
+    const int PATIENCE            = 4;
+    const int MAX_NO_FEAS_IMPROVE = 25;            // số move tối đa không cải thiện feasBest
+
+    int noMoveStreak  = 0; // số pass liên tiếp không có move nào được apply
+    int noFeasImprove = 0; // số move liên tiếp không cải thiện feasBest
+
+    int moveCount = 0; // tổng số move đã thực hiện (so với maxMoves)
+
+    // Lambda shouldStop: kiểm tra tất cả điều kiện dừng — gọi trước mỗi vòng lặp
+    auto shouldStop = [&]() -> bool {
+        if (moveCount >= maxMoves)                         return true; // [A] hết budget
+        if (noFeasImprove >= MAX_NO_FEAS_IMPROVE)          return true; // [B] không improve feasBest
+        if (totalViol < VALID_EPS && localPenalty <= PEN_MIN
+                                  && noMoveStreak > 0)     return true; // [C] hội tụ feasible
+        if (noMoveStreak >= PATIENCE)                       return true; // [D] bị kẹt hoàn toàn
+        return false; // chưa dừng
+    };
+
+    // ══════════════════════════════════════════════════════════════════════
+    // BƯỚC 5: CANDIDATE LIST (Danh sách ứng viên cho Phase B — Swap)
+    //
+    // Trong Phase B, mỗi node u chỉ thử swap với node trong cl[u]
+    // thay vì tất cả N-1 node → giảm độ phức tạp từ O(N²) xuống O(N × CL_SIZE).
+    //
+    // cl[u] = danh sách các node gần u nhất (theo khoảng cách trung bình).
+    // Swap với node gần thường có lợi nhất về distance → CL không làm mất nhiều quality.
+    //
+    // Ưu tiên dùng globalCL (đã xây trong ACO_tuned, tránh tính lại).
+    // Nếu globalCL không hợp lệ → xây localCL_fallback ngay trong hàm này.
+    // ══════════════════════════════════════════════════════════════════════
+
+    const vector<vector<int>> *clPtr = nullptr;  // con trỏ tới candidate list sẽ dùng
+    vector<vector<int>> localCL_fallback;        // CL dự phòng (chỉ xây nếu cần)
+
+    if (!globalCL.empty() && (int)globalCL.size() == N) {
+        // globalCL hợp lệ (đã xây sẵn trong ACO_tuned) → dùng trực tiếp
+        clPtr = &globalCL;
+    } else {
+        // globalCL chưa có hoặc kích thước sai → xây CL cục bộ
+        const int CL_SIZE_LOCAL = min(20, N - 1); // mỗi node có tối đa 20 ứng viên
+        localCL_fallback.resize(N);               // kích thước N × CL_SIZE_LOCAL
+        vector<pair<double, int>> tmp(N);          // mảng tạm để sort (dist, node_id)
+        for (int i = 0; i < N; ++i) {
+            // Tính khoảng cách trung bình từ i đến mọi node j
+            for (int j = 0; j < N; ++j)
+                tmp[j] = {(distmat[i][j] + distmat[j][i]) * 0.5, j}; // dist(i,j) trung bình 2 chiều
+            tmp[i].first = 1e300; // loại bỏ node i chính nó (đặt dist = vô cực)
+            // Chọn CL_SIZE_LOCAL node gần nhất bằng partial_sort (nhanh hơn sort đầy đủ)
+            partial_sort(tmp.begin(), tmp.begin() + CL_SIZE_LOCAL, tmp.end());
+            localCL_fallback[i].resize(CL_SIZE_LOCAL);
+            for (int r = 0; r < CL_SIZE_LOCAL; ++r)
+                localCL_fallback[i][r] = tmp[r].second; // lưu index node (không lưu dist)
+        }
+        clPtr = &localCL_fallback; // trỏ đến CL vừa xây
+    }
+    const vector<vector<int>> &cl = *clPtr; // alias tiện dùng
+
+    // ══════════════════════════════════════════════════════════════════════
+    // BƯỚC 6: HÀM TIỆN ÍCH
+    // ══════════════════════════════════════════════════════════════════════
+
+    // eraseNode: xóa node khỏi danh sách members của cluster — O(|members|)
+    // Dùng "swap with back + pop_back" để tránh dịch chuyển phần tử → O(1) thực tế.
+    // vec: members[k], node: node cần xóa
+    auto eraseNode = [](vector<int> &vec, int node) {
+        auto it = find(vec.begin(), vec.end(), node); // tìm vị trí node
+        if (it != vec.end()) {
+            *it = vec.back(); // ghi đè bằng phần tử cuối (O(1), không giữ thứ tự)
+            vec.pop_back();   // xóa phần tử cuối (đã dịch lên trên)
+        }
+    };
+
+    // ══════════════════════════════════════════════════════════════════════
+    // BƯỚC 7: APPLY RELOCATE — Di chuyển node u từ cluster from sang cluster to
+    //
+    // THAM SỐ (đã tính sẵn ở bước evaluate để tránh tính lại):
+    //   u         : node cần di chuyển
+    //   from      : cluster hiện tại của u
+    //   to        : cluster đích
+    //   deltaDist : thay đổi intra-distance (= curDist mới - curDist cũ)
+    //   deltaViol : thay đổi tổng vi phạm (= totalViol mới - totalViol cũ)
+    //
+    // CẬP NHẬT (incremental, không tính lại từ đầu):
+    //   curDist   → cộng deltaDist — O(1)
+    //   assign    → gán assign[u] = to — O(1)
+    //   members   → xóa u khỏi from, thêm vào to — O(|members|)
+    //   clusterWt → cộng/trừ Wmat[u][t] — O(M_weights)
+    //   violCache → tính lại 2 cluster bị ảnh hưởng (from, to) — O(M_weights)
+    //   totalViol → cập nhật từ violCache — O(1)
+    //   sumDist   → cập nhật dist từ mọi node j đến from/to — O(N)
+    //
+    // TỔNG ĐỘ PHỨC TẠP: O(N) (bottleneck là bước cập nhật sumDist)
+    // ══════════════════════════════════════════════════════════════════════
+
+    auto applyRelocate = [&](int u, int from, int to, double deltaDist, double deltaViol) {
+
+        // ── Cập nhật curDist — O(1) ──
+        // deltaDist đã được tính sẵn trong vòng evaluate → chỉ cần cộng
+        curDist += deltaDist;
+
+        // ── Cập nhật assign và members ──
+        assign[u] = to;                  // node u chuyển sang cluster to
+        eraseNode(members[from], u);     // xóa u khỏi danh sách cluster from — O(|members_from|)
+        members[to].push_back(u);        // thêm u vào danh sách cluster to — O(1)
+
+        // ── Cập nhật tổng trọng số mỗi cluster — O(M_weights) ──
+        // Cluster from mất đi trọng số của u; cluster to nhận thêm
+        for (int t = 0; t < M_weights; ++t) {
+            clusterWt[from][t] -= Wmat[u][t]; // cluster from: bớt trọng số node u chiều t
+            clusterWt[to][t]   += Wmat[u][t]; // cluster to: thêm trọng số node u chiều t
         }
 
-        return viol;
+        // ── Cập nhật violCache và totalViol — O(M_weights) ──
+        // Chỉ 2 cluster bị ảnh hưởng: from (mất u) và to (nhận u)
+        const double oldVFrom = violCache[from]; // lưu vi phạm cũ của cluster from
+        const double oldVTo   = violCache[to];   // lưu vi phạm cũ của cluster to
+        violCache[from] = recomputeViol(from);   // tính lại vi phạm mới của cluster from
+        violCache[to]   = recomputeViol(to);     // tính lại vi phạm mới của cluster to
+        // Cập nhật totalViol bằng cách trừ giá trị cũ, cộng giá trị mới
+        totalViol += (violCache[from] - oldVFrom) + (violCache[to] - oldVTo);
+        totalViol  = max(totalViol, 0.0); // đảm bảo không âm (sai số floating-point)
+
+        // ── Cập nhật sumDist cho mọi node v ≠ u — O(N) ──
+        // Khi u rời cluster from và vào cluster to:
+        //   sumDist[v][from] giảm đi dist(v, u) (u không còn trong from)
+        //   sumDist[v][to]   tăng lên dist(v, u) (u mới gia nhập to)
+        for (int v = 0; v < N; ++v) {
+            if (v == u) continue;              // bỏ qua node u chính nó
+            const double d = distmat[v][u];    // khoảng cách từ v đến u
+            sumDist[v][from] -= d;             // v mất 1 neighbor (u) trong cluster from
+            sumDist[v][to]   += d;             // v có thêm 1 neighbor (u) trong cluster to
+        }
+
+        // ── Cập nhật sumDist của chính node u — O(|cluster|) ≈ O(N/K) ──
+        // Sau khi u chuyển cluster, sumDist[u][from] và sumDist[u][to] phải tính lại
+        // (vì từ góc nhìn của u, thành phần của 2 cluster đã thay đổi)
+        {
+            // sumDist[u][from]: tổng dist từ u đến mọi node còn lại trong from
+            // (u đã bị xóa khỏi members[from] ở trên → không tính dist(u, u))
+            double sf = 0.0;
+            for (int m : members[from]) sf += distmat[u][m];
+            sumDist[u][from] = sf;
+        }
+        {
+            // sumDist[u][to]: tổng dist từ u đến mọi node trong to
+            // (u đã được thêm vào members[to] ở trên → tính cả dist(u, u) = 0)
+            double st = 0.0;
+            for (int m : members[to]) st += distmat[u][m];
+            sumDist[u][to] = st;
+        }
     };
 
-    // Cache violation hiện tại cho mỗi cluster
-    vector<double> violCache(K);                       // violCache[k] = violation của cluster k
+    // ══════════════════════════════════════════════════════════════════════
+    // BƯỚC 8: APPLY SWAP — Hoán đổi cluster của 2 node u và v
+    //
+    // Điều kiện: u ∈ cluster cu, v ∈ cluster cv, cu ≠ cv
+    // Sau swap: u ∈ cv, v ∈ cu
+    //
+    // THAM SỐ (đã tính sẵn ở bước evaluate):
+    //   u, v      : 2 node cần hoán đổi
+    //   deltaDist : thay đổi intra-distance
+    //   deltaViol : thay đổi tổng vi phạm
+    //
+    // CẬP NHẬT tương tự applyRelocate nhưng cho 2 node cùng lúc:
+    //   curDist, assign, members, clusterWt, violCache, totalViol, sumDist
+    //
+    // TỔNG ĐỘ PHỨC TẠP: O(N) (bottleneck vẫn là sumDist)
+    // ══════════════════════════════════════════════════════════════════════
 
-    for (int k = 0; k < K; ++k)                       // khởi tạo cache
-        violCache[k] = computeViolation(k, clusterWt[k]);
+    auto applySwap = [&](int u, int v, double deltaDist, double deltaViol) {
+        int cu = assign[u]; // cluster hiện tại của u
+        int cv = assign[v]; // cluster hiện tại của v
 
-    // Tổng violation toàn cục (== 0 nghĩa là nghiệm feasible)
-    double totalViol = 0.0;
-    for (int k = 0; k < K; ++k)
-        totalViol += violCache[k];
+        // ── Cập nhật curDist — O(1) ──
+        curDist += deltaDist; // deltaDist đã tính sẵn
 
-    // ─────────────────────────────────────────────────────────────────────
-    // 4. HELPER FUNCTIONS
-    // ─────────────────────────────────────────────────────────────────────
+        // ── Cập nhật assign và members ──
+        assign[u] = cv;                          // u chuyển sang cluster cv
+        assign[v] = cu;                          // v chuyển sang cluster cu
+        eraseNode(members[cu], u);               // xóa u khỏi cu
+        eraseNode(members[cv], v);               // xóa v khỏi cv
+        members[cv].push_back(u);                // thêm u vào cv
+        members[cu].push_back(v);                // thêm v vào cu
 
-    // Xóa 1 node khỏi vector trong O(1): swap với phần tử cuối rồi pop
-    // Không giữ thứ tự, nhưng ta không cần thứ tự trong members[]
-    auto eraseFromVec = [](vector<int> &vec, int node)
-    {
-        // Tìm vị trí node trong vector
-        auto it = find(vec.begin(), vec.end(), node);
+        // ── Cập nhật tổng trọng số mỗi cluster — O(M_weights) ──
+        // Cluster cu: mất u nhưng nhận v → net = Wmat[v][t] - Wmat[u][t]
+        // Cluster cv: mất v nhưng nhận u → net = Wmat[u][t] - Wmat[v][t]
+        for (int t = 0; t < M_weights; ++t) {
+            clusterWt[cu][t] += Wmat[v][t] - Wmat[u][t]; // cu: đổi u lấy v
+            clusterWt[cv][t] += Wmat[u][t] - Wmat[v][t]; // cv: đổi v lấy u
+        }
 
-        // Ghi đè bằng phần tử cuối
-        *it = vec.back();
+        // ── Cập nhật violCache và totalViol — O(M_weights) ──
+        const double oldVCu = violCache[cu]; // vi phạm cũ cluster cu
+        const double oldVCv = violCache[cv]; // vi phạm cũ cluster cv
+        violCache[cu] = recomputeViol(cu);   // tính lại sau khi hoán đổi
+        violCache[cv] = recomputeViol(cv);   // tính lại sau khi hoán đổi
+        totalViol += (violCache[cu] - oldVCu) + (violCache[cv] - oldVCv);
+        totalViol  = max(totalViol, 0.0); // đảm bảo không âm
 
-        // Xóa phần tử cuối (O(1))
-        vec.pop_back();
+        // ── Cập nhật sumDist cho mọi node w ≠ u, v — O(N) ──
+        // Từ góc nhìn của node w bất kỳ:
+        //   sumDist[w][cu]: mất u (rời đi) nhưng nhận v (mới đến) → thay đổi = dv - du
+        //   sumDist[w][cv]: mất v (rời đi) nhưng nhận u (mới đến) → thay đổi = du - dv
+        for (int w = 0; w < N; ++w) {
+            if (w == u || w == v) continue;    // bỏ qua u và v (tính riêng bên dưới)
+            const double du = distmat[w][u];    // dist từ w đến u
+            const double dv = distmat[w][v];    // dist từ w đến v
+            sumDist[w][cu] += dv - du;          // cu: mất u, nhận v → +dv -du
+            sumDist[w][cv] += du - dv;          // cv: mất v, nhận u → +du -dv
+        }
+
+        // ── Cập nhật sumDist của u và v với cả 2 cluster — O(N/K) ──
+        // Sau hoán đổi, u và v nằm ở cluster khác → phải tính lại sumDist với cu và cv
+        for (int k : {cu, cv}) {
+            double su = 0.0, sv = 0.0;
+            for (int m : members[k]) {       // duyệt mọi node m trong cluster k
+                su += distmat[u][m];          // dist từ u đến m trong cluster k
+                sv += distmat[v][m];          // dist từ v đến m trong cluster k
+            }
+            sumDist[u][k] = su; // tổng dist từ u đến mọi node trong cluster k
+            sumDist[v][k] = sv; // tổng dist từ v đến mọi node trong cluster k
+        }
     };
 
-    // ─────────────────────────────────────────────────────────────────────
-    // 5. BIẾN ĐIỀU KHIỂN VÒNG LẶP
-    // ─────────────────────────────────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════════════
+    // BƯỚC 9: VÒNG LẶP CHÍNH
+    //
+    // Cấu trúc: nhiều "pass", mỗi pass gồm 2 phase:
+    //
+    // PHASE A — Relocate (best-of-K per node, first-improve per pass):
+    //   Shuffle thứ tự N đỉnh.
+    //   Với từng đỉnh u theo thứ tự:
+    //     Duyệt hết K cụm → tìm cụm tốt NHẤT (score = deltaDist + pen × deltaViol).
+    //     Nếu score tốt nhất < -EPS → apply move đó + kết thúc pass ngay (first-improve).
+    //     Nếu không cải thiện → bỏ qua u, thử đỉnh tiếp theo.
+    //   Nếu hết N đỉnh mà không có cải thiện → sang Phase B.
+    //
+    // PHASE B — Swap (first-improvement với Candidate List):
+    //   Với từng đỉnh u (cùng nodeOrder từ Phase A):
+    //     Thử swap u với mỗi v trong cl[u] (candidate list — node gần nhất).
+    //     Swap đầu tiên cải thiện → apply, kết thúc phase B.
+    //     Fallback: thử EXTRA_RANDOM cặp ngẫu nhiên nếu CL không cho move.
+    //   Nếu không có swap → tăng noMoveStreak, gọi updatePenaltyIdle.
+    // ══════════════════════════════════════════════════════════════════════
 
-    int moveCount = 0;                                  // số move đã thực hiện
-    bool improved = true;                               // flag: vòng trước có cải thiện không
+    const double SCORE_EPS = 1e-9;          // ngưỡng cải thiện: score < -SCORE_EPS → chấp nhận
+    const int EXTRA_RANDOM = min(30, N);    // số cặp ngẫu nhiên thử thêm trong fallback của Phase B
 
-    // Danh sách node (sẽ shuffle mỗi vòng để duyệt ngẫu nhiên)
+    // Thứ tự duyệt đỉnh (xáo trộn mỗi pass để tránh bias)
     vector<int> nodeOrder(N);
-    iota(nodeOrder.begin(), nodeOrder.end(), 0);        // fill [0, 1, 2, ..., N-1]
+    iota(nodeOrder.begin(), nodeOrder.end(), 0); // khởi tạo [0, 1, 2, ..., N-1]
 
-    // Bộ random chọn node (cho swap sampling)
+    // Phân phối ngẫu nhiên chọn node cho fallback swap
     uniform_int_distribution<int> randNode(0, N - 1);
 
-    // Số lần sample swap ngẫu nhiên cho mỗi node
-    // min(100, N): đủ để có xác suất cao tìm được swap tốt
-    const int SWAP_SAMPLES = min(100, N);
-
-    // Epsilon so sánh: tránh chấp nhận thay đổi quá nhỏ (nhiễu số)
-    constexpr double SCORE_EPS = 1e-6;
-
-    // ═══════════════════════════════════════════════════════════════════════
-    // 6. VÒNG LẶP LOCAL SEARCH CHÍNH
-    //
-    //    Mỗi iteration:
-    //      a) Phân loại cluster (overloaded / underloaded / feasible)
-    //      b) Thử RELOCATE
-    //      c) Nếu relocate không improve → thử SWAP
-    //      d) Lặp lại cho đến khi hết improve hoặc hết quota move
-    // ═══════════════════════════════════════════════════════════════════════
-
-    while (improved && moveCount < maxMoves)
+    // ── Vòng lặp ngoài: mỗi vòng = 1 pass (Phase A + Phase B nếu cần) ──
+    while (!shouldStop()) // lặp cho đến khi thỏa điều kiện dừng
     {
-        improved = false;                               // reset flag đầu mỗi vòng
-
-        // Shuffle để duyệt node theo thứ tự ngẫu nhiên → tránh bias
+        // Xáo trộn thứ tự duyệt đỉnh mỗi pass → tránh bias (luôn bắt đầu từ cùng 1 đỉnh)
         shuffle(nodeOrder.begin(), nodeOrder.end(), rng);
 
-        // ─────────────────────────────────────────────────────────────────
-        // 6a. PHÂN LOẠI CLUSTER: overloaded / underloaded
+        bool improved = false; // đánh dấu: pass này đã apply được move nào chưa?
+
+        // ══════════════════════════════════════════════════════════════════
+        // PHASE A: RELOCATE — Tìm best-of-K, first-improve per pass
         //
-        //     overloaded:  cluster có ít nhất 1 chiều vượt upper bound
-        //     underloaded: cluster có ít nhất 1 chiều dưới lower bound
+        // Với mỗi đỉnh u (theo nodeOrder):
+        //   1. Tính score cho mỗi cluster to ≠ from.
+        //      score(to) = deltaDist(u, from→to) + localPenalty × deltaViol(u, from→to)
+        //   2. Lưu cluster có score nhỏ nhất (bestTo, bestScore).
+        //   3. Nếu bestScore < -SCORE_EPS → apply ngay, kết thúc pass.
+        //   4. Nếu không → thử đỉnh tiếp theo.
         //
-        //     Mục đích: relocate ưu tiên chuyển node TỪ overloaded
-        //               SANG underloaded để giảm violation.
-        // ─────────────────────────────────────────────────────────────────
+        // Mục tiêu: giảm score (= giảm chi phí và/hoặc vi phạm) → chọn cluster tốt nhất
+        // cho u thay vì chọn cluster đầu tiên cho cải thiện (best-of-K per node).
+        // ══════════════════════════════════════════════════════════════════
 
-        // Kiểm tra xem nghiệm đã feasible chưa
-        bool isFeasible = (totalViol < SCORE_EPS);
-
-        // Danh sách cluster nguồn (sẽ lấy node ra)
-        vector<int> srcClusters;
-
-        // Danh sách cluster đích (sẽ nhận node vào)
-        vector<int> dstClusters;
-
-        if (isFeasible)
+        // Duyệt N đỉnh, dừng sớm khi tìm được move đầu tiên
+        for (int ii = 0; ii < N && !shouldStop() && !improved; ++ii)
         {
-            // ĐÃ FEASIBLE → cho phép relocate giữa BẤT KỲ 2 cluster
-            //   để tối ưu distance (nhưng phải giữ feasible)
-            srcClusters.resize(K);
-            dstClusters.resize(K);
-            iota(srcClusters.begin(), srcClusters.end(), 0);   // [0,1,...,K-1]
-            iota(dstClusters.begin(), dstClusters.end(), 0);
-        }
-        else
-        {
-            // CHƯA FEASIBLE → relocate có mục tiêu:
-            //   nguồn = cluster overloaded
-            //   đích  = cluster underloaded
-            for (int c = 0; c < K; ++c)
+            const int u    = nodeOrder[ii]; // đỉnh đang xét (theo thứ tự đã shuffle)
+            const int from = assign[u];     // cluster hiện tại của u
+
+            // Không relocate nếu cluster chỉ có 1 node → sẽ tạo cluster rỗng (không hợp lệ)
+            if ((int)members[from].size() <= 1) continue;
+
+            // Khởi tạo ứng viên tốt nhất cho u
+            int    bestTo    = -1;         // cluster đích tốt nhất (chưa tìm được)
+            double bestScore = -SCORE_EPS; // ngưỡng: chỉ chấp nhận move có score < -SCORE_EPS
+            double bestDelta = 0.0;        // deltaDist của bestTo (dùng khi apply)
+            double bestDViol = 0.0;        // deltaViol của bestTo (dùng khi apply)
+
+            // Tính sẵn một phần của deltaDist để tái sử dụng trong vòng K
+            // deltaDist(u, from→to) = sumDist[u][to] - sumDist[u][from]
+            //                       = sumDist[u][to] + distBase
+            const double distBase = -sumDist[u][from]; // âm của sumDist[u][from]
+
+            // Duyệt hết K cluster để tìm cluster đích tốt nhất cho u
+            for (int to = 0; to < K; ++to)
             {
-                bool overloaded  = false;        // có chiều nào vượt upper?
-                bool underloaded = false;        // có chiều nào dưới lower?
+                if (to == from) continue; // không thể chuyển sang cluster đang ở
 
-                for (int w = 0; w < M_weights; ++w)
-                {
-                    if (clusterWt[c][w] > WUmat[c][w] + VALID_EPS)
-                        overloaded = true;
+                // ── Tính deltaDist(u, from→to) ──
+                // Sau khi chuyển u từ from sang to:
+                //   intra-dist từ u với cluster from = 0 (u không còn trong from)
+                //   intra-dist từ u với cluster to   = sumDist[u][to] (u gia nhập to)
+                // Chênh lệch = sumDist[u][to] - sumDist[u][from]
+                const double deltaDist = sumDist[u][to] + distBase;
 
-                    if (clusterWt[c][w] < WLmat[c][w] - VALID_EPS)
-                        underloaded = true;
+                // ── Tính deltaViol(u, from→to) ──
+                // Tính tổng vi phạm MỚI của 2 cluster bị ảnh hưởng (from và to)
+                // sau khi giả sử u được chuyển (không thực sự apply)
+                double vfAfter = 0.0; // vi phạm mới của cluster from (sau khi mất u)
+                double vtAfter = 0.0; // vi phạm mới của cluster to   (sau khi nhận u)
+                for (int t = 0; t < M_weights; ++t) {
+                    const double sf = clusterWt[from][t] - Wmat[u][t]; // tổng W của from sau khi mất u
+                    const double st = clusterWt[to][t]   + Wmat[u][t]; // tổng W của to sau khi nhận u
+                    // Vi phạm lower bound của cluster from
+                    if      (sf < WLmat[from][t]) vfAfter += WLmat[from][t] - sf;
+                    // Vi phạm upper bound của cluster from
+                    else if (sf > WUmat[from][t]) vfAfter += sf - WUmat[from][t];
+                    // Vi phạm lower bound của cluster to
+                    if      (st < WLmat[to][t])   vtAfter += WLmat[to][t]   - st;
+                    // Vi phạm upper bound của cluster to
+                    else if (st > WUmat[to][t])   vtAfter += st - WUmat[to][t];
                 }
+                // deltaViol = (vi phạm mới của from + to) - (vi phạm cũ của from + to)
+                const double deltaViol = (vfAfter + vtAfter)
+                                       - (violCache[from] + violCache[to]);
 
-                if (overloaded)  srcClusters.push_back(c);
-                if (underloaded) dstClusters.push_back(c);
-            }
-        }
+                // ── Tính score tổng hợp ──
+                // score < 0 → move cải thiện hàm mục tiêu (tốt hơn)
+                // score gộp cả distance và penalty vi phạm với hệ số localPenalty
+                const double score = deltaDist + localPenalty * deltaViol;
 
-        // ─────────────────────────────────────────────────────────────────
-        // 6b. RELOCATE: Chuyển 1 node từ srcCluster sang dstCluster
-        //
-        //     Cho mỗi node trong mỗi srcCluster:
-        //       - Thử tất cả dstCluster
-        //       - Chọn cluster đích cho score tốt nhất (best improvement)
-        //       - score = (giảm violation) * PENALTY_SCALE - (tăng distance)
-        //       - Nếu feasible: chỉ chấp nhận khi SAU move vẫn feasible
-        //         VÀ distance giảm
-        //       - Nếu score > 0 → thực hiện move
-        // ─────────────────────────────────────────────────────────────────
-
-        for (int fc : srcClusters)                      // fc = from cluster
-        {
-            int idx = 0;                                // index duyệt members[fc]
-
-            // Duyệt từng node trong cluster nguồn
-            while (idx < (int)members[fc].size() && moveCount < maxMoves)
-            {
-                int node = members[fc][idx];            // node đang xét
-
-                // ── Tìm cluster đích tốt nhất ──
-
-                int    bestDst   = -1;                  // cluster đích tốt nhất (-1 = chưa tìm)
-                double bestScore = 0.0;                 // score tốt nhất (> 0 mới chấp nhận)
-
-                for (int tc : dstClusters)              // tc = to cluster
-                {
-                    if (tc == fc) continue;             // không chuyển về chính nó
-
-                    // ── Giả lập trọng số sau khi move ──
-                    for (int w = 0; w < M_weights; ++w)
-                    {
-                        // Cluster nguồn: mất đi trọng số của node
-                        simFrom[w] = clusterWt[fc][w] - Wmat[node][w];
-
-                        // Cluster đích: nhận thêm trọng số của node
-                        simTo[w]   = clusterWt[tc][w] + Wmat[node][w];
-                    }
-
-                    // ── Tính thay đổi violation ──
-                    double violBefore = violCache[fc] + violCache[tc];
-                                                        // violation hiện tại (dùng cache)
-
-                    double violAfter  = computeViolation(fc, simFrom)
-                                      + computeViolation(tc, simTo);
-                                                        // violation sau move (tính từ sim)
-
-                    // ── Tính thay đổi distance ──
-                    // sumDist[node][tc] = tổng dist(node, mọi node trong tc)
-                    // sumDist[node][fc] = tổng dist(node, mọi node trong fc)
-                    // deltaDist > 0 nghĩa là distance tăng (xấu hơn)
-                    double deltaDist = sumDist[node][tc] - sumDist[node][fc];
-
-                    // ── Tính score tùy trạng thái ──
-                    double score;
-
-                    if (isFeasible)
-                    {
-                        // ĐÃ FEASIBLE: chỉ chấp nhận nếu:
-                        //   1. Sau move VẪN feasible (violAfter ≈ 0)
-                        //   2. Distance giảm (deltaDist < 0)
-                        if (violAfter < SCORE_EPS && deltaDist < -SCORE_EPS)
-                            score = -deltaDist;         // score = lượng distance giảm (dương)
-                        else
-                            score = -1.0;               // reject: không thỏa mãn
-                    }
-                    else
-                    {
-                        // CHƯA FEASIBLE: ưu tiên giảm violation, có trừ delta distance
-                        // score = (violation giảm) * hệ số penalty - (distance tăng)
-                        score = (violBefore - violAfter) * PENALTY_SCALE - deltaDist;
-                    }
-
-                    // Cập nhật best nếu score cao hơn
-                    if (score > bestScore)
-                    {
-                        bestScore = score;
-                        bestDst   = tc;
-                    }
-                }
-                // ── Kết thúc duyệt dstClusters cho node này ──
-
-                // ── Thực hiện move nếu tìm được cải thiện ──
-                if (bestDst >= 0)
-                {
-                    int fc_old = fc;                    // cluster nguồn (alias cho rõ)
-                    int tc_new = bestDst;               // cluster đích
-
-                    // ── Cập nhật assign ──
-                    assign[node] = tc_new;              // node giờ thuộc cluster mới
-
-                    // ── Cập nhật members ──
-                    //    Xóa node khỏi cluster cũ bằng swap-with-back (O(1))
-                    members[fc_old][idx] = members[fc_old].back();
-                    members[fc_old].pop_back();
-                    //    ⚠️ KHÔNG tăng idx vì phần tử mới đã nằm ở vị trí idx
-
-                    //    Thêm node vào cluster mới
-                    members[tc_new].push_back(node);
-
-                    // ── Cập nhật trọng số cluster ──
-                    for (int w = 0; w < M_weights; ++w)
-                    {
-                        clusterWt[fc_old][w] -= Wmat[node][w]; // cluster cũ giảm
-                        clusterWt[tc_new][w] += Wmat[node][w]; // cluster mới tăng
-                    }
-
-                    // ── Cập nhật violation cache ──
-                    //    Chỉ 2 cluster bị ảnh hưởng
-                    double oldViol_fc = violCache[fc_old];
-                    double oldViol_tc = violCache[tc_new];
-
-                    violCache[fc_old] = computeViolation(fc_old, clusterWt[fc_old]);
-                    violCache[tc_new] = computeViolation(tc_new, clusterWt[tc_new]);
-
-                    // Cập nhật totalViol
-                    totalViol += (violCache[fc_old] - oldViol_fc)
-                               + (violCache[tc_new] - oldViol_tc);
-
-                    // ── Cập nhật sumDist ──
-                    //
-                    //    sumDist[v][k] = Σ dist(v, m) cho m ∈ members[k]
-                    //
-                    //    Khi node rời fc_old và vào tc_new:
-                    //      - Với mọi node v ≠ node:
-                    //          sumDist[v][fc_old] giảm dist(v, node)
-                    //          sumDist[v][tc_new] tăng  dist(v, node)
-                    //      - Với chính node: cần rebuild 2 cluster bị ảnh hưởng
-
-                    // Phần 1: cập nhật cho mọi node khác (O(N))
-                    for (int v = 0; v < N; ++v)
-                    {
-                        if (v == node) continue;        // node tự xử riêng
-
-                        double d = distmat[v][node];    // khoảng cách v ↔ node
-
-                        sumDist[v][fc_old] -= d;        // fc_old mất node
-                        sumDist[v][tc_new] += d;        // tc_new có thêm node
-                    }
-
-                    // Phần 2: rebuild sumDist cho chính node (chỉ 2 cluster)
-                    //
-                    //    CHỈ fc_old và tc_new thay đổi member,
-                    //    các cluster khác không đổi → sumDist[node][k] giữ nguyên
-                    //
-                    //    Complexity: O(|fc_old| + |tc_new|) ≈ O(N/K)
-                    //    (so với O(N*K) nếu rebuild toàn bộ)
-
-                    {
-                        double s = 0.0;                 // tính sumDist[node][fc_old]
-                        for (int m : members[fc_old])   // duyệt member MỚI của fc_old
-                            s += distmat[node][m];
-                        sumDist[node][fc_old] = s;
-                    }
-
-                    {
-                        double s = 0.0;                 // tính sumDist[node][tc_new]
-                        for (int m : members[tc_new])   // duyệt member MỚI của tc_new
-                            s += distmat[node][m];
-                        // Lưu ý: members[tc_new] bao gồm cả node →
-                        //   distmat[node][node] = 0, nên không ảnh hưởng giá trị
-                        sumDist[node][tc_new] = s;
-                    }
-
-                    // ── Đánh dấu có cải thiện, tăng counter ──
-                    moveCount++;
-                    improved = true;
-
-                    // idx KHÔNG tăng (vector đã shift, phần tử mới ở idx)
-                }
-                else
-                {
-                    idx++;                              // không move → sang node tiếp
+                // Cập nhật best nếu cluster to tốt hơn bestTo hiện tại
+                if (score < bestScore) { // score nhỏ hơn → tốt hơn
+                    bestScore = score;   // cập nhật score tốt nhất
+                    bestTo    = to;      // lưu cluster đích
+                    bestDelta = deltaDist; // lưu deltaDist để dùng khi apply
+                    bestDViol = deltaViol; // lưu deltaViol để dùng khi apply
                 }
             }
-            // ── Kết thúc duyệt members[fc] ──
+            // Kết thúc duyệt K cluster cho node u
+
+            // Nếu tìm được cluster cải thiện (bestTo >= 0) → apply move và kết thúc pass
+            if (bestTo >= 0) {
+                applyRelocate(u, from, bestTo, bestDelta, bestDViol);
+                ++moveCount;     // tăng đếm move
+                improved = true; // đánh dấu pass này có move → sẽ bắt đầu pass mới
+
+                updatePenalty(); // cập nhật penalty dựa trên trạng thái hiện tại
+
+                // Kiểm tra và cập nhật feasBest
+                if (tryUpdateFeasBest()) noFeasImprove = 0;  // cải thiện feasBest → reset đếm
+                else if (feasFound)      ++noFeasImprove;    // không cải thiện → tăng đếm
+                // improved = true → vòng for dừng sớm nhờ điều kiện !improved
+            }
         }
-        // ── Kết thúc duyệt srcClusters ──
+        // Kết thúc Phase A
 
-        // Nếu relocate đã cải thiện → quay lại đầu while (re-classify cluster)
-        if (improved) continue;
+        // Nếu Phase A tìm được move → reset noMoveStreak và bắt đầu pass mới
+        if (improved) {
+            noMoveStreak = 0; // reset đếm pass idle
+            continue;         // bắt đầu pass mới (shuffle lại nodeOrder)
+        }
 
-        // ─────────────────────────────────────────────────────────────────
-        // 6c. SWAP: Đổi chỗ 2 node ở 2 cluster khác nhau
+        // ══════════════════════════════════════════════════════════════════
+        // PHASE B: SWAP — First-improvement với Candidate List
         //
-        //     Khi relocate không cải thiện được, thử swap:
-        //       - Duyệt nodeA theo thứ tự ngẫu nhiên
-        //       - Với mỗi nodeA, sample ngẫu nhiên SWAP_SAMPLES nodeB
-        //       - Nếu cùng cluster → skip
-        //       - Tính delta tổng hợp = deltaDist + deltaPenalty
-        //       - Nếu deltaTotal < 0 → chấp nhận (first improvement)
-        //       - Break ngay khi tìm được swap tốt → quay lại while
-        // ─────────────────────────────────────────────────────────────────
+        // Chỉ chạy khi Phase A không tìm được move nào.
+        //
+        // Swap(u, v): hoán đổi cluster của u và v (assign[u] ↔ assign[v])
+        //   Điều kiện: assign[u] ≠ assign[v] (2 cluster khác nhau)
+        //   score = deltaDist + localPenalty × deltaViol
+        //   Chỉ chấp nhận nếu score < -SCORE_EPS (cải thiện)
+        //
+        // Thứ tự thử swap:
+        //   1. Với mỗi u theo nodeOrder → thử swap với v ∈ cl[u] (candidate list)
+        //      → node gần nhau về khoảng cách → swap thường có lợi nhất về distance
+        //   2. Fallback: thử EXTRA_RANDOM cặp (u, v) ngẫu nhiên
+        //      → mở rộng lân cận sang node xa (mà CL bỏ qua)
+        //      → phòng trường hợp CL không đủ để thoát local opt
+        //
+        // First-improvement: swap đầu tiên cải thiện → apply ngay, kết thúc phase.
+        // ══════════════════════════════════════════════════════════════════
 
-        for (int ii = 0; ii < N && moveCount < maxMoves; ++ii)
+        // Duyệt N đỉnh theo cùng nodeOrder với Phase A
+        for (int ii = 0; ii < N && !shouldStop() && !improved; ++ii)
         {
-            int nodeA    = nodeOrder[ii];               // node A (ngẫu nhiên theo shuffle)
-            int clusterA = assign[nodeA];               // cluster chứa A
+            const int u  = nodeOrder[ii]; // đỉnh đang xét
+            const int cu = assign[u];     // cluster hiện tại của u
 
-            for (int t = 0; t < SWAP_SAMPLES && moveCount < maxMoves; ++t)
-            {
-                int nodeB = randNode(rng);              // chọn ngẫu nhiên node B
+            // ── Lambda nội bộ: thử swap u ↔ v ──
+            // Tính score, kiểm tra cải thiện, apply nếu đạt ngưỡng.
+            // Trả về true nếu swap được apply (dừng tìm kiếm thêm).
+            auto trySwap = [&](int v) -> bool {
+                if (v == u) return false;   // không swap node với chính nó
+                const int cv = assign[v];   // cluster của v
+                if (cu == cv) return false; // không swap 2 node cùng cluster
 
-                if (nodeA == nodeB) continue;           // trùng node → skip
+                // ── Tính deltaDist(swap u↔v) ──
+                // Sau khi u→cv và v→cu:
+                //   u mất dist với cu-members, nhận dist với cv-members
+                //   v mất dist với cv-members, nhận dist với cu-members
+                //   Tuy nhiên phải trừ đi dist(u,v) đã tính 2 lần (từ sumDist[u] và sumDist[v])
+                //   và cộng lại đúng 1 lần (dist(u,v) trong intra-cluster mới)
+                //   Công thức đầy đủ:
+                //     deltaDist = (sumDist[u][cv] - sumDist[u][cu])   (u chuyển từ cu→cv)
+                //               + (sumDist[v][cu] - sumDist[v][cv])   (v chuyển từ cv→cu)
+                //               - distmat[u][v] - distmat[v][u]       (loại bỏ đếm đôi)
+                const double deltaDist =
+                    (sumDist[u][cv] - sumDist[u][cu])
+                  + (sumDist[v][cu] - sumDist[v][cv])
+                  - distmat[u][v] - distmat[v][u];
 
-                int clusterB = assign[nodeB];           // cluster chứa B
-
-                if (clusterA == clusterB) continue;     // cùng cluster → swap vô nghĩa
-
-                // ── Tính delta distance khi swap A ↔ B ──
-                //
-                //    Trước swap:
-                //      cost_A = sumDist[A][clusterA]   (dist A tới mọi node cùng cluster A)
-                //      cost_B = sumDist[B][clusterB]   (dist B tới mọi node cùng cluster B)
-                //
-                //    Sau swap:
-                //      cost_A' = sumDist[A][clusterB]  (A giờ ở B, dist tới mọi node cluster B)
-                //      cost_B' = sumDist[B][clusterA]  (B giờ ở A, dist tới mọi node cluster A)
-                //
-                //    NHƯNG: sumDist[A][clusterB] bao gồm dist(A,B) (vì B ∈ clusterB)
-                //           Sau swap, B không còn ở clusterB → phải trừ dist(A,B)
-                //           Tương tự cho sumDist[B][clusterA] với A
-                //           Và sau swap, A ∈ clusterB nên phải cộng dist(A, chính A) = 0
-                //           Tương tự B ∈ clusterA.
-                //
-                //    Delta = (cost_A' + cost_B') - (cost_A + cost_B)
-                //          = (sumDist[A][clB] - dist(A,B))       — A tới clB trừ B
-                //          + (sumDist[B][clA] - dist(B,A))       — B tới clA trừ A
-                //          - sumDist[A][clA] + dist(A,A)         — trước: A tới clA trừ chính A
-                //          - sumDist[B][clB] + dist(B,B)         — trước: B tới clB trừ chính B
-                //
-                //    Vì dist(A,A) = dist(B,B) = 0, dist(A,B) = dist(B,A):
-                //
-                //    Delta = (sumDist[A][clB] - sumDist[A][clA])
-                //          + (sumDist[B][clA] - sumDist[B][clB])
-                //          - 2 * dist(A, B)
-
-                double deltaDist =
-                    (sumDist[nodeA][clusterB] - sumDist[nodeA][clusterA])  // A: clA → clB
-                  + (sumDist[nodeB][clusterA] - sumDist[nodeB][clusterB]) // B: clB → clA
-                  - 2.0 * distmat[nodeA][nodeB];                          // correction term
-
-                // ── Giả lập trọng số cluster sau swap ──
-                for (int w = 0; w < M_weights; ++w)
-                {
-                    // Cluster A: mất nodeA, nhận nodeB
-                    simA[w] = clusterWt[clusterA][w]
-                            - Wmat[nodeA][w]
-                            + Wmat[nodeB][w];
-
-                    // Cluster B: mất nodeB, nhận nodeA
-                    simB[w] = clusterWt[clusterB][w]
-                            - Wmat[nodeB][w]
-                            + Wmat[nodeA][w];
+                // ── Tính deltaViol(swap u↔v) ──
+                // Tính vi phạm MỚI của cluster cu (mất u, nhận v) và cv (mất v, nhận u)
+                double vcuAfter = 0.0; // vi phạm mới cluster cu
+                double vcvAfter = 0.0; // vi phạm mới cluster cv
+                for (int t = 0; t < M_weights; ++t) {
+                    const double scu = clusterWt[cu][t] - Wmat[u][t] + Wmat[v][t]; // W mới của cu
+                    const double scv = clusterWt[cv][t] - Wmat[v][t] + Wmat[u][t]; // W mới của cv
+                    if      (scu < WLmat[cu][t]) vcuAfter += WLmat[cu][t] - scu; // vi phạm lower cu
+                    else if (scu > WUmat[cu][t]) vcuAfter += scu - WUmat[cu][t]; // vi phạm upper cu
+                    if      (scv < WLmat[cv][t]) vcvAfter += WLmat[cv][t] - scv; // vi phạm lower cv
+                    else if (scv > WUmat[cv][t]) vcvAfter += scv - WUmat[cv][t]; // vi phạm upper cv
                 }
+                // deltaViol = (vi phạm mới của cu + cv) - (vi phạm cũ của cu + cv)
+                const double deltaViol = (vcuAfter + vcvAfter)
+                                       - (violCache[cu] + violCache[cv]);
+                // Tính score
+                const double score     = deltaDist + localPenalty * deltaViol;
 
-                // ── Tính delta violation ──
-                double violBefore = violCache[clusterA] + violCache[clusterB];
-                                                        // violation hiện tại (cache)
+                if (score >= -SCORE_EPS) return false; // không cải thiện → bỏ qua
 
-                double violAfter  = computeViolation(clusterA, simA)
-                                  + computeViolation(clusterB, simB);
-                                                        // violation sau swap (simulated)
+                // Có cải thiện → apply swap
+                applySwap(u, v, deltaDist, deltaViol);
+                ++moveCount;     // tăng đếm move
+                improved = true; // đánh dấu phase B tìm được move
 
-                // ── Tính tổng delta cost ──
-                //    deltaTotal < 0 → cải thiện
-                //    = deltaDist + (violAfter - violBefore) * PENALTY_SCALE
-                double deltaTotal = deltaDist
-                                  + (violAfter - violBefore) * PENALTY_SCALE;
+                updatePenalty(); // cập nhật penalty
+                // Cập nhật feasBest nếu nghiệm hiện tại tốt hơn
+                if (tryUpdateFeasBest()) noFeasImprove = 0;
+                else if (feasFound)      ++noFeasImprove;
 
-                // ── Chấp nhận swap nếu cải thiện ──
-                if (deltaTotal < -SCORE_EPS)
-                {
-                    // ── Cập nhật assign ──
-                    assign[nodeA] = clusterB;           // A giờ thuộc cluster B
-                    assign[nodeB] = clusterA;           // B giờ thuộc cluster A
+                return true; // thông báo đã apply swap
+            };
 
-                    // ── Cập nhật members (O(1) mỗi operation) ──
-                    eraseFromVec(members[clusterA], nodeA);  // xóa A khỏi clA
-                    eraseFromVec(members[clusterB], nodeB);  // xóa B khỏi clB
+            // ── Thử swap u với mỗi v trong cl[u] (candidate list) ──
+            // cl[u] chứa GLOBAL_CL_SIZE node gần u nhất → ưu tiên vì swap thường có lợi nhất
+            bool foundSwap = false;
+            for (int v : cl[u]) {
+                if (shouldStop()) break;              // kiểm tra điều kiện dừng
+                if (trySwap(v)) { foundSwap = true; break; } // first-improvement: dừng ngay
+            }
 
-                    members[clusterA].push_back(nodeB);      // thêm B vào clA
-                    members[clusterB].push_back(nodeA);      // thêm A vào clB
-
-                    // ── Cập nhật trọng số cluster (đã tính sẵn) ──
-                    clusterWt[clusterA] = simA;         // swap bằng buffer đã tính
-                    clusterWt[clusterB] = simB;
-                    // ⚠️ simA, simB là buffer pre-alloc, gán vào clusterWt là COPY
-                    //    (chấp nhận được vì M_weights nhỏ, thường < 10)
-
-                    // ── Cập nhật violation cache ──
-                    double oldViol_A = violCache[clusterA];
-                    double oldViol_B = violCache[clusterB];
-
-                    violCache[clusterA] = computeViolation(clusterA, clusterWt[clusterA]);
-                    violCache[clusterB] = computeViolation(clusterB, clusterWt[clusterB]);
-
-                    totalViol += (violCache[clusterA] - oldViol_A)
-                               + (violCache[clusterB] - oldViol_B);
-
-                    // ── Cập nhật sumDist ──
-                    //
-                    //    Khi swap A ↔ B (A rời clA vào clB, B rời clB vào clA):
-                    //
-                    //    Với mọi node v ≠ A, v ≠ B:
-                    //      sumDist[v][clA] += dist(v,B) - dist(v,A)
-                    //                         (clA mất A, nhận B)
-                    //      sumDist[v][clB] += dist(v,A) - dist(v,B)
-                    //                         (clB mất B, nhận A)
-                    //
-                    //    Với A và B: rebuild 2 cluster bị ảnh hưởng
-
-                    // Phần 1: cập nhật cho mọi node khác (O(N))
-                    for (int v = 0; v < N; ++v)
-                    {
-                        if (v == nodeA || v == nodeB) continue;
-
-                        double dA = distmat[v][nodeA];  // dist(v, A)
-                        double dB = distmat[v][nodeB];  // dist(v, B)
-
-                        sumDist[v][clusterA] += dB - dA; // clA: -A +B
-                        sumDist[v][clusterB] += dA - dB; // clB: -B +A
-                    }
-
-                    // Phần 2: rebuild sumDist cho nodeA và nodeB
-                    //         CHỈ 2 cluster bị ảnh hưởng (clA và clB)
-                    //
-                    //    Complexity: O(|clA| + |clB|) ≈ O(N/K) cho mỗi node
-                    //    Tổng: O(2 * N/K) cho cả 2 node
-
-                    for (int k : {clusterA, clusterB})  // chỉ 2 cluster thay đổi
-                    {
-                        double sA = 0.0;                // sumDist[nodeA][k]
-                        double sB = 0.0;                // sumDist[nodeB][k]
-
-                        for (int m : members[k])        // duyệt member mới của k
-                        {
-                            sA += distmat[nodeA][m];    // dist(A, m)
-                            sB += distmat[nodeB][m];    // dist(B, m)
-                        }
-                        // Lưu ý: nếu nodeA ∈ members[k] → dist(A,A)=0 → OK
-                        //         nếu nodeB ∈ members[k] → dist(B,B)=0 → OK
-
-                        sumDist[nodeA][k] = sA;
-                        sumDist[nodeB][k] = sB;
-                    }
-
-                    // ── Đánh dấu cải thiện ──
-                    moveCount++;
-                    improved = true;
-
-                    break;                              // first improvement → thoát inner loop
+            // ── Fallback: thử EXTRA_RANDOM cặp ngẫu nhiên ──
+            // Chỉ chạy nếu CL không tìm được swap.
+            // Mở rộng lân cận sang node xa (ngoài CL) → thoát local opt mà CL bỏ lỡ.
+            if (!foundSwap && !shouldStop()) {
+                for (int r = 0; r < EXTRA_RANDOM; ++r) {
+                    if (shouldStop()) break;
+                    if (trySwap(randNode(rng))) break; // first-improvement: dừng ngay khi tìm được
                 }
             }
-            // ── Kết thúc SWAP_SAMPLES cho nodeA ──
-
-            // Nếu đã tìm được swap → thoát outer loop, quay lại while
-            if (improved) break;
         }
-        // ── Kết thúc duyệt nodeOrder (swap) ──
+        // Kết thúc Phase B
 
+        // Cập nhật trạng thái sau 1 pass đầy đủ (Phase A + Phase B)
+        if (improved) {
+            noMoveStreak = 0; // có move → reset đếm pass idle
+        } else {
+            // Không có move nào trong cả Phase A lẫn Phase B
+            ++noMoveStreak;       // tăng đếm pass idle (dùng cho điều kiện dừng PATIENCE)
+            updatePenaltyIdle(); // cập nhật penalty theo trạng thái idle
+        }
     }
-    // ═══════════════════════════════════════════════════════════════════════
-    // KẾT THÚC LOCAL SEARCH
+    // ── Kết thúc vòng lặp chính ──
+
+    // ══════════════════════════════════════════════════════════════════════
+    // BƯỚC 10: TRẢ VỀ KẾT QUẢ
     //
-    // sol đã được cập nhật in-place:
-    //   - sol.assign:          cluster assignment mới
-    //   - sol.members:         danh sách member mới
-    //   - sol.clusterWeight:   trọng số cluster mới
-    //   - sol.clusterSumDist:  sumDist mới
-    // ═══════════════════════════════════════════════════════════════════════
+    // Chiến lược:
+    //   Ưu tiên LUÔN trả nghiệm feasible tốt nhất từng tìm được (feasBest),
+    //   ngay cả khi working solution (sol) hiện tại có intra-distance nhỏ hơn
+    //   nhưng infeasible — vì nghiệm infeasible không được chấp nhận trong ACO.
+    //
+    //   Nếu không tìm được nghiệm feasible nào → trả nghiệm hiện tại (sol)
+    //   với cost được tính lại bằng compute_cost_fast để đồng bộ với phần
+    //   còn lại của ACO (bao gồm cả penalty vi phạm).
+    // ══════════════════════════════════════════════════════════════════════
+
+    if (feasFound) {
+        // Trả nghiệm feasible tốt nhất tìm được
+        sol          = feasBest;      // phục hồi snapshot feasBest (deep copy ngược lại)
+        sol.feasible = true;          // đánh dấu feasible
+        sol.cost     = feasBestDist;  // cost = intra-distance thuần (không có penalty)
+    } else {
+        // Không tìm được nghiệm feasible → trả nghiệm working hiện tại
+        sol.feasible = false;                     // đánh dấu infeasible
+        sol.cost     = compute_cost_fast(sol);    // tính lại cost (intra + penalty) để đồng bộ ACO
+    }
 }
+// ─── KẾT THÚC FILE Local_search.cpp ───

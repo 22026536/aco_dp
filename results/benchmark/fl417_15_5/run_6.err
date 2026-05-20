@@ -1,0 +1,48 @@
+[ITER 1] New best cost=910747.15 (feasible=YES, time 5.9563s)
+[ITER 2] New best cost=874441.85 (feasible=YES, time 16.1857s)
+[ITER 3] New best cost=861260.88 (feasible=YES, time 25.1766s)
+[ITER 4] New best cost=858325.88 (feasible=YES, time 34.6138s)
+[ITER 5] New best cost=853978.41 (feasible=YES, time 43.9048s)
+[ITER 6] New best cost=851356.92 (feasible=YES, time 53.4988s)
+[ITER 7] New best cost=848716.66 (feasible=YES, time 63.0522s)
+[ITER 10] [TS] New best cost=844260.04 (feasible=YES, time 94.0734s)
+[ITER 10] bestGlobalCost=844260.04 (feasible=YES) bestThisIter=844260.04 feasibleAnts=10 noImprove=1 (elapsed 101.333s)
+[ITER 13] New best cost=833666.04 (feasible=YES, time 127.139s)
+[ITER 20] bestGlobalCost=833666.04 (feasible=YES) bestThisIter=839707.02 feasibleAnts=10 noImprove=7 (elapsed 194.815s)
+[ITER 30] bestGlobalCost=833666.04 (feasible=YES) bestThisIter=834947.58 feasibleAnts=10 noImprove=17 (elapsed 284.216s)
+[ITER 40] bestGlobalCost=833666.04 (feasible=YES) bestThisIter=849437.90 feasibleAnts=10 noImprove=27 (elapsed 376.94s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 50] [TS] New best cost=833201.41 (feasible=YES, time 459.017s)
+[ITER 50] bestGlobalCost=833201.41 (feasible=YES) bestThisIter=852951.89 feasibleAnts=10 noImprove=1 (elapsed 466.468s)
+[ITER 60] bestGlobalCost=833201.41 (feasible=YES) bestThisIter=838511.48 feasibleAnts=10 noImprove=11 (elapsed 551.385s)
+[ITER 64] New best cost=830765.67 (feasible=YES, time 580.964s)
+[ITER 70] bestGlobalCost=830765.67 (feasible=YES) bestThisIter=850296.61 feasibleAnts=10 noImprove=6 (elapsed 637.279s)
+[ITER 77] New best cost=829822.76 (feasible=YES, time 694.72s)
+[ITER 80] bestGlobalCost=829822.76 (feasible=YES) bestThisIter=844610.95 feasibleAnts=10 noImprove=3 (elapsed 728.744s)
+[ITER 90] bestGlobalCost=829822.76 (feasible=YES) bestThisIter=852759.39 feasibleAnts=10 noImprove=13 (elapsed 829.602s)
+[ITER 100] bestGlobalCost=829822.76 (feasible=YES) bestThisIter=862139.43 feasibleAnts=10 noImprove=23 (elapsed 933.061s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 110] bestGlobalCost=829822.76 (feasible=YES) bestThisIter=851614.75 feasibleAnts=10 noImprove=3 (elapsed 1025.14s)
+[ITER 120] bestGlobalCost=829822.76 (feasible=YES) bestThisIter=856793.51 feasibleAnts=10 noImprove=13 (elapsed 1134.1s)
+[ITER 130] bestGlobalCost=829822.76 (feasible=YES) bestThisIter=841404.55 feasibleAnts=10 noImprove=23 (elapsed 1245.44s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 140] bestGlobalCost=829822.76 (feasible=YES) bestThisIter=838210.52 feasibleAnts=10 noImprove=3 (elapsed 1370.44s)
+[ITER 150] bestGlobalCost=829822.76 (feasible=YES) bestThisIter=842019.53 feasibleAnts=10 noImprove=13 (elapsed 1494.52s)
+166 168 169 170 172 173 174 175 176 177 178 183 185 187 188 189 190 192 193 194 196 197 198 199 200 201 316 318 
+254 259 263 264 265 266 267 268 269 270 271 272 273 275 277 281 282 285 286 287 289 290 291 292 293 294 295 296 297 
+35 132 298 299 300 301 302 303 304 305 307 320 321 322 323 328 329 330 331 332 333 340 341 342 343 344 346 347 
+60 62 72 88 89 90 103 104 105 205 206 210 211 216 221 227 228 231 232 244 248 249 360 363 366 393 406 
+8 10 13 24 43 310 311 312 313 314 317 325 326 327 334 335 336 337 349 350 351 352 353 354 355 357 
+63 64 65 66 67 69 70 73 74 75 77 78 79 80 82 83 84 85 87 91 93 94 95 96 97 98 100 
+1 2 3 4 5 6 7 11 12 14 15 17 18 19 21 22 23 25 26 27 28 29 31 32 39 42 147 
+250 251 252 253 255 256 257 258 260 261 262 274 276 278 279 280 283 284 288 374 375 376 377 379 387 399 416 
+34 36 41 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 61 68 71 76 86 92 309 324 
+38 154 155 156 157 158 159 160 161 162 163 164 165 167 171 179 180 181 182 184 186 191 195 315 319 338 339 356 
+202 203 204 226 358 359 361 362 364 365 367 380 381 382 383 388 389 390 391 392 400 401 402 403 404 405 407 408 
+106 107 108 109 110 111 112 113 114 115 117 118 119 120 121 130 131 133 134 135 136 137 140 141 143 306 308 345 348 
+9 16 20 30 33 37 40 116 122 123 124 125 126 127 128 129 138 139 142 144 145 146 148 149 150 151 152 153 
+207 208 209 212 213 214 215 217 218 219 220 222 223 224 225 229 230 233 234 235 236 237 238 239 240 241 242 243 245 246 247 368 
+81 99 101 102 369 370 371 372 373 378 384 385 386 394 395 396 397 398 409 410 411 412 413 414 415 417 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/fl417_15_5.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/fl417_15_5.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/fl417_15_5.txt

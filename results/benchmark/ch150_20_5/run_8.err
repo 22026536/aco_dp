@@ -1,0 +1,43 @@
+[ITER 1] New best cost=59732.73 (feasible=YES, time 0.681775s)
+[ITER 2] New best cost=57385.94 (feasible=YES, time 1.3818s)
+[ITER 3] New best cost=54355.30 (feasible=YES, time 2.0552s)
+[ITER 5] New best cost=53631.74 (feasible=YES, time 3.47542s)
+[ITER 6] New best cost=52426.23 (feasible=YES, time 4.00104s)
+[ITER 9] New best cost=52388.61 (feasible=YES, time 5.68083s)
+[TS] New best cost=52259.33 (feasible=YES, time 7.4604s)
+[ITER 10] bestGlobalCost=52259.33 (feasible=YES) bestThisIter=54055.06 feasibleAnts=10 noImprove=1 (elapsed 8.0551s)
+[ITER 14] New best cost=51927.50 (feasible=YES, time 10.3291s)
+[ITER 20] bestGlobalCost=51927.50 (feasible=YES) bestThisIter=51927.50 feasibleAnts=10 noImprove=6 (elapsed 15.453s)
+[TS] New best cost=51769.06 (feasible=YES, time 21.5397s)
+[ITER 30] bestGlobalCost=51769.06 (feasible=YES) bestThisIter=51769.06 feasibleAnts=12 noImprove=1 (elapsed 22.716s)
+[ITER 40] bestGlobalCost=51769.06 (feasible=YES) bestThisIter=51769.06 feasibleAnts=11 noImprove=11 (elapsed 29.4582s)
+[ITER 50] bestGlobalCost=51769.06 (feasible=YES) bestThisIter=51769.06 feasibleAnts=15 noImprove=21 (elapsed 35.6852s)
+[RESET] no improvement for30-> reset pheromones
+[ITER 60] bestGlobalCost=51769.06 (feasible=YES) bestThisIter=61056.86 feasibleAnts=9 noImprove=1 (elapsed 43.0258s)
+[ITER 67] New best cost=51697.26 (feasible=YES, time 47.9845s)
+[ITER 70] bestGlobalCost=51697.26 (feasible=YES) bestThisIter=51769.06 feasibleAnts=11 noImprove=3 (elapsed 52.3725s)
+[ITER 72] New best cost=51449.35 (feasible=YES, time 53.6008s)
+[ITER 80] bestGlobalCost=51449.35 (feasible=YES) bestThisIter=51449.35 feasibleAnts=12 noImprove=8 (elapsed 60.2798s)
+16 52 59 79 94 105 124 133 
+2 29 40 53 81 110 120 139 
+4 22 62 88 104 115 149 150 
+12 43 67 109 116 118 131 134 
+1 10 30 34 87 98 103 
+8 35 82 84 89 93 96 121 
+14 15 21 77 78 80 111 122 
+50 58 65 85 86 90 132 141 
+6 9 19 28 37 42 47 114 
+20 33 46 51 54 92 126 138 
+17 36 39 57 60 130 140 
+13 64 68 71 91 119 128 
+5 7 95 97 100 107 143 
+3 48 63 73 76 113 125 
+44 45 74 106 112 136 145 
+27 31 49 72 123 144 147 
+11 24 61 66 69 127 148 
+55 70 99 102 108 135 137 
+18 25 26 56 75 83 142 146 
+23 32 38 41 101 117 129 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/ch150_20_5.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/ch150_20_5.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/ch150_20_5.txt

@@ -1,0 +1,57 @@
+[ITER 1] New best cost=183329.18 (feasible=NO, time 1.36535s)
+[ITER 1] New best cost=211317.68 (feasible=YES, time 1.37015s)
+[ITER 3] New best cost=210253.39 (feasible=YES, time 1.7516s)
+[ITER 7] New best cost=209686.79 (feasible=YES, time 2.39418s)
+[ITER 9] New best cost=202764.65 (feasible=YES, time 2.6933s)
+[ITER 10] bestGlobalCost=202764.65 (feasible=YES) bestThisIter=210581.25 feasibleAnts=5 noImprove=1 (elapsed 2.831s)
+[ITER 20] New best cost=201845.97 (feasible=YES, time 5.38825s)
+[ITER 20] bestGlobalCost=201845.97 (feasible=YES) bestThisIter=200364.44 feasibleAnts=7 noImprove=0 (elapsed 5.39308s)
+[ITER 30] bestGlobalCost=201845.97 (feasible=YES) bestThisIter=199548.22 feasibleAnts=5 noImprove=10 (elapsed 7.87769s)
+[ITER 32] New best cost=201320.38 (feasible=YES, time 9.33878s)
+[ITER 40] bestGlobalCost=201320.38 (feasible=YES) bestThisIter=204277.63 feasibleAnts=9 noImprove=8 (elapsed 10.5252s)
+[ITER 43] New best cost=196906.22 (feasible=YES, time 12.182s)
+[ITER 50] bestGlobalCost=196906.22 (feasible=YES) bestThisIter=198276.47 feasibleAnts=6 noImprove=7 (elapsed 13.1625s)
+[ITER 55] New best cost=193779.98 (feasible=YES, time 15.2904s)
+[ITER 60] bestGlobalCost=193779.98 (feasible=YES) bestThisIter=202295.57 feasibleAnts=6 noImprove=5 (elapsed 16.169s)
+[ITER 70] bestGlobalCost=193779.98 (feasible=YES) bestThisIter=197212.09 feasibleAnts=9 noImprove=15 (elapsed 19.1252s)
+[ITER 80] bestGlobalCost=193779.98 (feasible=YES) bestThisIter=201710.98 feasibleAnts=9 noImprove=25 (elapsed 21.7705s)
+[ITER 90] bestGlobalCost=193779.98 (feasible=YES) bestThisIter=203024.41 feasibleAnts=6 noImprove=35 (elapsed 24.3872s)
+[ITER 100] bestGlobalCost=193779.98 (feasible=YES) bestThisIter=206538.29 feasibleAnts=7 noImprove=45 (elapsed 27.1115s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 110] bestGlobalCost=193779.98 (feasible=YES) bestThisIter=196700.72 feasibleAnts=7 noImprove=5 (elapsed 30.0306s)
+[ITER 118] New best cost=193094.68 (feasible=YES, time 32.3496s)
+[ITER 120] bestGlobalCost=193094.68 (feasible=YES) bestThisIter=198777.08 feasibleAnts=9 noImprove=2 (elapsed 32.5908s)
+[ITER 130] bestGlobalCost=193094.68 (feasible=YES) bestThisIter=193409.47 feasibleAnts=8 noImprove=12 (elapsed 35.3707s)
+[ITER 140] bestGlobalCost=193094.68 (feasible=YES) bestThisIter=194057.88 feasibleAnts=6 noImprove=22 (elapsed 38.6192s)
+[ITER 150] bestGlobalCost=193094.68 (feasible=YES) bestThisIter=196244.03 feasibleAnts=9 noImprove=32 (elapsed 41.2965s)
+[ITER 160] bestGlobalCost=193094.68 (feasible=YES) bestThisIter=205373.90 feasibleAnts=9 noImprove=42 (elapsed 44.0548s)
+[RESET] no improvement for50-> reset pheromones
+[ITER 170] bestGlobalCost=193094.68 (feasible=YES) bestThisIter=205697.46 feasibleAnts=9 noImprove=2 (elapsed 47.0197s)
+[ITER 171] New best cost=191332.36 (feasible=YES, time 48.4248s)
+[ITER 180] bestGlobalCost=191332.36 (feasible=YES) bestThisIter=196089.71 feasibleAnts=5 noImprove=9 (elapsed 49.6574s)
+[ITER 190] bestGlobalCost=191332.36 (feasible=YES) bestThisIter=189450.62 feasibleAnts=6 noImprove=19 (elapsed 52.7183s)
+[ITER 200] bestGlobalCost=191332.36 (feasible=YES) bestThisIter=201878.93 feasibleAnts=11 noImprove=29 (elapsed 55.6565s)
+[ITER 210] bestGlobalCost=191332.36 (feasible=YES) bestThisIter=203388.04 feasibleAnts=8 noImprove=39 (elapsed 58.2972s)
+9 51 61 78 82 120 135 146 
+3 4 33 69 73 118 140 
+14 36 45 57 81 136 144 
+28 38 39 56 101 119 124 126 
+18 29 46 49 60 93 116 143 
+2 6 8 47 54 75 104 149 
+13 27 31 65 80 115 147 
+21 30 41 59 77 89 122 
+11 52 87 96 97 100 150 
+20 55 64 67 79 107 110 130 
+22 62 83 108 113 134 138 
+10 19 48 74 92 99 105 141 
+76 95 111 121 123 129 131 139 
+34 58 88 98 109 114 148 
+16 44 63 66 84 103 127 128 
+23 35 68 70 91 94 102 
+7 24 26 32 37 117 132 142 
+17 25 42 90 106 112 145 
+5 43 50 71 72 86 133 
+1 12 15 40 53 85 125 137 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/kroB150_20_4.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/kroB150_20_4.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/kroB150_20_4.txt

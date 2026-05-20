@@ -1,0 +1,17 @@
+Instance:           pr299_15_4
+Instance path:      normalized_instances/tsplib/pr299_15_4.txt
+Num runs:           10
+Time limit (s):     300
+Date:               2026-05-13 02:36:04
+---
+Valid runs:         10 / 10
+Feasible runs:      10
+Infeasible runs:    0
+---
+Best cost:          1579616.000000
+Worst cost:         1629591.640000
+Avg cost:           1599983.386000
+Std dev cost:       17605.954750
+---
+Avg time-to-best:   180.1072 s
+Best time-to-best:  158.8860 s
