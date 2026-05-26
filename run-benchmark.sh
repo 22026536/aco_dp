@@ -1,12 +1,12 @@
 #!/bin/bash
 # =============================================================================
-# run_benchmark.sh — Chạy MCGP nhiều lần, ghi Best/time-to-best, tính thống kê
+# run-benchmark.sh — Chạy MCGP nhiều lần, ghi kết quả và tính thống kê
 #
 # Cách dùng:
-#   ./run_benchmark.sh <instance_path> [num_runs] [time_limit]
+#   ./run-benchmark.sh <instance_path> [num_runs] [max_time] [max_iter]
 #
 # Ví dụ:
-#   ./run_benchmark.sh normalized_instances/tsplib/eil101_20_4.txt 10 60
+#   ./run-benchmark.sh data/inst_100_5.txt 10 60 5000
 #
 # Output (trong results/benchmark/<instance_name>/):
 #   run_N.log   — stdout mỗi lần chạy  (Final cost, feasibility)
@@ -20,11 +20,12 @@ set -euo pipefail
 # ─── Tham số đầu vào ─────────────────────────────────────────────────────────
 INSTANCE_PATH="${1:-}"
 NUM_RUNS="${2:-10}"
-TIME_LIMIT="${3:-300}"
+MAX_TIME="${3:-1500}"
+MAX_ITER="${4:-10000}"
 
 if [ -z "$INSTANCE_PATH" ]; then
     echo "❌  Thiếu đường dẫn instance!"
-    echo "    Cách dùng: $0 <instance_path> [num_runs] [time_limit]"
+    echo "    Cách dùng: $0 <instance_path> [num_runs] [max_time] [max_iter]"
     exit 1
 fi
 
@@ -38,23 +39,14 @@ if [ ! -f "./MCGP" ]; then
     exit 1
 fi
 
-# ─── Tên instance (không path, không extension) ──────────────────────────────
-INSTANCE_NAME=$(basename "$INSTANCE_PATH")
-INSTANCE_NAME="${INSTANCE_NAME%.*}"
+# ─── Tên instance ─────────────────────────────────────────────────────────────
+INSTANCE_NAME=$(basename "$INSTANCE_PATH" | sed 's/\.[^.]*$//')
 
-# ─── Thư mục lưu kết quả benchmark ──────────────────────────────────────────
+# ─── Thư mục lưu kết quả benchmark ───────────────────────────────────────────
 RESULT_DIR="results/benchmark/${INSTANCE_NAME}"
 mkdir -p "$RESULT_DIR"
 
-# ─── Tham số chạy MCGP ───────────────────────────────────────────────────────
-FIXED_PARAMS="--termination_criteria tcpu --termination_value ${TIME_LIMIT} --logs 1 --move ext --efficient 1"
-CONFIG_PARAMS="--schema 2P-ACO-DP --version rnd-grd --m 8 --block 38 --delta 5 --exploration first --debug 0"
-
-# ─── File tổng hợp CSV ───────────────────────────────────────────────────────
-SUMMARY_CSV="${RESULT_DIR}/summary.csv"
-echo "run,seed,feasible,best_cost,time_to_best_s" > "$SUMMARY_CSV"
-
-# ─── Màu terminal ────────────────────────────────────────────────────────────
+# ─── Màu terminal ─────────────────────────────────────────────────────────────
 if [ -t 1 ]; then
     RED='\033[0;31m'; GREEN='\033[0;32m'; CYAN='\033[0;36m'
     BOLD='\033[1m'; RESET='\033[0m'
@@ -62,15 +54,18 @@ else
     RED=''; GREEN=''; CYAN=''; BOLD=''; RESET=''
 fi
 
-# ─── Banner ──────────────────────────────────────────────────────────────────
+# ─── Banner ───────────────────────────────────────────────────────────────────
 echo ""
 echo -e "${BOLD}════════════════════════════════════════════════════════${RESET}"
 echo -e "${BOLD}  MCGP Benchmark — ${INSTANCE_NAME}${RESET}"
-echo -e "${BOLD}  Runs: ${NUM_RUNS}   Time limit: ${TIME_LIMIT}s${RESET}"
+echo -e "${BOLD}  Runs: ${NUM_RUNS}   Time limit: ${MAX_TIME}s   Max iter: ${MAX_ITER}${RESET}"
 echo -e "${BOLD}════════════════════════════════════════════════════════${RESET}"
 echo ""
 
-# ─── Mảng kết quả ────────────────────────────────────────────────────────────
+# ─── File tổng hợp CSV ────────────────────────────────────────────────────────
+SUMMARY_CSV="${RESULT_DIR}/summary.csv"
+echo "run,seed,feasible,best_cost,time_to_best_s" > "$SUMMARY_CSV"
+
 declare -a ALL_COSTS=()
 declare -a ALL_TIMES=()
 
@@ -79,7 +74,6 @@ declare -a ALL_TIMES=()
 # =============================================================================
 for (( RUN=1; RUN<=NUM_RUNS; RUN++ )); do
 
-    # Seed khác nhau mỗi lần để kết quả đa dạng
     SEED=$((1000000000 + RUN))
 
     LOG_FILE="${RESULT_DIR}/run_${RUN}.log"
@@ -87,56 +81,51 @@ for (( RUN=1; RUN<=NUM_RUNS; RUN++ )); do
 
     echo -e "${CYAN}▶  Run ${RUN}/${NUM_RUNS}${RESET}  (seed=${SEED})"
 
-    # Tạo thư mục log ACO đúng cấu trúc mới: results/logs/<instance_name>/...
-    # Không xóa results/logs toàn bộ để không mất log run trước.
-    # Chỉ xóa thư mục con của instance này để tránh log cũ còn sót.
-    rm -rf "results/logs/${INSTANCE_NAME}"
+    # Dọn thư mục log của lần chạy trước
+    if [ -d "results/logs/${INSTANCE_NAME}" ]; then
+        chmod -R u+rwx "results/logs/${INSTANCE_NAME}" 2>/dev/null || true
+        rm -rf "results/logs/${INSTANCE_NAME}"
+    fi
     mkdir -p "results/logs/${INSTANCE_NAME}/evolution"
     mkdir -p "results/logs/${INSTANCE_NAME}/solutions"
     mkdir -p "results/logs/${INSTANCE_NAME}/objectives"
 
-    # ── Chạy MCGP ────────────────────────────────────────────────────────────
+    # ── Chạy MCGP ─────────────────────────────────────────────────────────────
     set +e
     ./MCGP \
-        --instance "$INSTANCE_PATH" \
-        --seed     "$SEED"          \
-        $FIXED_PARAMS               \
-        $CONFIG_PARAMS              \
-        > "$LOG_FILE"               \
+        --instance          "$INSTANCE_PATH" \
+        --seed              "$SEED"          \
+        --termination_value "$MAX_TIME"      \
+        --iter_value        "$MAX_ITER"      \
+        --logs              10               \
+        > "$LOG_FILE"                        \
         2> "$ERR_FILE"
     EXIT_CODE=$?
     set -e
 
     if [ $EXIT_CODE -ne 0 ]; then
         echo -e "  ${RED}✗  Lần chạy thất bại (exit code ${EXIT_CODE})${RESET}"
+        echo -e "  ${RED}    Xem chi tiết: cat ${ERR_FILE}${RESET}"
+        head -5 "$ERR_FILE" 2>/dev/null | sed 's/^/      /' || true
         echo "${RUN},${SEED},ERROR,NA,NA" >> "$SUMMARY_CSV"
         ALL_COSTS+=("NA")
         ALL_TIMES+=("NA")
         continue
     fi
 
-    # ── Parse cost cuối cùng từ stdout ───────────────────────────────────────
-    # Format: "Final cost = 1,234,567.89"  (có thể có dấu phẩy hàng nghìn)
+    # ── Parse kết quả ─────────────────────────────────────────────────────────
     FINAL_COST=$(grep -oP '(?<=Final cost = )[\d,]+\.?\d*' "$LOG_FILE" \
                  | tail -1 | tr -d ',')
 
-    # ── Parse feasibility từ stdout ──────────────────────────────────────────
     if grep -q "Final solution is valid" "$LOG_FILE"; then
         FEASIBLE="YES"
     else
         FEASIBLE="NO"
     fi
 
-    # ── Parse time-to-best từ stderr ─────────────────────────────────────────
-    # Format dòng: "[ITER N] New best cost=X,XXX.XX (feasible=YES, time 12.34s)"
-    # Lấy dòng CUỐI CÙNG = thời điểm tìm được nghiệm tốt nhất cuối cùng
     TIME_TO_BEST=$(grep -oP 'time \K[\d.]+(?=s\))' "$ERR_FILE" | tail -1)
+    [ -z "$TIME_TO_BEST" ] && TIME_TO_BEST="NA"
 
-    if [ -z "$TIME_TO_BEST" ]; then
-        TIME_TO_BEST="NA"
-    fi
-
-    # ── Kiểm tra parse cost thành công ───────────────────────────────────────
     if [ -z "$FINAL_COST" ]; then
         echo -e "  ${RED}✗  Không parse được cost từ output${RESET}"
         echo "${RUN},${SEED},${FEASIBLE},NA,NA" >> "$SUMMARY_CSV"
@@ -145,7 +134,7 @@ for (( RUN=1; RUN<=NUM_RUNS; RUN++ )); do
         continue
     fi
 
-    # ── In kết quả lần này ───────────────────────────────────────────────────
+    # ── In kết quả lần này ────────────────────────────────────────────────────
     FEAS_COLOR="$RED"
     [ "$FEASIBLE" = "YES" ] && FEAS_COLOR="$GREEN"
 
@@ -160,9 +149,8 @@ for (( RUN=1; RUN<=NUM_RUNS; RUN++ )); do
 
 done
 
-
 # =============================================================================
-# THỐNG KÊ TỔNG HỢP (dùng awk)
+# THỐNG KÊ TỔNG HỢP
 # =============================================================================
 echo -e "${BOLD}════════════════════════════════════════════════════════${RESET}"
 echo -e "${BOLD}  Kết quả tổng hợp${RESET}"
@@ -172,29 +160,24 @@ STATS=$(awk -F',' '
 NR == 1 { next }
 $4 == "NA" || $5 == "NA" { next }
 {
-    cost = $4 + 0
-    time = $5 + 0
-    n++
-    sum_cost += cost
-    sum_time += time
+    cost = $4 + 0; time = $5 + 0; n++
+    sum_cost += cost; sum_time += time
     if (n == 1 || cost < min_cost) { min_cost = cost; min_time = time }
     if (n == 1 || cost > max_cost)   max_cost = cost
-    costs[n] = cost
-    times[n]  = time
+    costs[n] = cost; times[n] = time
 }
 END {
     if (n == 0) { print "NO_VALID_RUNS"; exit }
-    avg_cost = sum_cost / n
-    avg_time = sum_time / n
+    avg_cost = sum_cost / n; avg_time = sum_time / n
     for (i = 1; i <= n; i++) var_cost += (costs[i] - avg_cost)^2
     std_cost = (n > 1) ? sqrt(var_cost / (n-1)) : 0
-    printf "valid_runs=%d\n",       n
-    printf "best_cost=%.6f\n",      min_cost
-    printf "worst_cost=%.6f\n",     max_cost
-    printf "avg_cost=%.6f\n",       avg_cost
-    printf "std_cost=%.6f\n",       std_cost
-    printf "avg_time=%.4f\n",       avg_time
-    printf "best_time=%.4f\n",      min_time
+    printf "valid_runs=%d\n",   n
+    printf "best_cost=%.6f\n",  min_cost
+    printf "worst_cost=%.6f\n", max_cost
+    printf "avg_cost=%.6f\n",   avg_cost
+    printf "std_cost=%.6f\n",   std_cost
+    printf "avg_time=%.4f\n",   avg_time
+    printf "best_time=%.4f\n",  min_time
 }
 ' "$SUMMARY_CSV")
 
@@ -215,24 +198,25 @@ STD_COST=$(echo   "$STATS" | grep ^std_cost   | cut -d= -f2)
 AVG_TIME=$(echo   "$STATS" | grep ^avg_time   | cut -d= -f2)
 BEST_TIME=$(echo  "$STATS" | grep ^best_time  | cut -d= -f2)
 
-printf "  %-24s %s / %s\n"  "Valid runs:"        "$VALID_RUNS"  "$NUM_RUNS"
+printf "  %-24s %s / %s\n"  "Valid runs:"       "$VALID_RUNS"   "$NUM_RUNS"
 printf "  %-24s %s feasible,  %s infeasible,  %s error\n" \
-                             "Feasibility:"       "$N_FEASIBLE"  "$N_INFEASIBLE" "$N_ERROR"
-printf "  %-24s %s\n"  "Best cost:"              "$BEST_COST"
-printf "  %-24s %s\n"  "Worst cost:"             "$WORST_COST"
-printf "  %-24s %s\n"  "Avg cost:"               "$AVG_COST"
-printf "  %-24s %s\n"  "Std dev cost:"           "$STD_COST"
-printf "  %-24s %s s\n" "Avg time-to-best:"      "$AVG_TIME"
-printf "  %-24s %s s\n" "Best time-to-best:"     "$BEST_TIME"
+                             "Feasibility:"      "$N_FEASIBLE"  "$N_INFEASIBLE" "$N_ERROR"
+printf "  %-24s %s\n"  "Best cost:"             "$BEST_COST"
+printf "  %-24s %s\n"  "Worst cost:"            "$WORST_COST"
+printf "  %-24s %s\n"  "Avg cost:"              "$AVG_COST"
+printf "  %-24s %s\n"  "Std dev cost:"          "$STD_COST"
+printf "  %-24s %s s\n" "Avg time-to-best:"     "$AVG_TIME"
+printf "  %-24s %s s\n" "Best time-to-best:"    "$BEST_TIME"
 echo ""
 
-# ─── Ghi stats.txt ───────────────────────────────────────────────────────────
+# ─── Ghi stats.txt ────────────────────────────────────────────────────────────
 STATS_FILE="${RESULT_DIR}/stats.txt"
 {
     echo "Instance:            $INSTANCE_NAME"
     echo "Instance path:       $INSTANCE_PATH"
     echo "Num runs:            $NUM_RUNS"
-    echo "Time limit (s):      $TIME_LIMIT"
+    echo "Time limit (s):      $MAX_TIME"
+    echo "Max iterations:      $MAX_ITER"
     echo "Date:                $(date '+%Y-%m-%d %H:%M:%S')"
     echo "---"
     echo "Valid runs:          $VALID_RUNS / $NUM_RUNS"

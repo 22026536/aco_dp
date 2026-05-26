@@ -17,24 +17,10 @@
 //   - Lặp cho đến khi hết thời gian hoặc đạt maxIter
 // ═══════════════════════════════════════════════════════════════════════════
 
-#include "ACO.h"            // Header chứa khai báo struct ACOSolution, Instance, Parameters, LogRow,...
+#include "ACO.h"            // type aliases, ACOSolution, LogRow, biến extern của engine
+#include "Input.h"           // Instance, Parameters (định nghĩa đầy đủ cần thiết cho ACO_tuned)
 #include "Local_search.h"   // Header cho hàm local_search() — cải thiện nghiệm bằng relocate/swap
 #include "Tabu_search.h"    // Header cho iterated_tabu_search() — tìm kiếm tabu lặp
-#include <iostream>         // cout, cerr — in ra console
-#include <iomanip>          // setw, setprecision — định dạng output
-#include <algorithm>        // sort, shuffle, min, max, find, any_of,...
-#include <cmath>            // sqrt, pow, exp, abs — hàm toán học
-#include <random>           // mt19937_64, uniform_real_distribution — sinh số ngẫu nhiên
-#include <numeric>          // iota (fill 0,1,2,...), accumulate (tính tổng)
-#include <cassert>          // assert — kiểm tra điều kiện debug
-#include <vector>           // vector — cấu trúc dữ liệu chính
-#include <functional>       // function objects (không dùng trực tiếp ở đây)
-#include <chrono>           // steady_clock, duration — đo thời gian chạy
-#include <fstream>          // ofstream — ghi file log
-#include <string>           // string — chuỗi ký tự
-#include <queue>            // priority_queue (không dùng trực tiếp ở đây)
-#include <sstream>          // ostringstream — format chuỗi
-#include <locale>           // locale — hỗ trợ format số có dấu phẩy ngàn
 
 using std::mt19937_64;      // alias cho Mersenne Twister 64-bit RNG
 using std::vector;          // alias cho std::vector
@@ -48,14 +34,11 @@ using Clock = chrono::steady_clock;
 // (local_search, tabu_search, compute_cost, is_feasible,...)
 // ═══════════════════════════════════════════════════════════════════════════
 
-vector<int> log_iter;           // [LOG] danh sách iteration đã log (dự phòng, chưa dùng trực tiếp)
-vector<double> log_time;        // [LOG] danh sách thời gian tại mỗi log point (dự phòng)
+vector<int>    log_iter;
+vector<double> log_time;
 vector<LogRow> log_rows;        // [LOG] danh sách snapshot mỗi 10 iteration
                                 //   LogRow chứa: iter, time, bestCost, bestFeasible,
                                 //                bestThisIter, feasibleAnts, noImprove
-
-Parameters parameters;          // Tham số cấu hình (đọc từ file hoặc command line)
-                                //   Chứa: LOGdir, timeLimitSeconds, maxIter, ...
 
 string LOG_EVOL_FILENAME;       // Đường dẫn file log evolution (ghi diễn biến qua các iteration)
 string LOG_COST_FILENAME;       // Đường dẫn file log cost tốt nhất
@@ -95,10 +78,8 @@ double PENALTY_SCALE = 10000.0; // Hệ số phạt cho vi phạm ràng buộc t
                                 //   Giá trị lớn → ưu tiên tìm nghiệm feasible trước
                                 //   Sẽ được tính lại dựa trên instance trong ACO_tuned()
 
-double VALID_EPS = 1e-6;        // Epsilon cho kiểm tra feasibility
-                                //   Cho phép sai số nhỏ khi so sánh với bounds
-                                //   Ví dụ: nếu tổng W = 99.9999999 và lower = 100, vẫn coi là OK
-
+double VALID_EPS = 1e-9;        // sai số kiểm tra
+                                //   Cho phép sai số nhỏ khi so sánh
 
 // ═══════════════════════════════════════════════════════════════════════════
 // HÀM TIỆN ÍCH (UTILITY FUNCTIONS)
@@ -351,7 +332,7 @@ bool is_feasible(const std::vector<int> &assign)
 int hamming_distance(const vector<int>& a, const vector<int>& b)
 {
     int diff = 0;                                        // đếm số vị trí khác nhau
-    for (int i = 0; i < a.size(); ++i)                   // duyệt từng node
+    for (int i = 0; i < (int)a.size(); ++i)                   // duyệt từng node
         if (a[i] != b[i])                                // nếu cluster khác nhau
             diff++;                                      // tăng đếm
     return diff;                                         // trả về khoảng cách Hamming
@@ -369,29 +350,45 @@ int hamming_distance(const vector<int>& a, const vector<int>& b)
 void SaveLogs(const ACOSolution &best)
 {
     // ─── File 1: Evolution (diễn biến hội tụ) ───
-    std::ofstream foutEvo(LOG_EVOL_FILENAME);            // mở file ghi evolution
-    if (!foutEvo.is_open())                              // nếu không mở được
+    std::ofstream foutEvo(LOG_EVOL_FILENAME);
+    if (!foutEvo.is_open())
     {
         std::cerr << "[SAVELOGS] Cannot open " << LOG_EVOL_FILENAME << " for writing.\n";
     }
     else
     {
-        // Ghi header (dòng tiêu đề)
-        foutEvo << "# iter   time(s)    bestCost    bestFeasible  bestThisIter  feasibleAnts  noImprove\n";
+           // ═════════════════════════════════════════════════════════════════
+        // HEADER
+        // ═════════════════════════════════════════════════════════════════
+        foutEvo << std::right                                               
+                << std::setw(7)  << "iter"
+                << std::setw(14) << "time(s)"
+                << std::setw(18) << "bestCost"                              
+                << std::setw(10) << "feasible"
+                << std::setw(18) << "bestThisIter"                          
+                << std::setw(12) << "feasAnts"
+                << std::setw(10) << "noImprove"
+                << "\n";
+        
+        foutEvo << std::string(93, '-') << "\n";
 
-        // Ghi từng snapshot (mỗi 10 iteration được lưu vào log_rows)
+        // ═════════════════════════════════════════════════════════════════
+        // DATA
+        // ═════════════════════════════════════════════════════════════════
         for (auto &r : log_rows)
         {
-            foutEvo << std::setw(6) << r.iter                          // số iteration
-                    << std::setw(12) << std::fixed << std::setprecision(4) << r.time       // thời gian (s)
-                    << std::setw(14) << std::fixed << std::setprecision(6) << r.bestCost   // cost tốt nhất toàn cục
-                    << std::setw(12) << (r.bestFeasible ? "1" : "0")                       // đã feasible chưa?
-                    << std::setw(14) << std::fixed << std::setprecision(6) << r.bestThisIter // cost tốt nhất iteration này
-                    << std::setw(12) << r.feasibleAnts                                      // số ant feasible
-                    << std::setw(12) << r.noImprove                                         // số iteration liên tiếp không improve
+            foutEvo << std::right                                               
+                    << std::setw(7)  << r.iter                                 
+                    << std::setw(14) << std::fixed << std::setprecision(2) << r.time    
+                    << std::setw(18) << std::fixed << std::setprecision(2) << r.bestCost  
+                    << std::setw(10) << (r.bestFeasible ? "YES" : "NO")                    
+                    << std::setw(18) << std::fixed << std::setprecision(2) << r.bestThisIter
+                    << std::setw(12) << r.feasibleAnts                                  
+                    << std::setw(10) << r.noImprove                                     
                     << "\n";
         }
-        foutEvo.close();                                 // đóng file
+        foutEvo.unsetf(std::ios::right); // ← THÊM để reset
+        foutEvo.close();
         std::cerr << "[SAVELOGS] evolution saved to " << LOG_EVOL_FILENAME << "\n";
     }
 
@@ -473,7 +470,8 @@ void SaveLogs(const ACOSolution &best)
 //   ACOSolution: nghiệm tốt nhất tìm được (assign, cost, feasible, members,...)
 // ═══════════════════════════════════════════════════════════════════════════
 
-ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSeconds, const string &instance_name)
+ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
+                      int maxIter, double timeLimitSeconds, const string &instance_name)
 {
     // ─────────────────────────────────────────────────────────────────────
     // BƯỚC 1: CẤU HÌNH ĐƯỜNG DẪN LOG
@@ -597,7 +595,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
         vector<pair<double,int>> tmp(N);
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < N; ++j)
-                tmp[j] = {(distmat[i][j]+distmat[j][i])*0.5, j};
+                tmp[j] = {(distmat[i][j]+distmat[j][i]), j};
             tmp[i].first = 1e300;
             partial_sort(tmp.begin(), tmp.begin()+GLOBAL_CL_SIZE, tmp.end());
             for (int r = 0; r < GLOBAL_CL_SIZE; ++r)
@@ -633,11 +631,11 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     double T_max = 0.3;                                 // lượng pheromone deposit tối đa (best ant)
     double T_min = 0.1;                                 // lượng pheromone deposit tối thiểu (all ants)
                                                         // T_max >> T_min → best ant ảnh hưởng mạnh
-    const double PHI_MIN = 0.1;                         // giới hạn dưới vết mùi (tránh = 0)
+    const double PHI_MIN = 0.05;                         // giới hạn dưới vết mùi (tránh = 0)
     const double PHI_MAX = 1.0;                         // giới hạn trên vết mùi (tránh quá lớn → bias cực)
 
     double Q_max = 0.95;                                // xác suất exploitation tối đa
-    double Q_min = 0.05;                                // xác suất exploitation tối thiểu
+    double Q_min = 0.025;                                // xác suất exploitation tối thiểu
     double Q0 = Q_max;                                  // xác suất exploitation hiện tại
                                                         // Q0 cao → kiến thường chọn cluster tốt nhất (exploit)
                                                         // Q0 thấp → kiến chọn theo roulette wheel (explore)
@@ -647,7 +645,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                                                         // → chuyển dần từ exploitation sang exploration
     int STAGNATE_COUNT = 0;                             // đếm số vòng liên tiếp không cải thiện sau khi giảm Q_0
 
-    int STAGNATE_DROP = 0.05;                           // Ý định: mỗi iteration stagnate, giảm Q0 đi 0.05
+    double STAGNATE_DROP = 0.05;                           // Ý định: mỗi iteration stagnate, giảm Q0 đi 0.05
 
     // ── Repair configuration ──
     int lsTop = 10;                                     // số ant được chọn để local search
@@ -656,19 +654,19 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     int lsMaxMoves = 1000;                              // giới hạn moves mỗi lần LS
 
     // Số ant được Tabu Search (subset của lsTop)
-    int tsTop = 5;                                     // số ant được chọn để tabu search
+    int tsTop = 5;                                      // số ant được chọn để tabu search
 
     // Điều kiện chạy Tabu Search
     int tsInterval = 10;                                // chạy TS mỗi x iteration
 
     // ─────────────────────────────────────────────────────────────────────
-    // BƯỚC 5: KHỞI TẠO RNG VÀ BIẾN TRẠNG THÁI
+    // BƯỚC 5: KHỞI TẠO BIẾN TRẠNG THÁI
+    //
+    // RNG (rng) được truyền vào từ main.cpp qua vengine[0].
+    // Seed đã được thiết lập trước đó:
+    //   - --seed N  → vengine[p].seed((p+1)*N)  → kết quả tái lập được
+    //   - không seed → random_device{}()         → mỗi lần chạy khác nhau
     // ─────────────────────────────────────────────────────────────────────
-
-    mt19937_64 rng(                                      // Mersenne Twister 64-bit random generator
-        (unsigned)chrono::high_resolution_clock::now()
-            .time_since_epoch().count());                 // seed = thời gian hiện tại (nanoseconds)
-                                                         // → mỗi lần chạy cho kết quả khác nhau
 
     uniform_real_distribution<double> uni01(0.0, 1.0);   // phân phối đều trong [0, 1)
                                                          // dùng cho: exploitation/exploration decision,
@@ -717,7 +715,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
     // ─────────────────────────────────────────────────────────────────────
  
     const int poolSize     = max(tsInterval * tsTop, 1);         // kích thước pool tối đa
-    const int MIN_DIFF_POOL = max(N / 10, 1);            // độ đa dạng tối thiểu trong pool
+    const int MIN_DIFF_POOL = max(N / 100, 1);            // độ đa dạng tối thiểu trong pool
  
     struct PoolEntry {
         ACOSolution sol;
@@ -1002,7 +1000,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
 
         // ── Chọn top ants đa dạng ──
         vector<int> lsSelected;                          // index các ant được chọn để local search
-        int MIN_DIFF_LS = max(N/100,1);                     // Hamming distance tối thiểu giữa các ant selected
+        int MIN_DIFF_LS = max(N/50,1);                     // Hamming distance tối thiểu giữa các ant selected
 
         for (int idx = 0; idx < m && (int)lsSelected.size() < lsTop; ++idx)
         {
@@ -1328,7 +1326,7 @@ ACOSolution ACO_tuned(const Instance &instance, int maxIter, double timeLimitSec
                     phi[i][k] = T_min;                   // phi = 0.05 (uniform)
 
             noImprove = 0;                               // reset counter
-            STAGNATE_DROP = 0;
+            STAGNATE_COUNT = 0;
             Q0 = Q_max;
         }
 

@@ -1,82 +1,94 @@
-// ═══════════════════════════════════════════════════════════════════════════
-// FILE: input.h
-//
-// Xử lý tất cả các tác vụ liên quan đến đầu vào của chương trình:
-//   - Phân tích tham số dòng lệnh     (LoadInput)
-//   - Đọc file dữ liệu bài toán       (LoadInstance)
-//   - In cấu hình chạy ra màn hình    (LogParameters)
-//
-// Cả ba hàm đều hoạt động trên các biến toàn cục khai báo trong main.cpp:
-//   instance, parameters, maxIter, termination_time, instance_path
-//
-// Chỉ include file này từ main.cpp (sau khi đã định nghĩa các biến trên).
-// ═══════════════════════════════════════════════════════════════════════════
-
 #pragma once
 
-#include "aco/ACO.h"
+// ═══════════════════════════════════════════════════════════════════════════
+// FILE: Input.h
+//
+// Header của tầng INPUT.
+// Chứa: struct Instance, struct Parameters, SplitString,
+//        khai báo các biến toàn cục liên quan đến input/config,
+//        và khai báo hàm LoadInput / LoadInstance / LogParameters.
+//
+// Tầng Input KHÔNG biết gì về nội tại của thuật toán ACO.
+// Tầng ACO include Input.h để lấy Instance khi cần.
+// ═══════════════════════════════════════════════════════════════════════════
 
-// ── Các biến toàn cục định nghĩa trong main.cpp, dùng ở đây ──────────────
-extern Instance         instance;
-extern Parameters       parameters;
-extern int              maxIter;
-extern double           termination_time;
-extern string           instance_path;
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
+#include <cmath>
 
+using namespace std;
+
+// Type aliases
+using vecDbl  = vector<double>;
+using matDbl  = vector<vector<double>>;
 
 // ═══════════════════════════════════════════════════════════════════════════
-// LoadInput()
+// Parameters — cấu hình chạy (đọc từ command line / argv)
 //
-// Phân tích tham số dòng lệnh theo dạng --key value.
-// Gán giá trị vào các biến toàn cục `parameters`, `maxIter` và
-// `termination_time`.
-//
-// Tham số:
-//   argc, argv : tham số chuẩn của hàm main
-//   seed       : [out] seed cho bộ sinh số ngẫu nhiên (0 = không xác định)
-//
-// Trả về:
-//   Đường dẫn tới file dữ liệu bài toán (từ --instance).
-//   Thoát chương trình với thông báo lỗi nếu thiếu --instance hoặc gặp
-//   tham số không hợp lệ.
+// LOGdir: thư mục gốc lưu kết quả
+// ALGlg : tần suất ghi log (mỗi ALGlg iteration)
 // ═══════════════════════════════════════════════════════════════════════════
+struct Parameters {
+    string LOGdir = "results/logs";
+    int    ALGlg  = 10;
+};
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Instance — dữ liệu bài toán (đọc từ file instance)
+//
+// type : loại instance — "p" (planar, ma trận dist cho sẵn)
+//                        "t" (TSP-like, tọa độ Euclid)
+//                        "h" (handover, ma trận cạnh mạng không dây)
+// nV   : số node (vertices)
+// nK   : số cluster (partitions)
+// nT   : số chiều trọng số (resource dimensions)
+// W    : W[i][t]   = trọng số node i chiều t          (nV × nT)
+// WL   : WL[k][t]  = lower bound cluster k chiều t    (nK × nT)
+// WU   : WU[k][t]  = upper bound cluster k chiều t    (nK × nT)
+// D    : D[i][j]   = khoảng cách từ node i đến j      (nV × nV)
+// ═══════════════════════════════════════════════════════════════════════════
+struct Instance {
+    string type = "p";
+    int nV = 0, nK = 0, nT = 0;
+    matDbl W, WL, WU, D;
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// SplitString — tách chuỗi theo delimiter
+// Chỉ dùng trong Input.cpp (LoadInstance, parse file type "h").
+// ─────────────────────────────────────────────────────────────────────────
+inline vector<string> SplitString(const string &str, char delimiter)
+{
+    vector<string> tokens;
+    stringstream   ss(str);
+    string         token;
+    while (getline(ss, token, delimiter))
+        tokens.push_back(token);
+    return tokens;
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Biến toàn cục của tầng Input
+// (định nghĩa trong Input.cpp, dùng bởi main.cpp và LogParameters)
+// ─────────────────────────────────────────────────────────────────────────
+extern Instance   instance;         // dữ liệu bài toán (điền bởi LoadInstance)
+extern Parameters parameters;       // cấu hình chạy   (điền bởi LoadInput)
+extern int        maxIter;          // số iteration tối đa
+extern double     termination_time; // giới hạn thời gian (giây) - ĐỒNG TÊN TỪ `parameters.ALGtv`
+extern string     instance_path;    // đường dẫn file instance
+
+// ─────────────────────────────────────────────────────────────────────────
+// Hàm công khai của Input.cpp
+// ─────────────────────────────────────────────────────────────────────────
+
+// Đọc và phân tích tham số từ argv; trả về đường dẫn file instance
 string LoadInput(int argc, const char *argv[], unsigned &seed);
 
-
-// ═══════════════════════════════════════════════════════════════════════════
-// LoadInstance()
-//
-// Mở và phân tích file dữ liệu, ghi kết quả vào biến toàn cục `instance`.
-//
-// Các định dạng được hỗ trợ:
-//
-//   "p" (planar)     Ma trận khoảng cách cho trực tiếp trong file.
-//                    Dòng 1 : "p"
-//                    Dòng 2 : nV  nK  nT
-//                    Mỗi nút: <nhãn>  W[i][0..nT-1]  D[i][0..nV-1]
-//                    Cuối   : WL rồi WU cho từng cụm k
-//
-//   "t" (tsp-like)   Các nút được cho bởi tọa độ (x, y); khoảng cách tính
-//                    theo công thức D[i][j] = round(Euclid(i,j) / 2 * 1e6) / 1e6.
-//                    Cấu trúc giống "p" nhưng thay hàng D bằng x y.
-//
-//   "h" (handover)   Biến thể mạng không dây. Khoảng cách là trọng số cạnh
-//                    đảo dấu, giúp tối thiểu hoá chi phí tương đương tối đa
-//                    hoá lưu lượng handover giữa các nút cùng cụm.
-//                    Dòng 1  : "h"
-//                    Dòng 2  : nV  nK  handover_threshold
-//                    Các dòng: "Cluster <k> <WU>"
-//                    Các dòng: "Node <i> <W>"
-//                    Các dòng: "edge <src> <dst> <weight>"
-// ═══════════════════════════════════════════════════════════════════════════
+// Mở và đọc file instance; điền vào biến toàn cục `instance`
 void LoadInstance(const string &pathInstance);
 
-
-// ═══════════════════════════════════════════════════════════════════════════
-// LogParameters()
-//
-// In ra màn hình (stderr) tóm tắt cấu hình chạy trước khi thuật toán bắt
-// đầu. Dùng stderr để không trộn lẫn với các giá trị chi phí in ra stdout
-// bởi ACO_tuned().
-// ═══════════════════════════════════════════════════════════════════════════
+// In tóm tắt cấu hình ra stdout trước khi thuật toán bắt đầu
 void LogParameters();

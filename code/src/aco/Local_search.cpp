@@ -55,10 +55,10 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
     // ── Tạo alias (tham chiếu) đến các thành phần của nghiệm ──
     // Mục đích: viết ngắn gọn hơn, tránh gọi sol.xxx mỗi lần.
     // Tất cả đều là reference → sửa alias = sửa trực tiếp sol.
-    auto &assign    = sol.assign;       // assign[i]    = cluster của node i (0-indexed)
-    auto &members   = sol.members;      // members[k]   = danh sách node thuộc cluster k
-    auto &clusterWt = sol.clusterWeight; // clusterWt[k][t] = tổng trọng số chiều t của cluster k
-    auto &sumDist   = sol.clusterSumDist;// sumDist[i][k]   = tổng dist(i, j) với mọi j ∈ cluster k
+    auto &assign    = sol.assign;                    // assign[i]    = cluster của node i (0-indexed)
+    auto &members   = sol.members;                   // members[k]   = danh sách node thuộc cluster k
+    auto &clusterWeight = sol.clusterWeight;         // clusterWeight[k][t] = tổng trọng số chiều t của cluster k
+    auto &clusterSumDist   = sol.clusterSumDist;     // clusterSumDist[i][k]   = tổng dist(i, j) với mọi j ∈ cluster k
 
     // ══════════════════════════════════════════════════════════════════════
     // BƯỚC 1: VIOLATION CACHE
@@ -68,19 +68,19 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
     // incremental sau mỗi move → O(M_weights) mỗi lần.
     //
     // violCache[k] = tổng vi phạm ràng buộc trọng số của cluster k
-    //   = Σ_t max(0, clusterWt[k][t] - WUmat[k][t])   (vi phạm upper)
-    //   + Σ_t max(0, WLmat[k][t] - clusterWt[k][t])   (vi phạm lower)
+    //   = Σ_t max(0, clusterWeight[k][t] - WUmat[k][t])   (vi phạm upper)
+    //   + Σ_t max(0, WLmat[k][t] - clusterWeight[k][t])   (vi phạm lower)
     //
     // totalViol = Σ_k violCache[k] = tổng vi phạm toàn bộ nghiệm
-    //   totalViol = 0 ↔ nghiệm feasible
+    // totalViol = 0 ↔ nghiệm feasible
     // ══════════════════════════════════════════════════════════════════════
 
-    // Hàm tính lại vi phạm của cluster k từ clusterWt hiện tại — O(M_weights)
+    // Hàm tính lại vi phạm của cluster k từ clusterWeight hiện tại — O(M_weights)
     // Được gọi sau mỗi move để cập nhật violCache[k] cho 2 cluster bị ảnh hưởng.
     auto recomputeViol = [&](int k) -> double {
         double v = 0.0;                        // tích lũy tổng vi phạm của cluster k
         for (int t = 0; t < M_weights; ++t) {  // duyệt mỗi chiều trọng số
-            double w = clusterWt[k][t];         // tổng trọng số chiều t của cluster k
+            double w = clusterWeight[k][t];         // tổng trọng số chiều t của cluster k
             if (w > WUmat[k][t]) v += w - WUmat[k][t]; // vượt upper → vi phạm = lượng thừa
             if (w < WLmat[k][t]) v += WLmat[k][t] - w; // dưới lower → vi phạm = lượng thiếu
         }
@@ -109,15 +109,15 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
     //   curDist = tổng intra-distance của sol hiện tại
     //   Thay vì tính lại O(N²) sau mỗi move, ta duy trì curDist bằng cách
     //   cộng/trừ deltaDist sau mỗi relocate/swap → O(1).
-    //   curDist = Σ_i sumDist[i][assign[i]]
+    //   curDist = Σ_i clusterSumDist[i][assign[i]]
     // ══════════════════════════════════════════════════════════════════════
 
-    // Tính curDist một lần duy nhất từ sumDist hiện tại — O(N)
-    // sumDist[i][assign[i]] = tổng dist(i, j) với mọi j trong cùng cluster với i
+    // Tính curDist một lần duy nhất từ clusterSumDist hiện tại — O(N)
+    // clusterSumDist[i][assign[i]] = tổng dist(i, j) với mọi j trong cùng cluster với i
     // Σ tất cả = tổng intra-distance (mỗi cặp (i,j) được đếm 2 lần từ i và j)
     double curDist = 0.0;
     for (int i = 0; i < N; ++i)
-        curDist += sumDist[i][assign[i]]; // cộng dồn dist từ i đến tất cả node cùng cluster
+        curDist += clusterSumDist[i][assign[i]]; // cộng dồn dist từ i đến tất cả node cùng cluster
 
     // feasBest: snapshot nghiệm feasible tốt nhất tìm được cho đến hiện tại
     ACOSolution feasBest;          // chứa nghiệm feasible tốt nhất (copy của sol)
@@ -170,8 +170,8 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
     double localPenalty            = PENALTY_SCALE;       // bắt đầu bằng hệ số phạt toàn cục
     const double PEN_UP            = 1.5;                 // hệ số tăng penalty mỗi gradSteps move khi infeasible
     const double PEN_DOWN          = 2.0;                 // hệ số tăng penalty giảm khi kẹt tại feasible
-    const double PEN_MIN           = PENALTY_SCALE * 0.3; // ngưỡng dưới: penalty không giảm dưới đây
-    const double PEN_MAX           = PENALTY_SCALE * 3.0; // ngưỡng trên: penalty không tăng vượt đây
+    const double PEN_MIN           = PENALTY_SCALE * 0.2; // ngưỡng dưới: penalty không giảm dưới đây
+    const double PEN_MAX           = PENALTY_SCALE * 5.0; // ngưỡng trên: penalty không tăng vượt đây
     const int    gradSteps         = 5;                   // số move giữa 2 lần tăng penalty
 
     int stepsInfeas  = 0; // đếm move infeasible cho lần tăng penalty tiếp theo
@@ -228,7 +228,7 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
     // PATIENCE = 3: dừng sau 3 pass idle liên tiếp không có move.
     // Tức là: pass idle 1 → đổi penalty, pass idle 2 → đổi penalty lần 2,
     //         pass idle 3 → kết thúc (đã thay đổi penalty 2 lần mà vẫn kẹt).
-    const int PATIENCE            = 4;
+    const int PATIENCE            = 3;
     const int MAX_NO_FEAS_IMPROVE = 25;            // số move tối đa không cải thiện feasBest
 
     int noMoveStreak  = 0; // số pass liên tiếp không có move nào được apply
@@ -273,7 +273,7 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
         for (int i = 0; i < N; ++i) {
             // Tính khoảng cách trung bình từ i đến mọi node j
             for (int j = 0; j < N; ++j)
-                tmp[j] = {(distmat[i][j] + distmat[j][i]) * 0.5, j}; // dist(i,j) trung bình 2 chiều
+                tmp[j] = {(distmat[i][j] + distmat[j][i]), j}; // dist(i,j)
             tmp[i].first = 1e300; // loại bỏ node i chính nó (đặt dist = vô cực)
             // Chọn CL_SIZE_LOCAL node gần nhất bằng partial_sort (nhanh hơn sort đầy đủ)
             partial_sort(tmp.begin(), tmp.begin() + CL_SIZE_LOCAL, tmp.end());
@@ -314,12 +314,12 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
     //   curDist   → cộng deltaDist — O(1)
     //   assign    → gán assign[u] = to — O(1)
     //   members   → xóa u khỏi from, thêm vào to — O(|members|)
-    //   clusterWt → cộng/trừ Wmat[u][t] — O(M_weights)
+    //   clusterWeight → cộng/trừ Wmat[u][t] — O(M_weights)
     //   violCache → tính lại 2 cluster bị ảnh hưởng (from, to) — O(M_weights)
     //   totalViol → cập nhật từ violCache — O(1)
-    //   sumDist   → cập nhật dist từ mọi node j đến from/to — O(N)
+    //   clusterSumDist   → cập nhật dist từ mọi node j đến from/to — O(N)
     //
-    // TỔNG ĐỘ PHỨC TẠP: O(N) (bottleneck là bước cập nhật sumDist)
+    // TỔNG ĐỘ PHỨC TẠP: O(N) (bottleneck là bước cập nhật clusterSumDist)
     // ══════════════════════════════════════════════════════════════════════
 
     auto applyRelocate = [&](int u, int from, int to, double deltaDist, double deltaViol) {
@@ -336,47 +336,29 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
         // ── Cập nhật tổng trọng số mỗi cluster — O(M_weights) ──
         // Cluster from mất đi trọng số của u; cluster to nhận thêm
         for (int t = 0; t < M_weights; ++t) {
-            clusterWt[from][t] -= Wmat[u][t]; // cluster from: bớt trọng số node u chiều t
-            clusterWt[to][t]   += Wmat[u][t]; // cluster to: thêm trọng số node u chiều t
+            clusterWeight[from][t] -= Wmat[u][t]; // cluster from: bớt trọng số node u chiều t
+            clusterWeight[to][t]   += Wmat[u][t]; // cluster to: thêm trọng số node u chiều t
         }
 
         // ── Cập nhật violCache và totalViol — O(M_weights) ──
         // Chỉ 2 cluster bị ảnh hưởng: from (mất u) và to (nhận u)
-        const double oldVFrom = violCache[from]; // lưu vi phạm cũ của cluster from
-        const double oldVTo   = violCache[to];   // lưu vi phạm cũ của cluster to
+        double oldVFrom = violCache[from]; // lưu vi phạm cũ của cluster from
+        double oldVTo   = violCache[to];   // lưu vi phạm cũ của cluster to
         violCache[from] = recomputeViol(from);   // tính lại vi phạm mới của cluster from
         violCache[to]   = recomputeViol(to);     // tính lại vi phạm mới của cluster to
         // Cập nhật totalViol bằng cách trừ giá trị cũ, cộng giá trị mới
         totalViol += (violCache[from] - oldVFrom) + (violCache[to] - oldVTo);
         totalViol  = max(totalViol, 0.0); // đảm bảo không âm (sai số floating-point)
 
-        // ── Cập nhật sumDist cho mọi node v ≠ u — O(N) ──
+        // ── Cập nhật clusterSumDist cho mọi node v ≠ u — O(N) ──
         // Khi u rời cluster from và vào cluster to:
-        //   sumDist[v][from] giảm đi dist(v, u) (u không còn trong from)
-        //   sumDist[v][to]   tăng lên dist(v, u) (u mới gia nhập to)
+        //   clusterSumDist[v][from] giảm đi dist(v, u) (u không còn trong from)
+        //   clusterSumDist[v][to]   tăng lên dist(v, u) (u mới gia nhập to)
         for (int v = 0; v < N; ++v) {
             if (v == u) continue;              // bỏ qua node u chính nó
-            const double d = distmat[v][u];    // khoảng cách từ v đến u
-            sumDist[v][from] -= d;             // v mất 1 neighbor (u) trong cluster from
-            sumDist[v][to]   += d;             // v có thêm 1 neighbor (u) trong cluster to
-        }
-
-        // ── Cập nhật sumDist của chính node u — O(|cluster|) ≈ O(N/K) ──
-        // Sau khi u chuyển cluster, sumDist[u][from] và sumDist[u][to] phải tính lại
-        // (vì từ góc nhìn của u, thành phần của 2 cluster đã thay đổi)
-        {
-            // sumDist[u][from]: tổng dist từ u đến mọi node còn lại trong from
-            // (u đã bị xóa khỏi members[from] ở trên → không tính dist(u, u))
-            double sf = 0.0;
-            for (int m : members[from]) sf += distmat[u][m];
-            sumDist[u][from] = sf;
-        }
-        {
-            // sumDist[u][to]: tổng dist từ u đến mọi node trong to
-            // (u đã được thêm vào members[to] ở trên → tính cả dist(u, u) = 0)
-            double st = 0.0;
-            for (int m : members[to]) st += distmat[u][m];
-            sumDist[u][to] = st;
+            double d = distmat[v][u];    // khoảng cách từ v đến u
+            clusterSumDist[v][from] -= d;             // v mất 1 neighbor (u) trong cluster from
+            clusterSumDist[v][to]   += d;             // v có thêm 1 neighbor (u) trong cluster to
         }
     };
 
@@ -392,9 +374,9 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
     //   deltaViol : thay đổi tổng vi phạm
     //
     // CẬP NHẬT tương tự applyRelocate nhưng cho 2 node cùng lúc:
-    //   curDist, assign, members, clusterWt, violCache, totalViol, sumDist
+    //   curDist, assign, members, clusterWeight, violCache, totalViol, clusterSumDist
     //
-    // TỔNG ĐỘ PHỨC TẠP: O(N) (bottleneck vẫn là sumDist)
+    // TỔNG ĐỘ PHỨC TẠP: O(N) (bottleneck vẫn là clusterSumDist)
     // ══════════════════════════════════════════════════════════════════════
 
     auto applySwap = [&](int u, int v, double deltaDist, double deltaViol) {
@@ -416,41 +398,40 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
         // Cluster cu: mất u nhưng nhận v → net = Wmat[v][t] - Wmat[u][t]
         // Cluster cv: mất v nhưng nhận u → net = Wmat[u][t] - Wmat[v][t]
         for (int t = 0; t < M_weights; ++t) {
-            clusterWt[cu][t] += Wmat[v][t] - Wmat[u][t]; // cu: đổi u lấy v
-            clusterWt[cv][t] += Wmat[u][t] - Wmat[v][t]; // cv: đổi v lấy u
+            clusterWeight[cu][t] += Wmat[v][t] - Wmat[u][t]; // cu: đổi u lấy v
+            clusterWeight[cv][t] += Wmat[u][t] - Wmat[v][t]; // cv: đổi v lấy u
         }
 
         // ── Cập nhật violCache và totalViol — O(M_weights) ──
-        const double oldVCu = violCache[cu]; // vi phạm cũ cluster cu
-        const double oldVCv = violCache[cv]; // vi phạm cũ cluster cv
+        double oldVCu = violCache[cu]; // vi phạm cũ cluster cu
+        double oldVCv = violCache[cv]; // vi phạm cũ cluster cv
         violCache[cu] = recomputeViol(cu);   // tính lại sau khi hoán đổi
         violCache[cv] = recomputeViol(cv);   // tính lại sau khi hoán đổi
         totalViol += (violCache[cu] - oldVCu) + (violCache[cv] - oldVCv);
         totalViol  = max(totalViol, 0.0); // đảm bảo không âm
 
-        // ── Cập nhật sumDist cho mọi node w ≠ u, v — O(N) ──
-        // Từ góc nhìn của node w bất kỳ:
-        //   sumDist[w][cu]: mất u (rời đi) nhưng nhận v (mới đến) → thay đổi = dv - du
-        //   sumDist[w][cv]: mất v (rời đi) nhưng nhận u (mới đến) → thay đổi = du - dv
-        for (int w = 0; w < N; ++w) {
-            if (w == u || w == v) continue;    // bỏ qua u và v (tính riêng bên dưới)
-            const double du = distmat[w][u];    // dist từ w đến u
-            const double dv = distmat[w][v];    // dist từ w đến v
-            sumDist[w][cu] += dv - du;          // cu: mất u, nhận v → +dv -du
-            sumDist[w][cv] += du - dv;          // cv: mất v, nhận u → +du -dv
+        // ── Cập nhật clusterSumDist cho mọi node w ≠ u, v — O(N) ──
+        // Từ góc nhìn của node a bất kỳ:
+        //   clusterSumDist[a][cu]: mất u (rời đi) nhưng nhận v (mới đến) → thay đổi = dv - du
+        //   clusterSumDist[a][cv]: mất v (rời đi) nhưng nhận u (mới đến) → thay đổi = du - dv
+        for (int a = 0; a < N; ++a) {
+            if (a == u || a == v) continue;    // bỏ qua u và v (tính riêng bên dưới)
+            double dau = distmat[a][u];    // dist từ a đến u
+            double dav = distmat[a][v];    // dist từ a đến v
+            clusterSumDist[a][cu] += dav - dau;          // cu: mất u, nhận v → +dv -du
+            clusterSumDist[a][cv] += dau - dav;          // cv: mất v, nhận u → +du -dv
         }
 
-        // ── Cập nhật sumDist của u và v với cả 2 cluster — O(N/K) ──
-        // Sau hoán đổi, u và v nằm ở cluster khác → phải tính lại sumDist với cu và cv
-        for (int k : {cu, cv}) {
-            double su = 0.0, sv = 0.0;
-            for (int m : members[k]) {       // duyệt mọi node m trong cluster k
-                su += distmat[u][m];          // dist từ u đến m trong cluster k
-                sv += distmat[v][m];          // dist từ v đến m trong cluster k
-            }
-            sumDist[u][k] = su; // tổng dist từ u đến mọi node trong cluster k
-            sumDist[v][k] = sv; // tổng dist từ v đến mọi node trong cluster k
-        }
+        // ── Cập nhật clusterSumDist của u và v với cả 2 cluster — O(N/K) ──
+        // Sau hoán đổi, u và v nằm ở cluster khác → phải tính lại clusterSumDist với cu và cv
+        // cu mất u nhận v → clusterSumDist[u][cu] += dist(u,v)
+        // cv mất v nhận u → clusterSumDist[u][cv] -= dist(u,v)
+        const double duv = distmat[u][v];
+        const double dvu = distmat[v][u];
+        clusterSumDist[u][cu] += duv;
+        clusterSumDist[u][cv] -= duv;
+        clusterSumDist[v][cv] += dvu;
+        clusterSumDist[v][cu] -= dvu;
     };
 
     // ══════════════════════════════════════════════════════════════════════
@@ -475,7 +456,7 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
     // ══════════════════════════════════════════════════════════════════════
 
     const double SCORE_EPS = 1e-9;          // ngưỡng cải thiện: score < -SCORE_EPS → chấp nhận
-    const int EXTRA_RANDOM = min(30, N);    // số cặp ngẫu nhiên thử thêm trong fallback của Phase B
+    const int EXTRA_RANDOM = 10;    // số cặp ngẫu nhiên thử thêm trong fallback của Phase B
 
     // Thứ tự duyệt đỉnh (xáo trộn mỗi pass để tránh bias)
     vector<int> nodeOrder(N);
@@ -516,15 +497,10 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
             if ((int)members[from].size() <= 1) continue;
 
             // Khởi tạo ứng viên tốt nhất cho u
-            int    bestTo    = -1;         // cluster đích tốt nhất (chưa tìm được)
-            double bestScore = -SCORE_EPS; // ngưỡng: chỉ chấp nhận move có score < -SCORE_EPS
+            int    bestTo    = -1;         // cluster đích tốt nhất
+            double bestScore = -SCORE_EPS; // score âm tốt nhất (giảm hàm chi phí tổng)
             double bestDelta = 0.0;        // deltaDist của bestTo (dùng khi apply)
             double bestDViol = 0.0;        // deltaViol của bestTo (dùng khi apply)
-
-            // Tính sẵn một phần của deltaDist để tái sử dụng trong vòng K
-            // deltaDist(u, from→to) = sumDist[u][to] - sumDist[u][from]
-            //                       = sumDist[u][to] + distBase
-            const double distBase = -sumDist[u][from]; // âm của sumDist[u][from]
 
             // Duyệt hết K cluster để tìm cluster đích tốt nhất cho u
             for (int to = 0; to < K; ++to)
@@ -533,19 +509,19 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
 
                 // ── Tính deltaDist(u, from→to) ──
                 // Sau khi chuyển u từ from sang to:
-                //   intra-dist từ u với cluster from = 0 (u không còn trong from)
-                //   intra-dist từ u với cluster to   = sumDist[u][to] (u gia nhập to)
-                // Chênh lệch = sumDist[u][to] - sumDist[u][from]
-                const double deltaDist = sumDist[u][to] + distBase;
+                //   intra-dist từ u với cluster from = clusterSumDist[u][from] (u đang ở from)
+                //   intra-dist từ u với cluster to   = clusterSumDist[u][to] (u gia nhập to)
+                // Chênh lệch = clusterSumDist[u][to] - clusterSumDist[u][from]
+                const double deltaDist = clusterSumDist[u][to] - clusterSumDist[u][from];
 
                 // ── Tính deltaViol(u, from→to) ──
                 // Tính tổng vi phạm MỚI của 2 cluster bị ảnh hưởng (from và to)
-                // sau khi giả sử u được chuyển (không thực sự apply)
+                // sau khi giả sử u được chuyển
                 double vfAfter = 0.0; // vi phạm mới của cluster from (sau khi mất u)
                 double vtAfter = 0.0; // vi phạm mới của cluster to   (sau khi nhận u)
                 for (int t = 0; t < M_weights; ++t) {
-                    const double sf = clusterWt[from][t] - Wmat[u][t]; // tổng W của from sau khi mất u
-                    const double st = clusterWt[to][t]   + Wmat[u][t]; // tổng W của to sau khi nhận u
+                    const double sf = clusterWeight[from][t] - Wmat[u][t]; // tổng W của from sau khi mất u
+                    const double st = clusterWeight[to][t]   + Wmat[u][t]; // tổng W của to sau khi nhận u
                     // Vi phạm lower bound của cluster from
                     if      (sf < WLmat[from][t]) vfAfter += WLmat[from][t] - sf;
                     // Vi phạm upper bound của cluster from
@@ -634,15 +610,15 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
                 // Sau khi u→cv và v→cu:
                 //   u mất dist với cu-members, nhận dist với cv-members
                 //   v mất dist với cv-members, nhận dist với cu-members
-                //   Tuy nhiên phải trừ đi dist(u,v) đã tính 2 lần (từ sumDist[u] và sumDist[v])
+                //   Tuy nhiên phải trừ đi dist(u,v) đã tính 2 lần (từ clusterSumDist[u] và clusterSumDist[v])
                 //   và cộng lại đúng 1 lần (dist(u,v) trong intra-cluster mới)
                 //   Công thức đầy đủ:
-                //     deltaDist = (sumDist[u][cv] - sumDist[u][cu])   (u chuyển từ cu→cv)
-                //               + (sumDist[v][cu] - sumDist[v][cv])   (v chuyển từ cv→cu)
+                //     deltaDist = (clusterSumDist[u][cv] - clusterSumDist[u][cu])   (u chuyển từ cu→cv)
+                //               + (clusterSumDist[v][cu] - clusterSumDist[v][cv])   (v chuyển từ cv→cu)
                 //               - distmat[u][v] - distmat[v][u]       (loại bỏ đếm đôi)
                 const double deltaDist =
-                    (sumDist[u][cv] - sumDist[u][cu])
-                  + (sumDist[v][cu] - sumDist[v][cv])
+                    (clusterSumDist[u][cv] - clusterSumDist[u][cu])
+                  + (clusterSumDist[v][cu] - clusterSumDist[v][cv])
                   - distmat[u][v] - distmat[v][u];
 
                 // ── Tính deltaViol(swap u↔v) ──
@@ -650,8 +626,8 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
                 double vcuAfter = 0.0; // vi phạm mới cluster cu
                 double vcvAfter = 0.0; // vi phạm mới cluster cv
                 for (int t = 0; t < M_weights; ++t) {
-                    const double scu = clusterWt[cu][t] - Wmat[u][t] + Wmat[v][t]; // W mới của cu
-                    const double scv = clusterWt[cv][t] - Wmat[v][t] + Wmat[u][t]; // W mới của cv
+                    const double scu = clusterWeight[cu][t] - Wmat[u][t] + Wmat[v][t]; // W mới của cu
+                    const double scv = clusterWeight[cv][t] - Wmat[v][t] + Wmat[u][t]; // W mới của cv
                     if      (scu < WLmat[cu][t]) vcuAfter += WLmat[cu][t] - scu; // vi phạm lower cu
                     else if (scu > WUmat[cu][t]) vcuAfter += scu - WUmat[cu][t]; // vi phạm upper cu
                     if      (scv < WLmat[cv][t]) vcvAfter += WLmat[cv][t] - scv; // vi phạm lower cv

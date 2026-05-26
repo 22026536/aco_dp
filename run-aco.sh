@@ -1,23 +1,56 @@
 #!/bin/bash
+# =============================================================================
+# run-aco.sh — Chạy ACO một lần trên một instance
+#
+# Cách dùng:
+#   ./run-aco.sh <instance_path> [max_time] [max_iter]
+#
+# Ví dụ:
+#   ./run-aco.sh data/inst_100_5.txt 300 5000
+# =============================================================================
 
-instance_path="$1"
-if [ -z "$instance_path" ]; then
-  echo "❌ Instance path for ACO not found!"
-  exit 1
+set -euo pipefail
+
+# ─── Tham số đầu vào ─────────────────────────────────────────────────────────
+INSTANCE_PATH="${1:-}"
+MAX_TIME="${2:-1500}"
+MAX_ITER="${3:-10000}"
+
+if [ -z "$INSTANCE_PATH" ]; then
+    echo "❌  Thiếu đường dẫn instance!"
+    echo "    Cách dùng: $0 <instance_path> [max_time] [max_iter]"
+    exit 1
 fi
 
-# Lấy tên instance (bỏ đường dẫn và phần mở rộng)
-instance_name=$(basename "$instance_path" | sed 's/\.[^.]*$//')
+if [ ! -f "$INSTANCE_PATH" ]; then
+    echo "❌  Không tìm thấy file: $INSTANCE_PATH"
+    exit 1
+fi
 
-rm -rf results/logs
-mkdir -p "results/logs/${instance_name}/evolution"
-mkdir -p "results/logs/${instance_name}/solutions"
-mkdir -p "results/logs/${instance_name}/objectives"
+if [ ! -f "./MCGP" ]; then
+    echo "❌  Không tìm thấy binary ./MCGP (cần compile trước)"
+    exit 1
+fi
 
-config_params='--schema 2P-ACO-DP --version rnd-grd --m 8 --block 38 --delta 5 --exploration first --debug 0'
+# ─── Tên instance ─────────────────────────────────────────────────────────────
+INSTANCE_NAME=$(basename "$INSTANCE_PATH" | sed 's/\.[^.]*$//')
 
-time_limit="${2:-1200}"
+# ─── Chuẩn bị thư mục log ────────────────────────────────────────────────────
+if [ -d "results/logs/${INSTANCE_NAME}" ]; then
+    chmod -R u+rwx "results/logs/${INSTANCE_NAME}" 2>/dev/null || true
+    rm -rf "results/logs/${INSTANCE_NAME}"
+fi
+mkdir -p "results/logs/${INSTANCE_NAME}/evolution"
+mkdir -p "results/logs/${INSTANCE_NAME}/solutions"
+mkdir -p "results/logs/${INSTANCE_NAME}/objectives"
 
-fixed_params="--termination_criteria tcpu --termination_value $time_limit --logs 1 --move ext --efficient 1"
+echo "▶  Chạy ACO trên instance : $INSTANCE_NAME"
+echo "   Time limit             : ${MAX_TIME}s"
+echo "   Max iterations         : ${MAX_ITER}"
+echo ""
 
-./MCGP --instance "$instance_path" --seed 998244353 $fixed_params $config_params
+./MCGP \
+    --instance          "$INSTANCE_PATH" \
+    --termination_value "$MAX_TIME"      \
+    --iter_value        "$MAX_ITER"      \
+    --logs              10

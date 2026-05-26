@@ -1,20 +1,22 @@
 
- Structure: There are multiple islands, each containing one or more metaheuristic GRASP algorithms (by default, the code assigns one metaheuristic per island; this cannot be changed in the configuration file and must be modified directly in the code).
+Algorithm: Ant Colony Optimization (ACO) for the MCGP problem.
+  Each iteration, a colony of ants constructs independent solutions
+  guided by a pheromone matrix. Each solution is refined by
+  Local Search and Tabu Search before pheromone update.
+  The global best solution is tracked continuously and saved to disk.
 
- Operation: For each global iteration, one iteration is executed on every island. When an island performs an iteration, it means that all metaheuristics within that island also execute an iteration. When a metaheuristic performs an iteration, it refers to running the entire algorithm process once — including generating a new solution, validating it, and optimizing it.
+Run configuration:
+  Termination criteria : time = 60
+  Max iterations       : 10000
+  Log frequency        : every 10 iteration(s)
+  Output directory     : results/logs
 
-Algorithm parameters:
-  - Search method: grasp
-  - Termination criteria: tcpu = 60
-  - Number of islands: 1
-  - Migration rate: 1
-  - Logs frequency: 1
-Meta-heuristic parameters:
-  - Schema: 2P-ACO-DP
-  - GRASP version: rnd-grd
-  - Alpha: 0.5
-  - Number of alphas (m): 8
-  - Block size: 38
-  - Delta iterations: 5
+Instance:
+  Path     : normalized_instances/tsplib/eil101_20_4.txt
+  Type     : t  (tsp-like — Euclidean coordinates)
+  Nodes    : 101
+  Clusters : 20
+  Weights  : 4 dimension(s)
+
 Final solution is valid.
-Final cost = 2125.46
+Final cost = 2121.36

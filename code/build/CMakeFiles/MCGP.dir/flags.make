@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/mnt/d/khoa_luan/aco-dp/code/src
 
-CXX_FLAGS =  -fopenmp -O3
+CXX_FLAGS =  -fopenmp -O3 -std=gnu++17
 
