@@ -225,11 +225,11 @@ static void ts_core(
 
     // ── Khởi tạo Dynamic Penalty ──
     double pen = PENALTY_SCALE;                    // Giá trị ban đầu của hệ số phạt
-    const double PEN_UP     = 1.5;                 // Hệ số tăng penalty khi liên tục infeasible
-    const double PEN_DOWN   = 1.5;                 // Hệ số giảm penalty khi feasible + kẹt
+    const double PEN_UP     = 2.0;                 // Hệ số tăng penalty khi liên tục infeasible
+    const double PEN_DOWN   = 2.0;                 // Hệ số giảm penalty khi feasible + kẹt
     const double PEN_MIN    = PENALTY_SCALE * 0.2; // Giới hạn dưới của penalty
     const double PEN_MAX    = PENALTY_SCALE * 5.0; // Giới hạn trên của penalty
-    const int    gradSteps  = 10;                  // Số bước infeasible liên tiếp trước khi tăng pen
+    const int    gradSteps  = min(10, max(N / 20, 10));                  // Số bước infeasible liên tiếp trước khi tăng pen
     int stepsInfeas = 0;                           // Đếm số bước liên tiếp ở trạng thái infeasible
 
     // Lambda updatePen: gọi sau mỗi bước có move được thực thi.
@@ -454,11 +454,15 @@ static void ts_core(
                 }
             }
 
-            // Đánh giá thêm RAND_TRIES cặp swap ngẫu nhiên để đa dạng hóa tìm kiếm
-            const int RAND_TRIES = min(N, 10); // Tối đa 10 cặp ngẫu nhiên
-            for (int r = 0; r < RAND_TRIES; ++r) {
-                int u = randNodeDist(rng), v = randNodeDist(rng); // Chọn 2 đỉnh ngẫu nhiên
-                evaluateSwap(u, v);
+            // Đánh giá thêm N × Rand_tries cặp swap ngẫu nhiên để đa dạng hóa tìm kiếm:
+            // Duyệt từng đỉnh u trong nodeOrder (N đỉnh), mỗi đỉnh thử swap với
+            // Rand_tries đỉnh v ngẫu nhiên → tổng N × Rand_tries lần thử.
+            const int Rand_tries = 10;
+            for (int u : nodeOrder) {
+                for (int r = 0; r < Rand_tries; ++r) {
+                    int v = randNodeDist(rng); // Chọn đỉnh v ngẫu nhiên trong [0, N-1]
+                    evaluateSwap(u, v);
+                }
             }
         }
 
@@ -694,25 +698,31 @@ void iterated_tabu_search(ACOSolution &sol, mt19937_64 &rng)
     const int tabuDelta = max(2, tabuBase / 3);    // Biên độ ngẫu nhiên: tối thiểu 2
 
     // ── Xây dựng Candidate List (CL) ──
-    // CL giới hạn phạm vi tìm kiếm swap về các đỉnh gần nhất để tiết kiệm thời gian.
-    const int CL_SIZE = min(20, N - 1); // Mỗi đỉnh có tối đa 20 hàng xóm trong CL
-    vector<vector<int>> cl(N); // cl[i] = danh sách đỉnh gần i nhất
+    const vector<vector<int>> *clPtr = nullptr;  // con trỏ tới candidate list sẽ dùng
+    vector<vector<int>> localCL_fallback;        // CL dự phòng (chỉ xây nếu cần)
 
-    if (!globalCL.empty() && (int)globalCL.size() == N) {
-        cl = globalCL; // Tái sử dụng CL đã xây dựng từ ACO (tránh tính lại)
+    if (!globalCL.empty()) {
+        // globalCL hợp lệ (đã xây sẵn trong ACO_tuned) → dùng trực tiếp
+        clPtr = &globalCL;
     } else {
-        // Tự xây dựng CL từ ma trận khoảng cách
-        vector<pair<double, int>> tmp(N);
+        // globalCL chưa có hoặc kích thước sai → xây CL cục bộ
+        const int CL_SIZE_LOCAL = min(20, N - 1); // mỗi node có tối đa 20 ứng viên
+        localCL_fallback.resize(N);               // kích thước N × CL_SIZE_LOCAL
+        vector<pair<double, int>> tmp(N);          // mảng tạm để sort (dist, node_id)
         for (int i = 0; i < N; ++i) {
-            // Tính tổng khoảng cách 2 chiều (i→j + j→i) để đảm bảo tính đối xứng
+            // Tính khoảng cách trung bình từ i đến mọi node j
             for (int j = 0; j < N; ++j)
-                tmp[j] = {(distmat[i][j] + distmat[j][i]), j};
-            tmp[i].first = 1e300;  // Loại i ra khỏi CL của chính nó
-            partial_sort(tmp.begin(), tmp.begin() + CL_SIZE, tmp.end()); // Lấy CL_SIZE nhỏ nhất
-            cl[i].resize(CL_SIZE);
-            for (int r = 0; r < CL_SIZE; ++r) cl[i][r] = tmp[r].second; // Lưu index đỉnh
+                tmp[j] = {(distmat[i][j] + distmat[j][i]), j}; // dist(i,j)
+            tmp[i].first = 1e300; // loại bỏ node i chính nó (đặt dist = vô cực)
+            // Chọn CL_SIZE_LOCAL node gần nhất bằng partial_sort (nhanh hơn sort đầy đủ)
+            partial_sort(tmp.begin(), tmp.begin() + CL_SIZE_LOCAL, tmp.end());
+            localCL_fallback[i].resize(CL_SIZE_LOCAL);
+            for (int r = 0; r < CL_SIZE_LOCAL; ++r)
+                localCL_fallback[i][r] = tmp[r].second; // lưu index node (không lưu dist)
         }
+        clPtr = &localCL_fallback; // trỏ đến CL vừa xây
     }
+    const vector<vector<int>> &cl = *clPtr; // candidate list toàn bộ đỉnh
 
     // ── Tabu list — cục bộ từng vòng core, KHÔNG shared ──
     //

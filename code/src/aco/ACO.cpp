@@ -71,7 +71,6 @@ vector<vector<double>> distmat; // distmat[i][j] = khoảng cách từ node i đ
                                 //   node cùng cluster
 
 vector<vector<int>> globalCL;   // candidate list toàn cục
-const int GLOBAL_CL_SIZE = 20;  // só lượng candidate list cho mỗi đỉnh
 
 double PENALTY_SCALE = 10000.0; // Hệ số phạt cho vi phạm ràng buộc trọng số
                                 //   cost = intra_distance + PENALTY_SCALE * total_violation
@@ -589,6 +588,7 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
     //         → 1 đơn vị vi phạm trọng số bị phạt x đơn vị distance
     PENALTY_SCALE = ((N / K)) * (meanDist / meanWeight);
 
+    int GLOBAL_CL_SIZE = min(30, N / 10);
     // Build candidate list
     globalCL.assign(N, vector<int>(GLOBAL_CL_SIZE));
     {
@@ -613,7 +613,7 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
                                                         // min(N/2, 40): scale theo bài toán nhưng cap ở 40
                                                         // Nhiều ant → explore tốt hơn nhưng chậm hơn
 
-    double alpha = 1.0;                                 // hệ số importance của PHEROMONE
+    double alpha = 1.5;                                 // hệ số importance của PHEROMONE
                                                         // alpha lớn → kiến ưu tiên đường có nhiều pheromone
                                                         // (exploitation > exploration)
 
@@ -635,7 +635,7 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
     const double PHI_MAX = 1.0;                         // giới hạn trên vết mùi (tránh quá lớn → bias cực)
 
     double Q_max = 0.95;                                // xác suất exploitation tối đa
-    double Q_min = 0.025;                                // xác suất exploitation tối thiểu
+    double Q_min = 0.05;                                // xác suất exploitation tối thiểu
     double Q0 = Q_max;                                  // xác suất exploitation hiện tại
                                                         // Q0 cao → kiến thường chọn cluster tốt nhất (exploit)
                                                         // Q0 thấp → kiến chọn theo roulette wheel (explore)
@@ -654,10 +654,10 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
     int lsMaxMoves = 1000;                              // giới hạn moves mỗi lần LS
 
     // Số ant được Tabu Search (subset của lsTop)
-    int tsTop = 5;                                      // số ant được chọn để tabu search
+    int tsTop = 1;                                      // số ant được chọn để tabu search
 
     // Điều kiện chạy Tabu Search
-    int tsInterval = 10;                                // chạy TS mỗi x iteration
+    int tsInterval = 2;                                // chạy TS mỗi x iteration
 
     // ─────────────────────────────────────────────────────────────────────
     // BƯỚC 5: KHỞI TẠO BIẾN TRẠNG THÁI
@@ -869,7 +869,7 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
                             // Dùng log để phạt nhẹ: vi phạm gấp đôi span chỉ mất ~0.1 fitness.
                             // Local search sẽ sửa → không cần phạt quá nặng ở đây.
                             double over = (after - hi) / span;      // vi phạm tính theo span
-                            fitness_t = 3.0 / (1.0 + log1p(over));  // [0.3 → 0 chậm]
+                            fitness_t = 0.3 / (1.0 + log1p(over));  // [0.3 → 0 chậm]
                         }
                         else if (after < lo)
                         {
@@ -1271,7 +1271,7 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
         // LOGGING (mỗi 10 iteration)
         // ═════════════════════════════════════════════════════════════════
 
-        if (iter % 10 == 0)                              // log mỗi 10 iteration
+        if (iter % 1 == 0)                              // log mỗi 10 iteration
         {
             // Best local ant
             auto bestThisIter = ants[order[0]];

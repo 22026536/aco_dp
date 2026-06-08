@@ -29,10 +29,8 @@
 #include "Local_search.h"
 
 // Tham chiếu đến danh sách ứng viên (candidate list) toàn cục được xây trong ACO_tuned().
-// globalCL[i] = danh sách GLOBAL_CL_SIZE node gần node i nhất (theo trung bình dist).
 // Được dùng trong Phase B (Swap) để thu hẹp lân cận cần xét.
 extern vector<vector<int>> globalCL;
-extern int                 GLOBAL_CL_SIZE; // số phần tử mỗi hàng của globalCL (= 20)
 
 // ═══════════════════════════════════════════════════════════════════════════
 // HÀM CHÍNH: local_search
@@ -168,11 +166,11 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
     // ══════════════════════════════════════════════════════════════════════
 
     double localPenalty            = PENALTY_SCALE;       // bắt đầu bằng hệ số phạt toàn cục
-    const double PEN_UP            = 1.5;                 // hệ số tăng penalty mỗi gradSteps move khi infeasible
+    const double PEN_UP            = 2.0;                 // hệ số tăng penalty mỗi gradSteps move khi infeasible
     const double PEN_DOWN          = 2.0;                 // hệ số tăng penalty giảm khi kẹt tại feasible
     const double PEN_MIN           = PENALTY_SCALE * 0.2; // ngưỡng dưới: penalty không giảm dưới đây
     const double PEN_MAX           = PENALTY_SCALE * 5.0; // ngưỡng trên: penalty không tăng vượt đây
-    const int    gradSteps         = 5;                   // số move giữa 2 lần tăng penalty
+    const int    gradSteps         = min(20, max(N/20, 5));                   // số move giữa 2 lần tăng penalty
 
     int stepsInfeas  = 0; // đếm move infeasible cho lần tăng penalty tiếp theo
 
@@ -225,11 +223,11 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
     //       → đã thay đổi penalty 2 lần mà vẫn kẹt → dừng thuật toán
     // ══════════════════════════════════════════════════════════════════════
 
-    // PATIENCE = 3: dừng sau 3 pass idle liên tiếp không có move.
+    // PATIENCE = n: dừng sau n pass idle liên tiếp không có move.
     // Tức là: pass idle 1 → đổi penalty, pass idle 2 → đổi penalty lần 2,
-    //         pass idle 3 → kết thúc (đã thay đổi penalty 2 lần mà vẫn kẹt).
+    //         pass idle n → kết thúc (đã thay đổi penalty n-1 lần mà vẫn kẹt).
     const int PATIENCE            = 3;
-    const int MAX_NO_FEAS_IMPROVE = 25;            // số move tối đa không cải thiện feasBest
+    const int MAX_NO_FEAS_IMPROVE = min(100, max(N/4, 25));            // số move tối đa không cải thiện feasBest
 
     int noMoveStreak  = 0; // số pass liên tiếp không có move nào được apply
     int noFeasImprove = 0; // số move liên tiếp không cải thiện feasBest
@@ -262,7 +260,7 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
     const vector<vector<int>> *clPtr = nullptr;  // con trỏ tới candidate list sẽ dùng
     vector<vector<int>> localCL_fallback;        // CL dự phòng (chỉ xây nếu cần)
 
-    if (!globalCL.empty() && (int)globalCL.size() == N) {
+    if (!globalCL.empty()) {
         // globalCL hợp lệ (đã xây sẵn trong ACO_tuned) → dùng trực tiếp
         clPtr = &globalCL;
     } else {
@@ -284,6 +282,11 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
         clPtr = &localCL_fallback; // trỏ đến CL vừa xây
     }
     const vector<vector<int>> &cl = *clPtr; // alias tiện dùng
+
+    // LS_CL_SIZE: số node đầu tiên trong CL mà local search được phép duyệt.
+    // chỉ cần LS_CL_SIZE node gần nhất để tiết kiệm chi phí tính toán.
+    // Nếu CL thực tế nhỏ hơn 20 (ví dụ fallback với N nhỏ) → dùng hết.
+    const int LS_CL_SIZE = min(20, (int)cl[0].size());
 
     // ══════════════════════════════════════════════════════════════════════
     // BƯỚC 6: HÀM TIỆN ÍCH
@@ -456,7 +459,7 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
     // ══════════════════════════════════════════════════════════════════════
 
     const double SCORE_EPS = 1e-9;          // ngưỡng cải thiện: score < -SCORE_EPS → chấp nhận
-    const int EXTRA_RANDOM = 10;    // số cặp ngẫu nhiên thử thêm trong fallback của Phase B
+    const int EXTRA_RANDOM = 5;    // số cặp ngẫu nhiên thử thêm trong fallback của Phase B
 
     // Thứ tự duyệt đỉnh (xáo trộn mỗi pass để tránh bias)
     vector<int> nodeOrder(N);
@@ -592,83 +595,58 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
         // First-improvement: swap đầu tiên cải thiện → apply ngay, kết thúc phase.
         // ══════════════════════════════════════════════════════════════════
 
-        // Duyệt N đỉnh theo cùng nodeOrder với Phase A
-        for (int ii = 0; ii < N && !shouldStop() && !improved; ++ii)
-        {
-            const int u  = nodeOrder[ii]; // đỉnh đang xét
-            const int cu = assign[u];     // cluster hiện tại của u
+        // ── Lambda trySwap đặt ngoài vòng for → dùng chung cho B1 và B2 ──
+        auto trySwap = [&](int u, int v) -> bool {
+            if (v == u) return false;
+            const int cu = assign[u];
+            const int cv = assign[v];
+            if (cu == cv) return false;
 
-            // ── Lambda nội bộ: thử swap u ↔ v ──
-            // Tính score, kiểm tra cải thiện, apply nếu đạt ngưỡng.
-            // Trả về true nếu swap được apply (dừng tìm kiếm thêm).
-            auto trySwap = [&](int v) -> bool {
-                if (v == u) return false;   // không swap node với chính nó
-                const int cv = assign[v];   // cluster của v
-                if (cu == cv) return false; // không swap 2 node cùng cluster
+            const double deltaDist =
+                (clusterSumDist[u][cv] - clusterSumDist[u][cu])
+              + (clusterSumDist[v][cu] - clusterSumDist[v][cv])
+              - distmat[u][v] - distmat[v][u];
 
-                // ── Tính deltaDist(swap u↔v) ──
-                // Sau khi u→cv và v→cu:
-                //   u mất dist với cu-members, nhận dist với cv-members
-                //   v mất dist với cv-members, nhận dist với cu-members
-                //   Tuy nhiên phải trừ đi dist(u,v) đã tính 2 lần (từ clusterSumDist[u] và clusterSumDist[v])
-                //   và cộng lại đúng 1 lần (dist(u,v) trong intra-cluster mới)
-                //   Công thức đầy đủ:
-                //     deltaDist = (clusterSumDist[u][cv] - clusterSumDist[u][cu])   (u chuyển từ cu→cv)
-                //               + (clusterSumDist[v][cu] - clusterSumDist[v][cv])   (v chuyển từ cv→cu)
-                //               - distmat[u][v] - distmat[v][u]       (loại bỏ đếm đôi)
-                const double deltaDist =
-                    (clusterSumDist[u][cv] - clusterSumDist[u][cu])
-                  + (clusterSumDist[v][cu] - clusterSumDist[v][cv])
-                  - distmat[u][v] - distmat[v][u];
-
-                // ── Tính deltaViol(swap u↔v) ──
-                // Tính vi phạm MỚI của cluster cu (mất u, nhận v) và cv (mất v, nhận u)
-                double vcuAfter = 0.0; // vi phạm mới cluster cu
-                double vcvAfter = 0.0; // vi phạm mới cluster cv
-                for (int t = 0; t < M_weights; ++t) {
-                    const double scu = clusterWeight[cu][t] - Wmat[u][t] + Wmat[v][t]; // W mới của cu
-                    const double scv = clusterWeight[cv][t] - Wmat[v][t] + Wmat[u][t]; // W mới của cv
-                    if      (scu < WLmat[cu][t]) vcuAfter += WLmat[cu][t] - scu; // vi phạm lower cu
-                    else if (scu > WUmat[cu][t]) vcuAfter += scu - WUmat[cu][t]; // vi phạm upper cu
-                    if      (scv < WLmat[cv][t]) vcvAfter += WLmat[cv][t] - scv; // vi phạm lower cv
-                    else if (scv > WUmat[cv][t]) vcvAfter += scv - WUmat[cv][t]; // vi phạm upper cv
-                }
-                // deltaViol = (vi phạm mới của cu + cv) - (vi phạm cũ của cu + cv)
-                const double deltaViol = (vcuAfter + vcvAfter)
-                                       - (violCache[cu] + violCache[cv]);
-                // Tính score
-                const double score     = deltaDist + localPenalty * deltaViol;
-
-                if (score >= -SCORE_EPS) return false; // không cải thiện → bỏ qua
-
-                // Có cải thiện → apply swap
-                applySwap(u, v, deltaDist, deltaViol);
-                ++moveCount;     // tăng đếm move
-                improved = true; // đánh dấu phase B tìm được move
-
-                updatePenalty(); // cập nhật penalty
-                // Cập nhật feasBest nếu nghiệm hiện tại tốt hơn
-                if (tryUpdateFeasBest()) noFeasImprove = 0;
-                else if (feasFound)      ++noFeasImprove;
-
-                return true; // thông báo đã apply swap
-            };
-
-            // ── Thử swap u với mỗi v trong cl[u] (candidate list) ──
-            // cl[u] chứa GLOBAL_CL_SIZE node gần u nhất → ưu tiên vì swap thường có lợi nhất
-            bool foundSwap = false;
-            for (int v : cl[u]) {
-                if (shouldStop()) break;              // kiểm tra điều kiện dừng
-                if (trySwap(v)) { foundSwap = true; break; } // first-improvement: dừng ngay
+            double vcuAfter = 0.0, vcvAfter = 0.0;
+            for (int t = 0; t < M_weights; ++t) {
+                const double scu = clusterWeight[cu][t] - Wmat[u][t] + Wmat[v][t];
+                const double scv = clusterWeight[cv][t] - Wmat[v][t] + Wmat[u][t];
+                if      (scu < WLmat[cu][t]) vcuAfter += WLmat[cu][t] - scu;
+                else if (scu > WUmat[cu][t]) vcuAfter += scu - WUmat[cu][t];
+                if      (scv < WLmat[cv][t]) vcvAfter += WLmat[cv][t] - scv;
+                else if (scv > WUmat[cv][t]) vcvAfter += scv - WUmat[cv][t];
             }
+            const double deltaViol = (vcuAfter + vcvAfter) - (violCache[cu] + violCache[cv]);
+            const double score     = deltaDist + localPenalty * deltaViol;
 
-            // ── Fallback: thử EXTRA_RANDOM cặp ngẫu nhiên ──
-            // Chỉ chạy nếu CL không tìm được swap.
-            // Mở rộng lân cận sang node xa (ngoài CL) → thoát local opt mà CL bỏ lỡ.
-            if (!foundSwap && !shouldStop()) {
+            if (score >= -SCORE_EPS) return false;
+
+            applySwap(u, v, deltaDist, deltaViol);
+            ++moveCount; improved = true;
+            updatePenalty();
+            if (tryUpdateFeasBest()) noFeasImprove = 0;
+            else if (feasFound)      ++noFeasImprove;
+            return true;
+        };
+
+        // ── Giai đoạn B1: Duyệt hết N đỉnh × LS_CL_SIZE node đầu tiên của cl[u] ──
+        for (int ii = 0; ii < N && !shouldStop() && !improved; ++ii) {
+            const int u = nodeOrder[ii];
+            for (int r = 0; r < LS_CL_SIZE; ++r) {
+                if (shouldStop()) break;
+                if (trySwap(u, cl[u][r])) break; // first-improvement trong 20 node gần nhất của u
+            }
+        }
+
+        // ── Giai đoạn B2: Fallback N×10 cặp ngẫu nhiên ──
+        // Chỉ chạy khi B1 (toàn bộ N đỉnh với CL) không tìm được move nào.
+        // Mỗi đỉnh thử thêm EXTRA_RANDOM đỉnh ngẫu nhiên → tổng tối đa N×EXTRA_RANDOM lần thử.
+        if (!improved) {
+            for (int ii = 0; ii < N && !shouldStop() && !improved; ++ii) {
+                const int u = nodeOrder[ii];
                 for (int r = 0; r < EXTRA_RANDOM; ++r) {
                     if (shouldStop()) break;
-                    if (trySwap(randNode(rng))) break; // first-improvement: dừng ngay khi tìm được
+                    if (trySwap(u, randNode(rng))) break; // first-improvement cho đỉnh này
                 }
             }
         }
