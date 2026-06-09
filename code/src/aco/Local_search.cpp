@@ -58,6 +58,14 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
     auto &clusterWeight = sol.clusterWeight;         // clusterWeight[k][t] = tổng trọng số chiều t của cluster k
     auto &clusterSumDist   = sol.clusterSumDist;     // clusterSumDist[i][k]   = tổng dist(i, j) với mọi j ∈ cluster k
 
+    // ── Bảng tra vị trí: memberPos[i] = index của node i trong members[assign[i]] ──
+    // Dùng để eraseNode chạy O(1) thay vì O(N/K) với find().
+    // Bất biến: members[assign[i]][memberPos[i]] == i luôn đúng sau mỗi move.
+    vector<int> memberPos(N, 0);
+    for (int k = 0; k < K; ++k)
+        for (int pos = 0; pos < (int)members[k].size(); ++pos)
+            memberPos[members[k][pos]] = pos;
+
     // ══════════════════════════════════════════════════════════════════════
     // BƯỚC 1: VIOLATION CACHE
     //
@@ -282,7 +290,6 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
         clPtr = &localCL_fallback; // trỏ đến CL vừa xây
     }
     const vector<vector<int>> &cl = *clPtr; // alias tiện dùng
-
     // LS_CL_SIZE: số node đầu tiên trong CL mà local search được phép duyệt.
     // chỉ cần LS_CL_SIZE node gần nhất để tiết kiệm chi phí tính toán.
     // Nếu CL thực tế nhỏ hơn 20 (ví dụ fallback với N nhỏ) → dùng hết.
@@ -292,15 +299,23 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
     // BƯỚC 6: HÀM TIỆN ÍCH
     // ══════════════════════════════════════════════════════════════════════
 
-    // eraseNode: xóa node khỏi danh sách members của cluster — O(|members|)
-    // Dùng "swap with back + pop_back" để tránh dịch chuyển phần tử → O(1) thực tế.
-    // vec: members[k], node: node cần xóa
-    auto eraseNode = [](vector<int> &vec, int node) {
-        auto it = find(vec.begin(), vec.end(), node); // tìm vị trí node
-        if (it != vec.end()) {
-            *it = vec.back(); // ghi đè bằng phần tử cuối (O(1), không giữ thứ tự)
-            vec.pop_back();   // xóa phần tử cuối (đã dịch lên trên)
-        }
+    // eraseNode: xóa node khỏi members[k] trong O(1) nhờ bảng tra memberPos.
+    //
+    // Chiến lược "swap-with-back + pop_back":
+    //   1. Lấy vị trí pos = memberPos[node] (O(1)).
+    //   2. Ghi đè members[k][pos] bằng phần tử cuối (back).
+    //   3. Cập nhật memberPos[back] = pos để bảng tra vẫn đúng.
+    //   4. Pop phần tử cuối.
+    //
+    // Không cần find() — toàn bộ hàm chạy O(1).
+    auto eraseNode = [&](int k, int node) {
+        auto &vec  = members[k];
+        int   pos  = memberPos[node];          // vị trí của node trong vec — O(1)
+        int   back = vec.back();               // phần tử cuối vec
+        vec[pos]         = back;               // ghi đè node bằng back
+        memberPos[back]  = pos;                // cập nhật vị trí của back trong bảng tra
+        vec.pop_back();                        // xóa phần tử cuối (đã chuyển lên pos)
+        // memberPos[node] không cần xóa — node sẽ được gán pos mới khi push vào cluster khác
     };
 
     // ══════════════════════════════════════════════════════════════════════
@@ -333,7 +348,8 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
 
         // ── Cập nhật assign và members ──
         assign[u] = to;                  // node u chuyển sang cluster to
-        eraseNode(members[from], u);     // xóa u khỏi danh sách cluster from — O(|members_from|)
+        eraseNode(from, u);              // xóa u khỏi members[from] — O(1) nhờ memberPos
+        memberPos[u] = (int)members[to].size(); // vị trí mới của u trong members[to]
         members[to].push_back(u);        // thêm u vào danh sách cluster to — O(1)
 
         // ── Cập nhật tổng trọng số mỗi cluster — O(M_weights) ──
@@ -392,8 +408,11 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
         // ── Cập nhật assign và members ──
         assign[u] = cv;                          // u chuyển sang cluster cv
         assign[v] = cu;                          // v chuyển sang cluster cu
-        eraseNode(members[cu], u);               // xóa u khỏi cu
-        eraseNode(members[cv], v);               // xóa v khỏi cv
+        eraseNode(cu, u);                        // xóa u khỏi cu — O(1)
+        eraseNode(cv, v);                        // xóa v khỏi cv — O(1)
+        // Ghi nhận vị trí mới TRƯỚC khi push để memberPos luôn đồng bộ
+        memberPos[u] = (int)members[cv].size();  // vị trí u trong members[cv]
+        memberPos[v] = (int)members[cu].size();  // vị trí v trong members[cu]
         members[cv].push_back(u);                // thêm u vào cv
         members[cu].push_back(v);                // thêm v vào cu
 
@@ -459,7 +478,7 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
     // ══════════════════════════════════════════════════════════════════════
 
     const double SCORE_EPS = 1e-9;          // ngưỡng cải thiện: score < -SCORE_EPS → chấp nhận
-    const int EXTRA_RANDOM = 5;    // số cặp ngẫu nhiên thử thêm trong fallback của Phase B
+    const int EXTRA_RANDOM = min(5, max(N / 50, 1));;    // số cặp ngẫu nhiên thử thêm trong fallback của Phase B
 
     // Thứ tự duyệt đỉnh (xáo trộn mỗi pass để tránh bias)
     vector<int> nodeOrder(N);

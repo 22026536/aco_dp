@@ -587,8 +587,9 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
 
     //         → 1 đơn vị vi phạm trọng số bị phạt x đơn vị distance
     PENALTY_SCALE = ((N / K)) * (meanDist / meanWeight);
-
-    int GLOBAL_CL_SIZE = min(30, N / 10);
+    
+    // số lượng node hàng xóm
+    int GLOBAL_CL_SIZE = min(30, max(1, N / 5));
     // Build candidate list
     globalCL.assign(N, vector<int>(GLOBAL_CL_SIZE));
     {
@@ -610,10 +611,8 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
     // ─────────────────────────────────────────────────────────────────────
 
     int m = 40;                                         // số con kiến (ants) mỗi iteration
-                                                        // min(N/2, 40): scale theo bài toán nhưng cap ở 40
-                                                        // Nhiều ant → explore tốt hơn nhưng chậm hơn
 
-    double alpha = 1.5;                                 // hệ số importance của PHEROMONE
+    double alpha = 2.0;                                 // hệ số importance của PHEROMONE
                                                         // alpha lớn → kiến ưu tiên đường có nhiều pheromone
                                                         // (exploitation > exploration)
 
@@ -629,8 +628,6 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
     // ── Tham số adaptive (thay đổi theo quá trình chạy) ──
 
     double T_max = 0.3;                                 // lượng pheromone deposit tối đa (best ant)
-    double T_min = 0.1;                                 // lượng pheromone deposit tối thiểu (all ants)
-                                                        // T_max >> T_min → best ant ảnh hưởng mạnh
     const double PHI_MIN = 0.05;                         // giới hạn dưới vết mùi (tránh = 0)
     const double PHI_MAX = 1.0;                         // giới hạn trên vết mùi (tránh quá lớn → bias cực)
 
@@ -651,7 +648,7 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
     int lsTop = 10;                                     // số ant được chọn để local search
                                                         // Không repair TẤT CẢ m ant (quá chậm)
                                                         // Chỉ repair top ants (theo cost) + đa dạng (Hamming)
-    int lsMaxMoves = 1000;                              // giới hạn moves mỗi lần LS
+    int lsMaxMoves = max(50, min(N * 2, 500));                   // giới hạn moves mỗi lần LS
 
     // Số ant được Tabu Search (subset của lsTop)
     int tsTop = 1;                                      // số ant được chọn để tabu search
@@ -682,12 +679,12 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
     // phi[i][k] = lượng pheromone trên cạnh "gán node i vào cluster k"
     //
     // Giá trị cao → kiến có xu hướng chọn cluster k cho node i
-    // Ban đầu: tất cả bằng T_min (uniform, không bias)
+    // Ban đầu: tất cả bằng PHI_MAX
     // Sau mỗi iteration: evaporate + deposit dựa trên best solution
     // ─────────────────────────────────────────────────────────────────────
 
-    vector<vector<double>> phi(N, vector<double>(K, T_min));
-                                                         // phi[i][k] khởi tạo = T_min cho tất cả (i,k)
+    vector<vector<double>> phi(N, vector<double>(K, PHI_MAX));
+                                                         // phi[i][k] khởi tạo = PHI_MAX cho tất cả (i,k)
                                                          // Kích thước: N x K
     
     // ─────────────────────────────────────────────────────────────────────
@@ -1053,6 +1050,42 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
         for (int ai : lsSelected)
             addToPool(ants[ai]);
         
+        // improvedGlobal: true nếu best được cập nhật BẤT KỲ nguồn nào trong iteration này.
+        // Bao gồm cả cải thiện từ TS (chạy trước) và từ ant pool (chạy sau).
+        // Chỉ tăng noImprove khi CÙNG LÚC cả TS lẫn ant đều không cải thiện.
+        bool improvedGlobal = false;
+
+        // Hàm nội bộ kiểm tra và cập nhật best từ 1 nghiệm bất kỳ.
+        // Trả về true nếu best được cập nhật, đồng thời in log và reset stagnation.
+        // Tham số source: nhãn nguồn in ra stderr ("TS" hoặc "ANT").
+        auto tryUpdateBest = [&](ACOSolution &candidate,
+                                 double elapsed) -> bool {
+            bool curFeasible = candidate.feasible;
+            double curCost   = candidate.cost;
+
+            bool accept = false;
+            if (curFeasible) {
+                if (!best.feasible || curCost + VALID_EPS < best.cost)
+                    accept = true;
+            } else {
+                if (!best.feasible && curCost + VALID_EPS < best.cost)
+                    accept = true;
+            }
+
+            if (accept) {
+                best           = candidate;
+                improvedGlobal = true;          // đánh dấu toàn iteration này có cải thiện
+                noImprove      = 0;             // reset stagnation counter
+                STAGNATE_COUNT = 0;
+                Q0             = Q_max;
+                cerr << "[ITER " << iter << "] New best cost="
+                     << format_cost_with_commas(best.cost, 2)
+                     << " (feasible=" << (best.feasible ? "YES" : "NO")
+                     << ", time " << elapsed << "s)\n";
+            }
+            return accept;
+        };
+
         if (iter % tsInterval == 0) // chay tabu search mỗi tsInterval vòng
         {
             // ═════════════════════════════════════════════════════════════
@@ -1087,43 +1120,9 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
                 antPool[pi].sol.cost     = compute_cost_fast(antPool[pi].sol);
                 antPool[pi].sol.feasible = is_feasible(antPool[pi].sol.assign);
     
-                // Nghiệm sau TS cũng là ứng viên để cập nhật best global
-                bool curFeasible  = antPool[pi].sol.feasible;
-                double curCost    = antPool[pi].sol.cost;
-
-                bool bestFeasible = best.feasible;
-                double bestCost   = best.cost;
-
-                bool accept = false;
-
-                if (curFeasible)
-                {
-                    if (!bestFeasible || curCost + VALID_EPS < bestCost)
-                        accept = true;
-                }
-                else
-                {
-                    if (!bestFeasible && curCost + VALID_EPS < bestCost)
-                        accept = true;
-                }
-
-                if (accept)
-                {
-                    best = antPool[pi].sol;
-
-                    auto now = Clock::now();
-                    double elapsed = chrono::duration<double>(now - start).count();
-
-                    noImprove = 0;                           // reset counter stagnation
-                    STAGNATE_COUNT = 0;
-                    Q0 = Q_max;                             // reset Q_max
-
-                    cerr << "[ITER " << iter << "]"
-                        << " [TS] New best cost=" 
-                        << format_cost_with_commas(best.cost, 2)
-                        << " (feasible=" << (best.feasible ? "YES" : "NO")
-                        << ", time " << elapsed << "s)\n";
-                }
+                // Cập nhật best global qua flag chung — elapsed tính tại đây
+                double elapsed = chrono::duration<double>(Clock::now() - start).count();
+                tryUpdateBest(antPool[pi].sol, elapsed);
             }
 
             antPool.clear();
@@ -1137,63 +1136,21 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
         sort(order.begin(), order.end(), [&](int a1, int a2)
              { return ants[a1].cost < ants[a2].cost; });
 
-        // ── Cập nhật global best ──
+        // ── Cập nhật global best từ ant pool iteration này ──
         //
         // Logic ưu tiên:
         //   1. Feasible LUÔN thắng infeasible (dù cost cao hơn)
         //   2. Trong cùng loại (cả 2 feasible hoặc cả 2 infeasible): cost nhỏ hơn thắng
-        bool improvedThisIter = false;
-
         for (int r = 0; r < m; ++r)                      // duyệt tất cả ant (theo thứ tự cost)
         {
             int ai = order[r];
-
-            bool curFeasible  = ants[ai].feasible;       // ant hiện tại có feasible?
-            double curCost    = ants[ai].cost;            // cost ant hiện tại
-
-            bool bestFeasible = best.feasible;            // best global có feasible?
-            double bestCost   = best.cost;                // cost best global
-
-            bool accept = false;                         // có chấp nhận ant này làm best mới?
-
-            if (curFeasible)
-            {
-                // Trường hợp 1: Ant mới FEASIBLE
-                //   → Chấp nhận nếu:
-                //     (a) Best cũ infeasible (feasible LUÔN thắng infeasible)
-                //     (b) Hoặc cost mới < cost cũ
-                if (!bestFeasible || curCost + VALID_EPS < bestCost)
-                    accept = true;
-            }
-            else
-            {
-                // Trường hợp 2: Ant mới INFEASIBLE
-                //   → Chỉ chấp nhận nếu best cũng infeasible VÀ cost nhỏ hơn
-                //   → KHÔNG BAO GIỜ thay thế best feasible bằng infeasible
-                if (!bestFeasible && curCost + VALID_EPS < bestCost)
-                    accept = true;
-            }
-
-            if (accept)
-            {
-                best = ants[ai];                         // cập nhật best global
-                improvedThisIter = true;                 // đánh dấu iteration này có cải thiện
-
-                noImprove = 0;                           // reset counter stagnation
-                STAGNATE_COUNT = 0;
-                Q0 = Q_max;                             // reset Q_max
-
-                // In thông báo ra stderr
-                auto now = Clock::now();
-                double elapsed = chrono::duration<double>(now - start).count();
-                cerr << "[ITER " << iter << "] New best cost=" << format_cost_with_commas(best.cost, 2)
-                     << " (feasible=" << (best.feasible ? "YES" : "NO")
-                     << ", time " << elapsed << "s)\n";
-            }
+            double elapsed = chrono::duration<double>(Clock::now() - start).count();
+            tryUpdateBest(ants[ai], elapsed);
         }
 
-        // Nếu iteration này KHÔNG cải thiện best
-        if (!improvedThisIter)
+        // Nếu CẢ TS lẫn ant trong iteration này đều không cải thiện best
+        // → mới tăng noImprove và điều chỉnh Q0.
+        if (!improvedGlobal)
         {
             ++noImprove;                                 // tăng counter stagnation
             ++STAGNATE_COUNT;
@@ -1215,11 +1172,6 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
         //      phi[i][c] += T_max  (c = cluster của node i trong best solution)
         //      → tăng cường pheromone trên các cạnh (i, k) trong nghiệm tốt nhất
         //      → kiến tương lai có xu hướng đi theo best solution
-        //
-        //   3. Deposit nhỏ cho TẤT CẢ cạnh:
-        //      phi[i][k] += T_min
-        //      → đảm bảo không cạnh nào bị pheromone = 0
-        //      → luôn có cơ hội nhỏ để explore mọi hướng
         //
         //   4. Clamp: PHI_MIN <= phi[i][k] <= PHI_MAX
         //      → tránh giá trị cực đoan (overflow/underflow)
@@ -1271,7 +1223,7 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
         // LOGGING (mỗi 10 iteration)
         // ═════════════════════════════════════════════════════════════════
 
-        if (iter % 1 == 0)                              // log mỗi 10 iteration
+        if (iter % 10 == 0)                              // log mỗi 10 iteration
         {
             // Best local ant
             auto bestThisIter = ants[order[0]];
@@ -1308,7 +1260,7 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
         // STAGNATION RESET
         //
         // Nếu không cải thiện best sau noImproveReset iteration liên tiếp:
-        //   → Reset pheromone về T_min (uniform, như ban đầu)
+        //   → Reset pheromone về PHI_MAX (uniform, như ban đầu)
         //   → Cho phép ACO "khám phá lại từ đầu" với kinh nghiệm mới
         //
         // Đây là cơ chế thoát local optima quan trọng nhất.
@@ -1320,10 +1272,10 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
         {
             cerr << "[RESET] no improvement for" << noImproveReset << "-> reset pheromones\n";
 
-            // Reset toàn bộ pheromone về T_min
+            // Reset toàn bộ pheromone về PHI_MAX
             for (int i = 0; i < N; ++i)
                 for (int k = 0; k < K; ++k)
-                    phi[i][k] = T_min;                   // phi = 0.05 (uniform)
+                    phi[i][k] = PHI_MAX;
 
             noImprove = 0;                               // reset counter
             STAGNATE_COUNT = 0;

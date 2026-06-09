@@ -229,7 +229,7 @@ static void ts_core(
     const double PEN_DOWN   = 2.0;                 // Hệ số giảm penalty khi feasible + kẹt
     const double PEN_MIN    = PENALTY_SCALE * 0.2; // Giới hạn dưới của penalty
     const double PEN_MAX    = PENALTY_SCALE * 5.0; // Giới hạn trên của penalty
-    const int    gradSteps  = min(10, max(N / 20, 10));                  // Số bước infeasible liên tiếp trước khi tăng pen
+    const int    gradSteps  = min(10, max(N/20, 5));                  // Số bước infeasible liên tiếp trước khi tăng pen
     int stepsInfeas = 0;                           // Đếm số bước liên tiếp ở trạng thái infeasible
 
     // Lambda updatePen: gọi sau mỗi bước có move được thực thi.
@@ -457,7 +457,7 @@ static void ts_core(
             // Đánh giá thêm N × Rand_tries cặp swap ngẫu nhiên để đa dạng hóa tìm kiếm:
             // Duyệt từng đỉnh u trong nodeOrder (N đỉnh), mỗi đỉnh thử swap với
             // Rand_tries đỉnh v ngẫu nhiên → tổng N × Rand_tries lần thử.
-            const int Rand_tries = 10;
+            const int Rand_tries = min(10, max(N / 20, 1));
             for (int u : nodeOrder) {
                 for (int r = 0; r < Rand_tries; ++r) {
                     int v = randNodeDist(rng); // Chọn đỉnh v ngẫu nhiên trong [0, N-1]
@@ -682,7 +682,7 @@ void iterated_tabu_search(ACOSolution &sol, mt19937_64 &rng)
 
     // ── Tham số thuật toán ──
     // tsSteps: số bước mỗi lần gọi ts_core — tối thiểu 50, tối đa 500, mặc định N*3
-    const int tsSteps      = max(50, min(N * 3, 500));
+    const int tsSteps      = max(50, min(N * 2, 500));
     // maxRounds: số vòng lặp ILS (mỗi vòng gồm 1 perturbation + focused + full-pass)
     const int maxRounds    = 10;
     // focusedSteps: số bước tối đa của ts focused (nhỏ hơn tsSteps để nhanh hơn)
