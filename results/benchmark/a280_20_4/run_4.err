@@ -1,0 +1,57 @@
+[ITER 1] New best cost=62404.22 (feasible=YES, time 2.26299s)
+[ITER 2] New best cost=59080.95 (feasible=YES, time 4.13792s)
+[ITER 6] New best cost=58735.87 (feasible=YES, time 10.8799s)
+[ITER 7] New best cost=58727.15 (feasible=YES, time 12.5375s)
+[TS] New best cost=58281.40 (feasible=YES, time 18.8552s)
+[ITER 10] bestGlobalCost=58281.40 (feasible=YES) bestThisIter=58281.40 feasibleAnts=10 noImprove=1 (elapsed 24.0521s)
+[ITER 17] New best cost=58017.63 (feasible=YES, time 35.4461s)
+[TS] New best cost=57964.86 (feasible=YES, time 41.99s)
+[ITER 20] bestGlobalCost=57964.86 (feasible=YES) bestThisIter=57964.86 feasibleAnts=10 noImprove=1 (elapsed 46.6385s)
+[ITER 26] New best cost=57553.28 (feasible=YES, time 57.7985s)
+[ITER 27] New best cost=57291.88 (feasible=YES, time 60.3097s)
+[ITER 30] bestGlobalCost=57291.88 (feasible=YES) bestThisIter=58439.67 feasibleAnts=10 noImprove=3 (elapsed 72.2539s)
+[ITER 32] New best cost=57130.82 (feasible=YES, time 76.1354s)
+[ITER 37] New best cost=56451.84 (feasible=YES, time 86.5224s)
+[ITER 39] New best cost=56419.62 (feasible=YES, time 90.6991s)
+[ITER 40] bestGlobalCost=56419.62 (feasible=YES) bestThisIter=57432.04 feasibleAnts=10 noImprove=1 (elapsed 99.099s)
+[ITER 45] New best cost=55954.77 (feasible=YES, time 107.98s)
+[ITER 50] bestGlobalCost=55954.77 (feasible=YES) bestThisIter=57126.03 feasibleAnts=10 noImprove=5 (elapsed 122.437s)
+[ITER 51] New best cost=55888.92 (feasible=YES, time 124.264s)
+[ITER 56] New best cost=55841.92 (feasible=YES, time 134.546s)
+[ITER 60] bestGlobalCost=55841.92 (feasible=YES) bestThisIter=56267.23 feasibleAnts=10 noImprove=4 (elapsed 148.256s)
+[ITER 65] New best cost=55592.88 (feasible=YES, time 158.31s)
+[TS] New best cost=55323.07 (feasible=YES, time 168.686s)
+[ITER 70] bestGlobalCost=55323.07 (feasible=YES) bestThisIter=55323.07 feasibleAnts=10 noImprove=1 (elapsed 174.059s)
+[ITER 74] New best cost=55156.44 (feasible=YES, time 181.156s)
+[ITER 79] New best cost=54853.72 (feasible=YES, time 190.747s)
+[ITER 80] bestGlobalCost=54853.72 (feasible=YES) bestThisIter=55156.44 feasibleAnts=10 noImprove=1 (elapsed 198.809s)
+[ITER 90] bestGlobalCost=54853.72 (feasible=YES) bestThisIter=56100.16 feasibleAnts=9 noImprove=11 (elapsed 222.123s)
+[ITER 96] New best cost=54695.11 (feasible=YES, time 233.23s)
+[ITER 100] bestGlobalCost=54695.11 (feasible=YES) bestThisIter=57774.89 feasibleAnts=10 noImprove=4 (elapsed 247.063s)
+[ITER 102] New best cost=54568.17 (feasible=YES, time 250.175s)
+[ITER 105] New best cost=54350.71 (feasible=YES, time 255.335s)
+[ITER 110] bestGlobalCost=54350.71 (feasible=YES) bestThisIter=54521.84 feasibleAnts=10 noImprove=5 (elapsed 270.283s)
+[ITER 120] bestGlobalCost=54350.71 (feasible=YES) bestThisIter=54350.71 feasibleAnts=10 noImprove=15 (elapsed 293.773s)
+3 4 5 6 7 9 256 258 259 260 275 276 277 
+164 185 186 188 189 190 191 192 193 194 195 197 198 
+159 160 161 162 163 175 176 177 178 180 181 182 183 184 187 
+101 104 105 106 107 165 166 167 168 170 171 172 173 174 
+1 2 240 241 242 243 244 245 247 248 250 278 279 280 
+203 207 212 213 215 216 217 218 220 222 223 224 225 226 
+40 42 44 45 46 47 53 54 55 56 57 58 60 64 71 
+137 139 140 142 148 149 205 254 262 263 264 265 266 267 
+30 34 35 36 37 38 39 41 48 49 50 51 52 124 
+219 227 228 231 232 233 234 235 236 237 238 239 246 249 
+79 82 83 89 90 91 99 100 102 103 108 109 110 169 
+16 17 18 19 21 126 130 131 132 133 134 135 154 269 270 
+141 143 144 145 146 147 196 199 200 201 202 204 221 
+8 10 11 12 13 14 15 136 261 268 271 272 273 274 
+119 120 121 122 123 125 138 150 151 153 155 156 158 179 
+43 66 67 68 69 70 73 74 84 85 86 87 111 113 
+59 61 62 63 65 72 88 112 114 115 116 117 118 152 157 
+20 22 23 24 25 26 27 28 29 31 32 33 127 128 129 
+75 76 77 78 80 81 92 93 94 95 96 97 98 
+206 208 209 210 211 214 229 230 251 252 253 255 257 
+[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/a280_20_4.txt
+[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/a280_20_4.txt
+[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/a280_20_4.txt

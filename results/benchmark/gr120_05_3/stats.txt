@@ -1,19 +1,17 @@
-Instance:            gr120_05_3
-Instance path:       instances/tsplib3/gr120_05_3.txt
-Num runs:            10
-Time limit (s):      60
-Max iterations:      10000
-Date:                2026-06-11 21:55:56
+Instance:           gr120_05_3
+Instance path:      normalized_instances/tsplib/gr120_05_3.txt
+Num runs:           10
+Time limit (s):     60
+Date:               2026-04-25 18:49:10
 ---
-Valid runs:          10 / 10
-Feasible runs:       10
-Infeasible runs:     0
-Error runs:          0
+Valid runs:         10 / 10
+Feasible runs:      10
+Infeasible runs:    0
 ---
-Best cost:           55730.570000
-Worst cost:          55796.520000
-Avg cost:            55743.760000
-Std dev cost:        27.806962
+Best cost:          55730.570000
+Worst cost:         55730.570000
+Avg cost:           55730.570000
+Std dev cost:       0.000000
 ---
-Avg time-to-best:    14.2706 s
-Best time-to-best:   21.3590 s
+Avg time-to-best:   3.9759 s
+Best time-to-best:  0.9204 s

@@ -1,19 +1,17 @@
-Instance:            rd100_15_3
-Instance path:       instances/tsplib7/rd100_15_3.txt
-Num runs:            10
-Time limit (s):      60
-Max iterations:      10000
-Date:                2026-06-12 22:38:21
+Instance:           rd100_15_3
+Instance path:      normalized_instances/tsplib/rd100_15_3.txt
+Num runs:           10
+Time limit (s):     60
+Date:               2026-04-24 22:34:28
 ---
-Valid runs:          10 / 10
-Feasible runs:       10
-Infeasible runs:     0
-Error runs:          0
+Valid runs:         10 / 10
+Feasible runs:      10
+Infeasible runs:    0
 ---
-Best cost:           41817.950000
-Worst cost:          42032.440000
-Avg cost:            41849.473000
-Std dev cost:        71.660862
+Best cost:          41817.950000
+Worst cost:         42237.700000
+Avg cost:           41977.931000
+Std dev cost:       151.469787
 ---
-Avg time-to-best:    27.2745 s
-Best time-to-best:   36.0708 s
+Avg time-to-best:   22.0696 s
+Best time-to-best:  8.4460 s

@@ -1,19 +1,17 @@
-Instance:            bier127_15_4
-Instance path:       instances/tsplib1/bier127_15_4.txt
-Num runs:            10
-Time limit (s):      60
-Max iterations:      10000
-Date:                2026-06-13 16:27:29
+Instance:           bier127_15_4
+Instance path:      normalized_instances/tsplib/bier127_15_4.txt
+Num runs:           10
+Time limit (s):     60
+Date:               2026-04-26 18:46:30
 ---
-Valid runs:          10 / 10
-Feasible runs:       10
-Infeasible runs:     0
-Error runs:          0
+Valid runs:         10 / 10
+Feasible runs:      10
+Infeasible runs:    0
 ---
-Best cost:           897585.700000
-Worst cost:          903508.480000
-Avg cost:            899253.672000
-Std dev cost:        1970.489435
+Best cost:          898642.130000
+Worst cost:         904617.420000
+Avg cost:           901767.600000
+Std dev cost:       2395.483191
 ---
-Avg time-to-best:    27.0834 s
-Best time-to-best:   24.4436 s
+Avg time-to-best:   37.5909 s
+Best time-to-best:  53.9302 s

@@ -1,17 +1,19 @@
-Instance:           fl417_20_5
-Instance path:      normalized_instances/tsplib/fl417_20_5.txt
-Num runs:           10
-Time limit (s):     1500
-Date:               2026-05-10 13:45:15
+Instance:            fl417_20_5
+Instance path:       instances/tsplib/fl417_20_5.txt
+Num runs:            10
+Time limit (s):      1500
+Max iterations:      10000
+Date:                2026-06-08 06:40:59
 ---
-Valid runs:         10 / 10
-Feasible runs:      10
-Infeasible runs:    0
+Valid runs:          10 / 10
+Feasible runs:       10
+Infeasible runs:     0
+Error runs:          0
 ---
-Best cost:          530168.250000
-Worst cost:         543487.970000
-Avg cost:           536612.750000
-Std dev cost:       4091.314186
+Best cost:           535560.370000
+Worst cost:          549711.640000
+Avg cost:            543949.755000
+Std dev cost:        5121.389876
 ---
-Avg time-to-best:   994.5528 s
-Best time-to-best:  844.7850 s
+Avg time-to-best:    953.1670 s
+Best time-to-best:   1258.9600 s

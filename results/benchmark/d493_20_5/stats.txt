@@ -1,17 +1,19 @@
-Instance:           d493_20_5
-Instance path:      normalized_instances/tsplib/d493_20_5.txt
-Num runs:           10
-Time limit (s):     1500
-Date:               2026-05-07 02:46:22
+Instance:            d493_20_5
+Instance path:       instances/tsplib/d493_20_5.txt
+Num runs:            10
+Time limit (s):      1500
+Max iterations:      10000
+Date:                2026-06-02 05:01:03
 ---
-Valid runs:         10 / 10
-Feasible runs:      10
-Infeasible runs:    0
+Valid runs:          10 / 10
+Feasible runs:       10
+Infeasible runs:     0
+Error runs:          0
 ---
-Best cost:          1423627.630000
-Worst cost:         1451161.790000
-Avg cost:           1439641.284000
-Std dev cost:       9657.849259
+Best cost:           1419228.490000
+Worst cost:          1438496.930000
+Avg cost:            1427862.049000
+Std dev cost:        6681.282527
 ---
-Avg time-to-best:   1076.2013 s
-Best time-to-best:  1218.4300 s
+Avg time-to-best:    517.8119 s
+Best time-to-best:   946.2440 s

@@ -6,17 +6,17 @@ Algorithm: Ant Colony Optimization (ACO) for the MCGP problem.
   The global best solution is tracked continuously and saved to disk.
 
 Run configuration:
-  Termination time limit : 60 seconds
+  Termination criteria : time = 60
   Max iterations       : 10000
   Log frequency        : every 10 iteration(s)
   Output directory     : results/logs
 
 Instance:
-  Path     : 
+  Path     : normalized_instances/tsplib/kroB150_05_2.txt
   Type     : t  (tsp-like — Euclidean coordinates)
   Nodes    : 150
   Clusters : 5
   Weights  : 2 dimension(s)
 
 Final solution is valid.
-Final cost = 1456440.47
+Final cost = 1456138.75

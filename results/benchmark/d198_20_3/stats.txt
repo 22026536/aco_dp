@@ -1,19 +1,17 @@
-Instance:            d198_20_3
-Instance path:       instances/tsplib2/d198_20_3.txt
-Num runs:            10
-Time limit (s):      60
-Max iterations:      10000
-Date:                2026-06-12 02:55:36
+Instance:           d198_20_3
+Instance path:      normalized_instances/tsplib/d198_20_3.txt
+Num runs:           10
+Time limit (s):     60
+Date:               2026-04-28 21:45:42
 ---
-Valid runs:          10 / 10
-Feasible runs:       10
-Infeasible runs:     0
-Error runs:          0
+Valid runs:         10 / 10
+Feasible runs:      10
+Infeasible runs:    0
 ---
-Best cost:           152196.190000
-Worst cost:          154255.850000
-Avg cost:            153044.809000
-Std dev cost:        742.212337
+Best cost:          153612.070000
+Worst cost:         157203.870000
+Avg cost:           156183.724000
+Std dev cost:       1088.434515
 ---
-Avg time-to-best:    43.4455 s
-Best time-to-best:   56.6146 s
+Avg time-to-best:   42.6295 s
+Best time-to-best:  35.1155 s

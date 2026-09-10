@@ -1,19 +1,17 @@
-Instance:            u159_10_5
-Instance path:       instances/tsplib0/u159_10_5.txt
-Num runs:            10
-Time limit (s):      60
-Max iterations:      10000
-Date:                2026-06-13 21:32:57
+Instance:           u159_10_5
+Instance path:      normalized_instances/tsplib/u159_10_5.txt
+Num runs:           10
+Time limit (s):     60
+Date:               2026-05-05 21:36:40
 ---
-Valid runs:          10 / 10
-Feasible runs:       10
-Infeasible runs:     0
-Error runs:          0
+Valid runs:         10 / 10
+Feasible runs:      10
+Infeasible runs:    0
 ---
-Best cost:           1080572.370000
-Worst cost:          1119022.100000
-Avg cost:            1100142.844000
-Std dev cost:        13011.548252
+Best cost:          1072212.720000
+Worst cost:         1111384.170000
+Avg cost:           1085740.730000
+Std dev cost:       11079.692787
 ---
-Avg time-to-best:    36.6745 s
-Best time-to-best:   59.6352 s
+Avg time-to-best:   34.6226 s
+Best time-to-best:  47.6171 s
