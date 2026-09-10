@@ -612,7 +612,7 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
 
     int m = 40;                                         // số con kiến (ants) mỗi iteration
 
-    double alpha = 2.0;                                 // hệ số importance của PHEROMONE
+    double alpha = 1.5;                                 // hệ số importance của PHEROMONE
                                                         // alpha lớn → kiến ưu tiên đường có nhiều pheromone
                                                         // (exploitation > exploration)
 
@@ -651,10 +651,10 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
     int lsMaxMoves = max(50, min(N * 2, 500));                   // giới hạn moves mỗi lần LS
 
     // Số ant được Tabu Search (subset của lsTop)
-    int tsTop = 1;                                      // số ant được chọn để tabu search
+    int tsTop = 5;                                      // số ant được chọn để tabu search
 
     // Điều kiện chạy Tabu Search
-    int tsInterval = 2;                                // chạy TS mỗi x iteration
+    int tsInterval = 15;                                // chạy TS mỗi x iteration
 
     // ─────────────────────────────────────────────────────────────────────
     // BƯỚC 5: KHỞI TẠO BIẾN TRẠNG THÁI
@@ -862,24 +862,22 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
                         if (after > hi)
                         {
                             // ── Vi phạm upper bound ──
-                            // fitness bắt đầu tại 0.3, giảm chậm khi vi phạm tăng.
-                            // Dùng log để phạt nhẹ: vi phạm gấp đôi span chỉ mất ~0.1 fitness.
-                            // Local search sẽ sửa → không cần phạt quá nặng ở đây.
+                            // fitness bắt đầu tại 0.5, giảm nhanh khi vi phạm tăng.
                             double over = (after - hi) / span;      // vi phạm tính theo span
-                            fitness_t = 0.3 / (1.0 + log1p(over));  // [0.3 → 0 chậm]
+                            fitness_t =  0.5 * pow((1.0 - over), 2);         // [0.5 → 0 nhanh]
                         }
                         else if (after < lo)
                         {
                             double room_ratio = after / max(lo,VALID_EPS);               // tỉ lệ w dùng vào phần thiếu
-                            fitness_t = 0.75 + 0.25 * room_ratio; // [0.75, 1.0]
+                            fitness_t = 1.0 - 0.25 * room_ratio; // [0.75, 1.0]
                         }
                         else
                         {
                             // ── Cluster đã thỏa mãn [lo, hi], thêm node vẫn trong giới hạn ──
                             // Không "cần thiết" nhưng cũng không hại.
                             // fitness ≈ 0.7, giảm nhẹ khi gần chạm upper (ít room hơn).
-                            double room_ratio = (hi - after) / span;   // 1.0 = rất thoáng, 0.0 = sát upper
-                            fitness_t = 0.6 + 0.15 * room_ratio;      // [0.50, 0.75]
+                            double room_ratio = (hi - after) / span;  
+                            fitness_t = 0.5 + 0.25 * room_ratio;      // [0.60, 0.75]
                         }
 
                         fitness += log(max(fitness_t, 1e-12));

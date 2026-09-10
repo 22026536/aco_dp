@@ -478,7 +478,7 @@ void local_search(ACOSolution &sol, mt19937_64 &rng, int maxMoves)
     // ══════════════════════════════════════════════════════════════════════
 
     const double SCORE_EPS = 1e-9;          // ngưỡng cải thiện: score < -SCORE_EPS → chấp nhận
-    const int EXTRA_RANDOM = min(5, max(N / 50, 1));;    // số cặp ngẫu nhiên thử thêm trong fallback của Phase B
+    const int EXTRA_RANDOM = min(10, max(N / 20, 1));;    // số cặp ngẫu nhiên thử thêm trong fallback của Phase B
 
     // Thứ tự duyệt đỉnh (xáo trộn mỗi pass để tránh bias)
     vector<int> nodeOrder(N);

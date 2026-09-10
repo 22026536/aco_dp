@@ -457,7 +457,7 @@ static void ts_core(
             // Đánh giá thêm N × Rand_tries cặp swap ngẫu nhiên để đa dạng hóa tìm kiếm:
             // Duyệt từng đỉnh u trong nodeOrder (N đỉnh), mỗi đỉnh thử swap với
             // Rand_tries đỉnh v ngẫu nhiên → tổng N × Rand_tries lần thử.
-            const int Rand_tries = min(10, max(N / 20, 1));
+            const int Rand_tries = min(20, max(N / 10, 1));
             for (int u : nodeOrder) {
                 for (int r = 0; r < Rand_tries; ++r) {
                     int v = randNodeDist(rng); // Chọn đỉnh v ngẫu nhiên trong [0, N-1]
