@@ -864,7 +864,7 @@ ACOSolution ACO_tuned(const Instance &instance, Tengine &rng,
                             // ── Vi phạm upper bound ──
                             // fitness bắt đầu tại 0.5, giảm nhanh khi vi phạm tăng.
                             double over = (after - hi) / span;      // vi phạm tính theo span
-                            fitness_t = 0.3 / (1.0 + log1p(over));  // [0.3 → 0 chậm]
+                            fitness_t =  0.5 * pow((1.0 - over), 2);         // [0.5 → 0 nhanh]
                         }
                         else if (after < lo)
                         {
