@@ -1,6 +1,7 @@
 CMakeFiles/MCGP.dir/src/aco/Input.cpp.o: \
- /mnt/d/khoa_luan/aco-dp/code/src/aco/Input.cpp \
- /usr/include/stdc-predef.h /mnt/d/khoa_luan/aco-dp/code/src/aco/Input.h \
+ /mnt/d/aco_results/aco_dp/code/src/aco/Input.cpp \
+ /usr/include/stdc-predef.h \
+ /mnt/d/aco_results/aco_dp/code/src/aco/Input.h \
  /usr/include/c++/9/iostream \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/os_defines.h \

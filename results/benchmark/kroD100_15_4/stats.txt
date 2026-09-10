@@ -1,17 +1,19 @@
-Instance:           kroD100_15_4
-Instance path:      normalized_instances/tsplib/kroD100_15_4.txt
-Num runs:           10
-Time limit (s):     40
-Date:               2026-04-24 21:46:53
+Instance:            kroD100_15_4
+Instance path:       instances/tsplib5/kroD100_15_4.txt
+Num runs:            10
+Time limit (s):      60
+Max iterations:      10000
+Date:                2026-06-12 14:12:04
 ---
-Valid runs:         10 / 10
-Feasible runs:      10
-Infeasible runs:    0
+Valid runs:          10 / 10
+Feasible runs:       10
+Infeasible runs:     0
+Error runs:          0
 ---
-Best cost:          126489.980000
-Worst cost:         131053.870000
-Avg cost:           128076.749000
-Std dev cost:       1567.874321
+Best cost:           126657.080000
+Worst cost:          127662.180000
+Avg cost:            127205.892000
+Std dev cost:        417.333923
 ---
-Avg time-to-best:   19.3267 s
-Best time-to-best:  10.0698 s
+Avg time-to-best:    16.3844 s
+Best time-to-best:   6.1441 s

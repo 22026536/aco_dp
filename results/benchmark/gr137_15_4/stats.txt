@@ -1,17 +1,19 @@
-Instance:           gr137_15_4
-Instance path:      normalized_instances/tsplib/gr137_15_4.txt
-Num runs:           10
-Time limit (s):     60
-Date:               2026-04-28 18:48:35
+Instance:            gr137_15_4
+Instance path:       instances/tsplib3/gr137_15_4.txt
+Num runs:            10
+Time limit (s):      60
+Max iterations:      10000
+Date:                2026-06-12 02:14:34
 ---
-Valid runs:         10 / 10
-Feasible runs:      10
-Infeasible runs:    0
+Valid runs:          10 / 10
+Feasible runs:       10
+Infeasible runs:     0
+Error runs:          0
 ---
-Best cost:          6443.130000
-Worst cost:         6606.760000
-Avg cost:           6509.816000
-Std dev cost:       47.124022
+Best cost:           6430.350000
+Worst cost:          6509.010000
+Avg cost:            6465.479000
+Std dev cost:        28.200261
 ---
-Avg time-to-best:   36.8045 s
-Best time-to-best:  18.5102 s
+Avg time-to-best:    31.7983 s
+Best time-to-best:   46.2333 s

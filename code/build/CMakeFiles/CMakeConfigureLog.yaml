@@ -5,7 +5,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_UNAME"
     description: "Path to a program."
@@ -48,12 +48,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -108,12 +109,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -128,14 +130,14 @@ events:
     kind: "message-v1"
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineSystem.cmake:212 (message)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     message: |
       The system is: Linux - 5.15.146.1-microsoft-standard-WSL2 - x86_64
   -
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeUnixFindMake.cmake:5 (find_program)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_MAKE_PROGRAM"
     description: "Path to a program."
@@ -180,12 +182,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -223,12 +226,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/gmake"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/gmake"
       - "/mnt/c/Program Files/nodejs/gmake"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/gmake"
       - "/mnt/c/Program Files/redis/gmake"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/gmake"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/gmake"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/gmake"
       - "/mnt/c/Program Files/dotnet/gmake"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/gmake"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gmake"
       - "/mnt/c/Ruby34-x64/bin/gmake"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/gmake"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/gmake"
@@ -282,12 +286,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -306,7 +311,7 @@ events:
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "file"
     variable: "src_in"
     description: "Path to a file."
@@ -362,12 +367,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -384,7 +390,7 @@ events:
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     message: |
       Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
       Compiler: /usr/bin/gcc 
@@ -398,14 +404,14 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
       
       The C compiler identification is GNU, found in:
-        /mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/4.1.2/CompilerIdC/a.out
+        /mnt/d/aco_results/aco_dp/code/build/CMakeFiles/4.1.2/CompilerIdC/a.out
       
   -
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_AR"
     description: "Path to a program."
@@ -448,12 +454,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -502,12 +509,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -523,7 +531,7 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_RANLIB"
     description: "Path to a program."
@@ -566,12 +574,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -620,12 +629,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -641,7 +651,7 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_STRIP"
     description: "Path to a program."
@@ -684,12 +694,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -738,12 +749,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -759,7 +771,7 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_LINKER"
     description: "Path to a program."
@@ -802,12 +814,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -856,12 +869,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -877,7 +891,7 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_NM"
     description: "Path to a program."
@@ -920,12 +934,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -974,12 +989,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -995,7 +1011,7 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_OBJDUMP"
     description: "Path to a program."
@@ -1038,12 +1054,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -1092,12 +1109,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -1113,7 +1131,7 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_OBJCOPY"
     description: "Path to a program."
@@ -1156,12 +1174,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -1210,12 +1229,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -1231,7 +1251,7 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_READELF"
     description: "Path to a program."
@@ -1274,12 +1294,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -1328,12 +1349,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -1349,7 +1371,7 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_DLLTOOL"
     description: "Path to a program."
@@ -1392,12 +1414,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -1435,12 +1458,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/dlltool"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/dlltool"
       - "/mnt/c/Program Files/nodejs/dlltool"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/dlltool"
       - "/mnt/c/Program Files/redis/dlltool"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/dlltool"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/dlltool"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/dlltool"
       - "/mnt/c/Program Files/dotnet/dlltool"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/dlltool"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/dlltool"
       - "/mnt/c/Ruby34-x64/bin/dlltool"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/dlltool"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/dlltool"
@@ -1489,12 +1513,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -1510,7 +1535,7 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_ADDR2LINE"
     description: "Path to a program."
@@ -1553,12 +1578,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -1607,12 +1633,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -1628,7 +1655,7 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_TAPI"
     description: "Path to a program."
@@ -1671,12 +1698,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -1714,12 +1742,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/tapi"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/tapi"
       - "/mnt/c/Program Files/nodejs/tapi"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/tapi"
       - "/mnt/c/Program Files/redis/tapi"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/tapi"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/tapi"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/tapi"
       - "/mnt/c/Program Files/dotnet/tapi"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/tapi"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/tapi"
       - "/mnt/c/Ruby34-x64/bin/tapi"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/tapi"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/tapi"
@@ -1768,12 +1797,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -1789,7 +1819,7 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_C_COMPILER_AR"
     description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
@@ -1835,12 +1865,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -1878,12 +1909,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/gcc-ar-9.4"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/gcc-ar-9.4"
       - "/mnt/c/Program Files/nodejs/gcc-ar-9.4"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/gcc-ar-9.4"
       - "/mnt/c/Program Files/redis/gcc-ar-9.4"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/gcc-ar-9.4"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/gcc-ar-9.4"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/gcc-ar-9.4"
       - "/mnt/c/Program Files/dotnet/gcc-ar-9.4"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/gcc-ar-9.4"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ar-9.4"
       - "/mnt/c/Ruby34-x64/bin/gcc-ar-9.4"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/gcc-ar-9.4"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/gcc-ar-9.4"
@@ -1932,12 +1964,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -1953,7 +1986,7 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_C_COMPILER_RANLIB"
     description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
@@ -1999,12 +2032,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -2042,12 +2076,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/gcc-ranlib-9.4"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/gcc-ranlib-9.4"
       - "/mnt/c/Program Files/nodejs/gcc-ranlib-9.4"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/gcc-ranlib-9.4"
       - "/mnt/c/Program Files/redis/gcc-ranlib-9.4"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/gcc-ranlib-9.4"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/gcc-ranlib-9.4"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/gcc-ranlib-9.4"
       - "/mnt/c/Program Files/dotnet/gcc-ranlib-9.4"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/gcc-ranlib-9.4"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ranlib-9.4"
       - "/mnt/c/Ruby34-x64/bin/gcc-ranlib-9.4"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/gcc-ranlib-9.4"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/gcc-ranlib-9.4"
@@ -2096,12 +2131,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -2120,7 +2156,7 @@ events:
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "file"
     variable: "src_in"
     description: "Path to a file."
@@ -2176,12 +2212,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -2198,7 +2235,7 @@ events:
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
       Compiler: /usr/bin/g++ 
@@ -2212,14 +2249,14 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
       
       The CXX compiler identification is GNU, found in:
-        /mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/4.1.2/CompilerIdCXX/a.out
+        /mnt/d/aco_results/aco_dp/code/build/CMakeFiles/4.1.2/CompilerIdCXX/a.out
       
   -
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_CXX_COMPILER_AR"
     description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
@@ -2265,12 +2302,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -2308,12 +2346,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/gcc-ar-9.4"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/gcc-ar-9.4"
       - "/mnt/c/Program Files/nodejs/gcc-ar-9.4"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/gcc-ar-9.4"
       - "/mnt/c/Program Files/redis/gcc-ar-9.4"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/gcc-ar-9.4"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/gcc-ar-9.4"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/gcc-ar-9.4"
       - "/mnt/c/Program Files/dotnet/gcc-ar-9.4"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/gcc-ar-9.4"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ar-9.4"
       - "/mnt/c/Ruby34-x64/bin/gcc-ar-9.4"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/gcc-ar-9.4"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/gcc-ar-9.4"
@@ -2362,12 +2401,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -2383,7 +2423,7 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     mode: "program"
     variable: "CMAKE_CXX_COMPILER_RANLIB"
     description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
@@ -2429,12 +2469,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
       - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/"
       - "/mnt/c/Program Files/redis/"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
       - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
       - "/mnt/c/Ruby34-x64/bin/"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
@@ -2472,12 +2513,13 @@ events:
       - "/mnt/c/Program Files/Git/cmd/gcc-ranlib-9.4"
       - "/mnt/c/Users/Admin/AppData/Roaming/nvm/gcc-ranlib-9.4"
       - "/mnt/c/Program Files/nodejs/gcc-ranlib-9.4"
-      - "/mnt/c/Program Files/Docker/Docker/resources/bin/gcc-ranlib-9.4"
       - "/mnt/c/Program Files/redis/gcc-ranlib-9.4"
       - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/gcc-ranlib-9.4"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/gcc-ranlib-9.4"
       - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/gcc-ranlib-9.4"
       - "/mnt/c/Program Files/dotnet/gcc-ranlib-9.4"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/gcc-ranlib-9.4"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/gcc-ranlib-9.4"
       - "/mnt/c/Ruby34-x64/bin/gcc-ranlib-9.4"
       - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/gcc-ranlib-9.4"
       - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/gcc-ranlib-9.4"
@@ -2526,12 +2568,13 @@ events:
         - "/mnt/c/Program Files/Git/cmd"
         - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
         - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/Docker/Docker/resources/bin"
         - "/mnt/c/Program Files/redis"
         - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
         - "/mnt/c/Program Files/dotnet/"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
         - "/mnt/c/Ruby34-x64/bin"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
         - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
@@ -2547,12 +2590,12 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
       - "/usr/share/cmake-4.1/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-yqLCUU"
-      binary: "/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-yqLCUU"
+      source: "/mnt/d/aco_results/aco_dp/code/build/CMakeFiles/CMakeScratch/TryCompile-XtJcQT"
+      binary: "/mnt/d/aco_results/aco_dp/code/build/CMakeFiles/CMakeScratch/TryCompile-XtJcQT"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -2561,13 +2604,13 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-yqLCUU'
+        Change Dir: '/mnt/d/aco_results/aco_dp/code/build/CMakeFiles/CMakeScratch/TryCompile-XtJcQT'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_0b18e/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_0b18e.dir/build.make CMakeFiles/cmTC_0b18e.dir/build
-        make[1]: Entering directory '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-yqLCUU'
-        Building C object CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o
-        /usr/bin/gcc   -v -o CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-4.1/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_7a2c7/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_7a2c7.dir/build.make CMakeFiles/cmTC_7a2c7.dir/build
+        make[1]: Entering directory '/mnt/d/aco_results/aco_dp/code/build/CMakeFiles/CMakeScratch/TryCompile-XtJcQT'
+        Building C object CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o
+        /usr/bin/gcc   -v -o CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-4.1/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=/usr/bin/gcc
         OFFLOAD_TARGET_NAMES=nvptx-none:hsa
@@ -2576,8 +2619,8 @@ events:
         Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++,gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-9QDOt0/gcc-9-9.4.0/debian/tmp-nvptx/usr,hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
         Thread model: posix
         gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
-         /usr/lib/gcc/x86_64-linux-gnu/9/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-4.1/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cc0cnWjy.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+         /usr/lib/gcc/x86_64-linux-gnu/9/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-4.1/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccXNUvsy.s
         GNU C17 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)
         	compiled by GNU C version 9.4.0, GMP version 6.2.0, MPFR version 4.0.2, MPC version 1.1.0, isl version isl-0.22.1-GMP
         
@@ -2597,14 +2640,14 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 01da938ff5dc2163489aa33cb3b747a7
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
-         as -v --64 -o CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o /tmp/cc0cnWjy.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+         as -v --64 -o CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o /tmp/ccXNUvsy.s
         GNU assembler version 2.34 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.34
         COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
-        Linking C executable cmTC_0b18e
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0b18e.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+        Linking C executable cmTC_7a2c7
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7a2c7.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/gcc
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper
@@ -2616,14 +2659,14 @@ events:
         gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) 
         COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_0b18e' '-mtune=generic' '-march=x86-64'
-         /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccwtFa31.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_0b18e /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. -v CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_7a2c7' '-mtune=generic' '-march=x86-64'
+         /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnmWbm1.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_7a2c7 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. -v CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
         collect2 version 9.4.0
-        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccwtFa31.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_0b18e /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. -v CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
+        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnmWbm1.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_7a2c7 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. -v CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
         GNU ld (GNU Binutils for Ubuntu) 2.34
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_0b18e' '-mtune=generic' '-march=x86-64'
-        /usr/bin/gcc  -v -Wl,-v CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o -o cmTC_0b18e
-        make[1]: Leaving directory '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-yqLCUU'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_7a2c7' '-mtune=generic' '-march=x86-64'
+        /usr/bin/gcc  -v -Wl,-v CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o -o cmTC_7a2c7
+        make[1]: Leaving directory '/mnt/d/aco_results/aco_dp/code/build/CMakeFiles/CMakeScratch/TryCompile-XtJcQT'
         
       exitCode: 0
   -
@@ -2631,7 +2674,7 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
       - "/usr/share/cmake-4.1/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     message: |
       Parsed C implicit include dir info: rv=done
         found start of include info
@@ -2653,18 +2696,18 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
       - "/usr/share/cmake-4.1/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     message: |
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-yqLCUU']
+        ignore line: [Change Dir: '/mnt/d/aco_results/aco_dp/code/build/CMakeFiles/CMakeScratch/TryCompile-XtJcQT']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_0b18e/fast]
-        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_0b18e.dir/build.make CMakeFiles/cmTC_0b18e.dir/build]
-        ignore line: [make[1]: Entering directory '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-yqLCUU']
-        ignore line: [Building C object CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o]
-        ignore line: [/usr/bin/gcc   -v -o CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-4.1/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_7a2c7/fast]
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_7a2c7.dir/build.make CMakeFiles/cmTC_7a2c7.dir/build]
+        ignore line: [make[1]: Entering directory '/mnt/d/aco_results/aco_dp/code/build/CMakeFiles/CMakeScratch/TryCompile-XtJcQT']
+        ignore line: [Building C object CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/gcc   -v -o CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-4.1/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/gcc]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:hsa]
@@ -2673,8 +2716,8 @@ events:
         ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c ada c++ go brig d fortran objc obj-c++ gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-9QDOt0/gcc-9-9.4.0/debian/tmp-nvptx/usr hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu]
         ignore line: [Thread model: posix]
         ignore line: [gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
-        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/9/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-4.1/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cc0cnWjy.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/9/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-4.1/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccXNUvsy.s]
         ignore line: [GNU C17 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 9.4.0  GMP version 6.2.0  MPFR version 4.0.2  MPC version 1.1.0  isl version isl-0.22.1-GMP]
         ignore line: []
@@ -2694,14 +2737,14 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 01da938ff5dc2163489aa33cb3b747a7]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o /tmp/cc0cnWjy.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o /tmp/ccXNUvsy.s]
         ignore line: [GNU assembler version 2.34 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.34]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
-        ignore line: [Linking C executable cmTC_0b18e]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0b18e.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+        ignore line: [Linking C executable cmTC_7a2c7]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7a2c7.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/gcc]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper]
@@ -2713,13 +2756,13 @@ events:
         ignore line: [gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) ]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_0b18e' '-mtune=generic' '-march=x86-64']
-        link line: [ /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccwtFa31.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_0b18e /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. -v CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_7a2c7' '-mtune=generic' '-march=x86-64']
+        link line: [ /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnmWbm1.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_7a2c7 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. -v CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccwtFa31.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccnmWbm1.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -2737,7 +2780,7 @@ events:
           arg [-znow] ==> ignore
           arg [-zrelro] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_0b18e] ==> ignore
+          arg [cmTC_7a2c7] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o]
@@ -2750,7 +2793,7 @@ events:
           arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/9/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../..]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--push-state] ==> ignore
           arg [--as-needed] ==> ignore
@@ -2765,7 +2808,7 @@ events:
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o]
         ignore line: [collect2 version 9.4.0]
-        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccwtFa31.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_0b18e /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. -v CMakeFiles/cmTC_0b18e.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnmWbm1.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_7a2c7 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. -v CMakeFiles/cmTC_7a2c7.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o]
         linker tool for 'C': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
@@ -2790,7 +2833,7 @@ events:
       - "/usr/share/cmake-4.1/Modules/Internal/CMakeDetermineLinkerId.cmake:36 (message)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
       - "/usr/share/cmake-4.1/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     message: |
       Running the C compiler's linker: "/usr/bin/ld" "-v"
       GNU ld (GNU Binutils for Ubuntu) 2.34
@@ -2799,12 +2842,12 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
       - "/usr/share/cmake-4.1/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-TJUKMV"
-      binary: "/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-TJUKMV"
+      source: "/mnt/d/aco_results/aco_dp/code/build/CMakeFiles/CMakeScratch/TryCompile-qNmrcU"
+      binary: "/mnt/d/aco_results/aco_dp/code/build/CMakeFiles/CMakeScratch/TryCompile-qNmrcU"
     cmakeVariables:
       CMAKE_CXX_FLAGS: " -fopenmp -O3"
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -2814,13 +2857,13 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-TJUKMV'
+        Change Dir: '/mnt/d/aco_results/aco_dp/code/build/CMakeFiles/CMakeScratch/TryCompile-qNmrcU'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_c8f47/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_c8f47.dir/build.make CMakeFiles/cmTC_c8f47.dir/build
-        make[1]: Entering directory '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-TJUKMV'
-        Building CXX object CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o
-        /usr/bin/g++   -fopenmp -O3    -v -o CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_70aa2/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_70aa2.dir/build.make CMakeFiles/cmTC_70aa2.dir/build
+        make[1]: Entering directory '/mnt/d/aco_results/aco_dp/code/build/CMakeFiles/CMakeScratch/TryCompile-qNmrcU'
+        Building CXX object CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/g++   -fopenmp -O3  -std=gnu++17   -v -o CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=/usr/bin/g++
         OFFLOAD_TARGET_NAMES=nvptx-none:hsa
@@ -2829,9 +2872,9 @@ events:
         Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++,gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-9QDOt0/gcc-9-9.4.0/debian/tmp-nvptx/usr,hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
         Thread model: posix
         gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) 
-        COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-v' '-o' 'CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
-         /usr/lib/gcc/x86_64-linux-gnu/9/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE -D_REENTRANT /usr/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o -O3 -version -fopenmp -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccUnmvtW.s
-        GNU C++14 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)
+        COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
+         /usr/lib/gcc/x86_64-linux-gnu/9/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE -D_REENTRANT /usr/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o -O3 -std=gnu++17 -version -fopenmp -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cczNy0kV.s
+        GNU C++17 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)
         	compiled by GNU C version 9.4.0, GMP version 6.2.0, MPFR version 4.0.2, MPC version 1.1.0, isl version isl-0.22.1-GMP
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
@@ -2849,19 +2892,19 @@ events:
          /usr/include/x86_64-linux-gnu
          /usr/include
         End of search list.
-        GNU C++14 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)
+        GNU C++17 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)
         	compiled by GNU C version 9.4.0, GMP version 6.2.0, MPFR version 4.0.2, MPC version 1.1.0, isl version isl-0.22.1-GMP
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 3d1eba838554fa2348dba760e4770469
-        COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-v' '-o' 'CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
-         as -v --64 -o CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccUnmvtW.s
+        COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
+         as -v --64 -o CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o /tmp/cczNy0kV.s
         GNU assembler version 2.34 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.34
         COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-v' '-o' 'CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
-        Linking CXX executable cmTC_c8f47
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c8f47.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
+        Linking CXX executable cmTC_70aa2
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_70aa2.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/g++
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper
@@ -2874,14 +2917,14 @@ events:
         COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
         Reading specs from /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.spec
-        COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-v' '-o' 'cmTC_c8f47' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
-         /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccWPoODo.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_c8f47 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. -v CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadend.o
+        COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-v' '-o' 'cmTC_70aa2' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
+         /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccyqJqqp.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_70aa2 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. -v CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadend.o
         collect2 version 9.4.0
-        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccWPoODo.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_c8f47 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. -v CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadend.o
+        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccyqJqqp.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_70aa2 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. -v CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadend.o
         GNU ld (GNU Binutils for Ubuntu) 2.34
-        COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-v' '-o' 'cmTC_c8f47' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
-        /usr/bin/g++  -fopenmp -O3   -v -Wl,-v CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_c8f47
-        make[1]: Leaving directory '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-TJUKMV'
+        COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-v' '-o' 'cmTC_70aa2' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
+        /usr/bin/g++  -fopenmp -O3   -v -Wl,-v CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_70aa2
+        make[1]: Leaving directory '/mnt/d/aco_results/aco_dp/code/build/CMakeFiles/CMakeScratch/TryCompile-qNmrcU'
         
       exitCode: 0
   -
@@ -2889,7 +2932,7 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
       - "/usr/share/cmake-4.1/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     message: |
       Parsed CXX implicit include dir info: rv=done
         found start of include info
@@ -2917,18 +2960,18 @@ events:
     backtrace:
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
       - "/usr/share/cmake-4.1/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     message: |
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-TJUKMV']
+        ignore line: [Change Dir: '/mnt/d/aco_results/aco_dp/code/build/CMakeFiles/CMakeScratch/TryCompile-qNmrcU']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_c8f47/fast]
-        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_c8f47.dir/build.make CMakeFiles/cmTC_c8f47.dir/build]
-        ignore line: [make[1]: Entering directory '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-TJUKMV']
-        ignore line: [Building CXX object CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/usr/bin/g++   -fopenmp -O3    -v -o CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_70aa2/fast]
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_70aa2.dir/build.make CMakeFiles/cmTC_70aa2.dir/build]
+        ignore line: [make[1]: Entering directory '/mnt/d/aco_results/aco_dp/code/build/CMakeFiles/CMakeScratch/TryCompile-qNmrcU']
+        ignore line: [Building CXX object CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/g++   -fopenmp -O3  -std=gnu++17   -v -o CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/g++]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:hsa]
@@ -2937,9 +2980,9 @@ events:
         ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c ada c++ go brig d fortran objc obj-c++ gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-9QDOt0/gcc-9-9.4.0/debian/tmp-nvptx/usr hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu]
         ignore line: [Thread model: posix]
         ignore line: [gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-v' '-o' 'CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread']
-        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/9/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE -D_REENTRANT /usr/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o -O3 -version -fopenmp -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccUnmvtW.s]
-        ignore line: [GNU C++14 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)]
+        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread']
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/9/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE -D_REENTRANT /usr/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o -O3 -std=gnu++17 -version -fopenmp -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cczNy0kV.s]
+        ignore line: [GNU C++17 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 9.4.0  GMP version 6.2.0  MPFR version 4.0.2  MPC version 1.1.0  isl version isl-0.22.1-GMP]
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
@@ -2957,19 +3000,19 @@ events:
         ignore line: [ /usr/include/x86_64-linux-gnu]
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
-        ignore line: [GNU C++14 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)]
+        ignore line: [GNU C++17 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 9.4.0  GMP version 6.2.0  MPFR version 4.0.2  MPC version 1.1.0  isl version isl-0.22.1-GMP]
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 3d1eba838554fa2348dba760e4770469]
-        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-v' '-o' 'CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccUnmvtW.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o /tmp/cczNy0kV.s]
         ignore line: [GNU assembler version 2.34 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.34]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-v' '-o' 'CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread']
-        ignore line: [Linking CXX executable cmTC_c8f47]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c8f47.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread']
+        ignore line: [Linking CXX executable cmTC_70aa2]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_70aa2.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/g++]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper]
@@ -2982,13 +3025,13 @@ events:
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/]
         ignore line: [Reading specs from /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.spec]
-        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-v' '-o' 'cmTC_c8f47' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread']
-        link line: [ /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccWPoODo.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_c8f47 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. -v CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadend.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-O3' '-v' '-o' 'cmTC_70aa2' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread']
+        link line: [ /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccyqJqqp.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_70aa2 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. -v CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadend.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccWPoODo.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccyqJqqp.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lpthread] ==> ignore
@@ -3007,7 +3050,7 @@ events:
           arg [-znow] ==> ignore
           arg [-zrelro] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_c8f47] ==> ignore
+          arg [cmTC_70aa2] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o]
@@ -3021,7 +3064,7 @@ events:
           arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/9/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../..]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgomp] ==> lib [gomp]
@@ -3035,7 +3078,7 @@ events:
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadend.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadend.o]
         ignore line: [collect2 version 9.4.0]
-        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccWPoODo.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_c8f47 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. -v CMakeFiles/cmTC_c8f47.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadend.o]
+        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccyqJqqp.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_70aa2 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. -v CMakeFiles/cmTC_70aa2.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadend.o]
         linker tool for 'CXX': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
@@ -3060,658 +3103,8 @@ events:
       - "/usr/share/cmake-4.1/Modules/Internal/CMakeDetermineLinkerId.cmake:36 (message)"
       - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
       - "/usr/share/cmake-4.1/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:11 (project)"
+      - "CMakeLists.txt:16 (project)"
     message: |
       Running the CXX compiler's linker: "/usr/bin/ld" "-v"
       GNU ld (GNU Binutils for Ubuntu) 2.34
-...
-
----
-events:
-  -
-    kind: "try_compile-v1"
-    backtrace:
-      - "/usr/share/cmake-4.1/Modules/FindOpenMP.cmake:251 (try_compile)"
-      - "/usr/share/cmake-4.1/Modules/FindOpenMP.cmake:558 (_OPENMP_GET_FLAGS)"
-      - "CMakeLists.txt:26 (find_package)"
-    description: "Detecting C OpenMP compiler info"
-    directories:
-      source: "/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-QswbSI"
-      binary: "/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-QswbSI"
-    cmakeVariables:
-      CMAKE_C_FLAGS: ""
-      CMAKE_C_FLAGS_DEBUG: "-g"
-      CMAKE_EXE_LINKER_FLAGS: ""
-    buildResult:
-      variable: "OpenMP_COMPILE_RESULT_C_fopenmp"
-      cached: true
-      stdout: |
-        Change Dir: '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-QswbSI'
-        
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_3fced/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_3fced.dir/build.make CMakeFiles/cmTC_3fced.dir/build
-        make[1]: Entering directory '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-QswbSI'
-        Building C object CMakeFiles/cmTC_3fced.dir/OpenMPTryFlag.c.o
-        /usr/bin/gcc   -fopenmp -o CMakeFiles/cmTC_3fced.dir/OpenMPTryFlag.c.o -c /mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-QswbSI/OpenMPTryFlag.c
-        Linking C executable cmTC_3fced
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3fced.dir/link.txt --verbose=1
-        Using built-in specs.
-        COLLECT_GCC=/usr/bin/gcc
-        COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper
-        OFFLOAD_TARGET_NAMES=nvptx-none:hsa
-        OFFLOAD_TARGET_DEFAULT=1
-        Target: x86_64-linux-gnu
-        Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++,gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-9QDOt0/gcc-9-9.4.0/debian/tmp-nvptx/usr,hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
-        Thread model: posix
-        gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) 
-        COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/
-        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
-        Reading specs from /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.spec
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_3fced' '-mtune=generic' '-march=x86-64' '-pthread'
-         /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccElnz9B.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_3fced /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_3fced.dir/OpenMPTryFlag.c.o -lgomp -lgcc --push-state --as-needed -lgcc_s --pop-state -lpthread -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadend.o
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_3fced' '-mtune=generic' '-march=x86-64' '-pthread'
-        /usr/bin/gcc  -fopenmp -v CMakeFiles/cmTC_3fced.dir/OpenMPTryFlag.c.o -o cmTC_3fced
-        make[1]: Leaving directory '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-QswbSI'
-        
-      exitCode: 0
-  -
-    kind: "message-v1"
-    backtrace:
-      - "/usr/share/cmake-4.1/Modules/FindOpenMP.cmake:295 (message)"
-      - "/usr/share/cmake-4.1/Modules/FindOpenMP.cmake:558 (_OPENMP_GET_FLAGS)"
-      - "CMakeLists.txt:26 (find_package)"
-    message: |
-      Parsed C OpenMP implicit link information from above output:
-        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-QswbSI']
-        ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_3fced/fast]
-        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_3fced.dir/build.make CMakeFiles/cmTC_3fced.dir/build]
-        ignore line: [make[1]: Entering directory '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-QswbSI']
-        ignore line: [Building C object CMakeFiles/cmTC_3fced.dir/OpenMPTryFlag.c.o]
-        ignore line: [/usr/bin/gcc   -fopenmp -o CMakeFiles/cmTC_3fced.dir/OpenMPTryFlag.c.o -c /mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-QswbSI/OpenMPTryFlag.c]
-        ignore line: [Linking C executable cmTC_3fced]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3fced.dir/link.txt --verbose=1]
-        ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/usr/bin/gcc]
-        ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper]
-        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:hsa]
-        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
-        ignore line: [Target: x86_64-linux-gnu]
-        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c ada c++ go brig d fortran objc obj-c++ gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-9QDOt0/gcc-9-9.4.0/debian/tmp-nvptx/usr hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu]
-        ignore line: [Thread model: posix]
-        ignore line: [gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) ]
-        ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/]
-        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/]
-        ignore line: [Reading specs from /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.spec]
-        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_3fced' '-mtune=generic' '-march=x86-64' '-pthread']
-        link line: [ /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccElnz9B.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_3fced /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_3fced.dir/OpenMPTryFlag.c.o -lgomp -lgcc --push-state --as-needed -lgcc_s --pop-state -lpthread -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadend.o]
-          arg [/usr/lib/gcc/x86_64-linux-gnu/9/collect2] ==> ignore
-          arg [-plugin] ==> ignore
-          arg [/usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so] ==> ignore
-          arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccElnz9B.res] ==> ignore
-          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
-          arg [-plugin-opt=-pass-through=-lpthread] ==> ignore
-          arg [-plugin-opt=-pass-through=-lc] ==> ignore
-          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
-          arg [--build-id] ==> ignore
-          arg [--eh-frame-hdr] ==> ignore
-          arg [-m] ==> ignore
-          arg [elf_x86_64] ==> ignore
-          arg [--hash-style=gnu] ==> ignore
-          arg [--as-needed] ==> ignore
-          arg [-dynamic-linker] ==> ignore
-          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
-          arg [-pie] ==> ignore
-          arg [-znow] ==> ignore
-          arg [-zrelro] ==> ignore
-          arg [-o] ==> ignore
-          arg [cmTC_3fced] ==> ignore
-          arg [-L/usr/lib/gcc/x86_64-linux-gnu/9] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/9]
-          arg [-L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu]
-          arg [-L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib]
-          arg [-L/lib/x86_64-linux-gnu] ==> dir [/lib/x86_64-linux-gnu]
-          arg [-L/lib/../lib] ==> dir [/lib/../lib]
-          arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
-          arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
-          arg [-L/usr/lib/gcc/x86_64-linux-gnu/9/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../..]
-          arg [CMakeFiles/cmTC_3fced.dir/OpenMPTryFlag.c.o] ==> ignore
-          arg [-lgomp] ==> lib [gomp]
-          arg [-lgcc] ==> lib [gcc]
-          arg [--push-state] ==> ignore
-          arg [--as-needed] ==> ignore
-          arg [-lgcc_s] ==> lib [gcc_s]
-          arg [--pop-state] ==> ignore
-          arg [-lpthread] ==> lib [pthread]
-          arg [-lc] ==> lib [c]
-          arg [-lgcc] ==> lib [gcc]
-          arg [--push-state] ==> ignore
-          arg [--as-needed] ==> ignore
-          arg [-lgcc_s] ==> lib [gcc_s]
-          arg [--pop-state] ==> ignore
-        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/9] ==> [/usr/lib/gcc/x86_64-linux-gnu/9]
-        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
-        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib] ==> [/usr/lib]
-        collapse library dir [/lib/x86_64-linux-gnu] ==> [/lib/x86_64-linux-gnu]
-        collapse library dir [/lib/../lib] ==> [/lib]
-        collapse library dir [/usr/lib/x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
-        collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
-        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../..] ==> [/usr/lib]
-        implicit libs: [gomp;gcc;gcc_s;pthread;c;gcc;gcc_s]
-        implicit objs: []
-        implicit dirs: [/usr/lib/gcc/x86_64-linux-gnu/9;/usr/lib/x86_64-linux-gnu;/usr/lib;/lib/x86_64-linux-gnu;/lib]
-        implicit fwks: []
-      
-      
-  -
-    kind: "find-v1"
-    backtrace:
-      - "/usr/share/cmake-4.1/Modules/FindOpenMP.cmake:313 (find_library)"
-      - "/usr/share/cmake-4.1/Modules/FindOpenMP.cmake:558 (_OPENMP_GET_FLAGS)"
-      - "CMakeLists.txt:26 (find_package)"
-    mode: "library"
-    variable: "OpenMP_gomp_LIBRARY"
-    description: "Path to the gomp library for OpenMP"
-    settings:
-      SearchFramework: "NEVER"
-      SearchAppBundle: "NEVER"
-      CMAKE_FIND_USE_CMAKE_PATH: false
-      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
-      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
-      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
-      CMAKE_FIND_USE_INSTALL_PREFIX: true
-    names:
-      - "gomp"
-    candidate_directories:
-      - "/usr/lib/gcc/x86_64-linux-gnu/9/"
-      - "/usr/lib/x86_64-linux-gnu/"
-      - "/usr/lib/"
-      - "/lib/x86_64-linux-gnu/"
-      - "/lib/"
-      - "/usr/local/bin/"
-      - "/home/ducquangk6/.rbenv/shims/"
-      - "/home/ducquangk6/.rbenv/bin/"
-      - "/usr/local/sbin/"
-      - "/usr/sbin/"
-      - "/usr/bin/"
-      - "/sbin/"
-      - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
-      - "/usr/lib/wsl/lib/"
-      - "/mnt/c/Program Files/WindowsApps/CanonicalGroupLimited.UbuntuonWindows_2004.2022.1.0_x64__79rhkp1fndgsc/"
-      - "/mnt/c/Program Files (x86)/VMware/VMware Player/bin/"
-      - "/mnt/c/WINDOWS/system32/"
-      - "/mnt/c/WINDOWS/"
-      - "/mnt/c/WINDOWS/System32/Wbem/"
-      - "/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/"
-      - "/mnt/c/WINDOWS/System32/OpenSSH/"
-      - "/mnt/c/MinGW/bin/"
-      - "/mnt/d/code/Project SDL/src/include/"
-      - "/mnt/d/code/Project SDL/src/lib/"
-      - "/mnt/d/code/ProjectSDL/src/bin/"
-      - "/mnt/d/code/ProjectSDL/"
-      - "/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/"
-      - "/mnt/c/Program Files/Eclipse Adoptium/jdk-17.0.8.101-hotspot/bin/"
-      - "/mnt/c/Program Files/Git/cmd/"
-      - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
-      - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/redis/"
-      - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
-      - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
-      - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
-      - "/mnt/c/Program Files/dotnet/"
-      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
-      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
-      - "/mnt/c/Ruby34-x64/bin/"
-      - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
-      - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
-      - "/mnt/c/Users/Admin/AppData/Local/Programs/Microsoft VS Code/bin/"
-      - "/mnt/c/Program Files (x86)/Java/jdk-1.8/bin/"
-      - "/mnt/c/Users/Admin/AppData/Roaming/npm/"
-      - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312-32/"
-      - "/snap/bin/"
-      - "/usr/local/lib/x86_64-linux-gnu/"
-      - "/usr/local/lib/"
-      - "/usr/local/"
-      - "/usr/lib/x86_64-linux-gnu/"
-      - "/usr/lib/"
-      - "/usr/"
-      - "/lib/x86_64-linux-gnu/"
-      - "/lib/"
-      - "/usr/X11R6/lib/x86_64-linux-gnu/"
-      - "/usr/X11R6/lib/"
-      - "/usr/X11R6/"
-      - "/usr/pkg/lib/x86_64-linux-gnu/"
-      - "/usr/pkg/lib/"
-      - "/usr/pkg/"
-      - "/opt/lib/x86_64-linux-gnu/"
-      - "/opt/lib/"
-      - "/opt/"
-      - "/usr/lib/X11/"
-    found: "/usr/lib/gcc/x86_64-linux-gnu/9/libgomp.so"
-    search_context:
-      ENV{PATH}:
-        - "/usr/local/bin"
-        - "/home/ducquangk6/.rbenv/shims"
-        - "/home/ducquangk6/.rbenv/bin"
-        - "/home/ducquangk6/.rbenv/shims"
-        - "/home/ducquangk6/.rbenv/bin"
-        - "/home/ducquangk6/.rbenv/shims"
-        - "/home/ducquangk6/.rbenv/bin"
-        - "/home/ducquangk6/.rbenv/shims"
-        - "/home/ducquangk6/.rbenv/bin"
-        - "/home/ducquangk6/.rbenv/shims"
-        - "/home/ducquangk6/.rbenv/bin"
-        - "/usr/local/sbin"
-        - "/usr/local/bin"
-        - "/usr/sbin"
-        - "/usr/bin"
-        - "/sbin"
-        - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
-        - "/usr/lib/wsl/lib"
-        - "/mnt/c/Program Files/WindowsApps/CanonicalGroupLimited.UbuntuonWindows_2004.2022.1.0_x64__79rhkp1fndgsc"
-        - "/mnt/c/Program Files (x86)/VMware/VMware Player/bin/"
-        - "/mnt/c/WINDOWS/system32"
-        - "/mnt/c/WINDOWS"
-        - "/mnt/c/WINDOWS/System32/Wbem"
-        - "/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/"
-        - "/mnt/c/WINDOWS/System32/OpenSSH/"
-        - "/mnt/c/MinGW/bin"
-        - "/mnt/d/code/Project SDL/src/include"
-        - "/mnt/d/code/Project SDL/src/lib"
-        - "/mnt/d/code/ProjectSDL/src/bin"
-        - "/mnt/d/code/ProjectSDL"
-        - "/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/"
-        - "/mnt/c/Program Files/Eclipse Adoptium/jdk-17.0.8.101-hotspot/bin"
-        - "/mnt/c/Program Files/Git/cmd"
-        - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
-        - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/redis"
-        - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
-        - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
-        - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
-        - "/mnt/c/Program Files/dotnet/"
-        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
-        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
-        - "/mnt/c/Ruby34-x64/bin"
-        - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
-        - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
-        - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
-        - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps"
-        - "/mnt/c/Users/Admin/AppData/Local/Programs/Microsoft VS Code/bin"
-        - "/mnt/c/Program Files (x86)/Java/jdk-1.8/bin"
-        - "/mnt/c/Users/Admin/AppData/Roaming/npm"
-        - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312-32"
-        - "/snap/bin"
-      CMAKE_INSTALL_PREFIX: "/usr/local"
-      CMAKE_SYSTEM_PREFIX_PATH:
-        - "/usr/local"
-        - "/usr"
-        - "/"
-        - "/usr"
-        - "/usr/local"
-        - "/usr/X11R6"
-        - "/usr/pkg"
-        - "/opt"
-      CMAKE_SYSTEM_LIBRARY_PATH:
-        - "/usr/lib/X11"
-  -
-    kind: "find-v1"
-    backtrace:
-      - "/usr/share/cmake-4.1/Modules/FindOpenMP.cmake:313 (find_library)"
-      - "/usr/share/cmake-4.1/Modules/FindOpenMP.cmake:558 (_OPENMP_GET_FLAGS)"
-      - "CMakeLists.txt:26 (find_package)"
-    mode: "library"
-    variable: "OpenMP_pthread_LIBRARY"
-    description: "Path to the pthread library for OpenMP"
-    settings:
-      SearchFramework: "NEVER"
-      SearchAppBundle: "NEVER"
-      CMAKE_FIND_USE_CMAKE_PATH: false
-      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
-      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
-      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
-      CMAKE_FIND_USE_INSTALL_PREFIX: true
-    names:
-      - "pthread"
-    candidate_directories:
-      - "/usr/lib/gcc/x86_64-linux-gnu/9/"
-      - "/usr/lib/x86_64-linux-gnu/"
-      - "/usr/lib/"
-      - "/lib/x86_64-linux-gnu/"
-      - "/lib/"
-      - "/usr/local/bin/"
-      - "/home/ducquangk6/.rbenv/shims/"
-      - "/home/ducquangk6/.rbenv/bin/"
-      - "/usr/local/sbin/"
-      - "/usr/sbin/"
-      - "/usr/bin/"
-      - "/sbin/"
-      - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
-      - "/usr/lib/wsl/lib/"
-      - "/mnt/c/Program Files/WindowsApps/CanonicalGroupLimited.UbuntuonWindows_2004.2022.1.0_x64__79rhkp1fndgsc/"
-      - "/mnt/c/Program Files (x86)/VMware/VMware Player/bin/"
-      - "/mnt/c/WINDOWS/system32/"
-      - "/mnt/c/WINDOWS/"
-      - "/mnt/c/WINDOWS/System32/Wbem/"
-      - "/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/"
-      - "/mnt/c/WINDOWS/System32/OpenSSH/"
-      - "/mnt/c/MinGW/bin/"
-      - "/mnt/d/code/Project SDL/src/include/"
-      - "/mnt/d/code/Project SDL/src/lib/"
-      - "/mnt/d/code/ProjectSDL/src/bin/"
-      - "/mnt/d/code/ProjectSDL/"
-      - "/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/"
-      - "/mnt/c/Program Files/Eclipse Adoptium/jdk-17.0.8.101-hotspot/bin/"
-      - "/mnt/c/Program Files/Git/cmd/"
-      - "/mnt/c/Users/Admin/AppData/Roaming/nvm/"
-      - "/mnt/c/Program Files/nodejs/"
-      - "/mnt/c/Program Files/redis/"
-      - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin/"
-      - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
-      - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
-      - "/mnt/c/Program Files/dotnet/"
-      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
-      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
-      - "/mnt/c/Ruby34-x64/bin/"
-      - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
-      - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps/"
-      - "/mnt/c/Users/Admin/AppData/Local/Programs/Microsoft VS Code/bin/"
-      - "/mnt/c/Program Files (x86)/Java/jdk-1.8/bin/"
-      - "/mnt/c/Users/Admin/AppData/Roaming/npm/"
-      - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312-32/"
-      - "/snap/bin/"
-      - "/usr/local/lib/x86_64-linux-gnu/"
-      - "/usr/local/lib/"
-      - "/usr/local/"
-      - "/usr/lib/x86_64-linux-gnu/"
-      - "/usr/lib/"
-      - "/usr/"
-      - "/lib/x86_64-linux-gnu/"
-      - "/lib/"
-      - "/usr/X11R6/lib/x86_64-linux-gnu/"
-      - "/usr/X11R6/lib/"
-      - "/usr/X11R6/"
-      - "/usr/pkg/lib/x86_64-linux-gnu/"
-      - "/usr/pkg/lib/"
-      - "/usr/pkg/"
-      - "/opt/lib/x86_64-linux-gnu/"
-      - "/opt/lib/"
-      - "/opt/"
-      - "/usr/lib/X11/"
-    searched_directories:
-      - "/usr/lib/gcc/x86_64-linux-gnu/9/"
-    found: "/usr/lib/x86_64-linux-gnu/libpthread.so"
-    search_context:
-      ENV{PATH}:
-        - "/usr/local/bin"
-        - "/home/ducquangk6/.rbenv/shims"
-        - "/home/ducquangk6/.rbenv/bin"
-        - "/home/ducquangk6/.rbenv/shims"
-        - "/home/ducquangk6/.rbenv/bin"
-        - "/home/ducquangk6/.rbenv/shims"
-        - "/home/ducquangk6/.rbenv/bin"
-        - "/home/ducquangk6/.rbenv/shims"
-        - "/home/ducquangk6/.rbenv/bin"
-        - "/home/ducquangk6/.rbenv/shims"
-        - "/home/ducquangk6/.rbenv/bin"
-        - "/usr/local/sbin"
-        - "/usr/local/bin"
-        - "/usr/sbin"
-        - "/usr/bin"
-        - "/sbin"
-        - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
-        - "/usr/lib/wsl/lib"
-        - "/mnt/c/Program Files/WindowsApps/CanonicalGroupLimited.UbuntuonWindows_2004.2022.1.0_x64__79rhkp1fndgsc"
-        - "/mnt/c/Program Files (x86)/VMware/VMware Player/bin/"
-        - "/mnt/c/WINDOWS/system32"
-        - "/mnt/c/WINDOWS"
-        - "/mnt/c/WINDOWS/System32/Wbem"
-        - "/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/"
-        - "/mnt/c/WINDOWS/System32/OpenSSH/"
-        - "/mnt/c/MinGW/bin"
-        - "/mnt/d/code/Project SDL/src/include"
-        - "/mnt/d/code/Project SDL/src/lib"
-        - "/mnt/d/code/ProjectSDL/src/bin"
-        - "/mnt/d/code/ProjectSDL"
-        - "/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/"
-        - "/mnt/c/Program Files/Eclipse Adoptium/jdk-17.0.8.101-hotspot/bin"
-        - "/mnt/c/Program Files/Git/cmd"
-        - "/mnt/c/Users/Admin/AppData/Roaming/nvm"
-        - "/mnt/c/Program Files/nodejs"
-        - "/mnt/c/Program Files/redis"
-        - "/mnt/c/Program Files/MySQL/MySQL Server 8.2/bin"
-        - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312"
-        - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts"
-        - "/mnt/c/Program Files/dotnet/"
-        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
-        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
-        - "/mnt/c/Ruby34-x64/bin"
-        - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/Scripts/"
-        - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312/"
-        - "/mnt/c/Program Files/MySQL/MySQL Shell 8.2/bin/"
-        - "/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps"
-        - "/mnt/c/Users/Admin/AppData/Local/Programs/Microsoft VS Code/bin"
-        - "/mnt/c/Program Files (x86)/Java/jdk-1.8/bin"
-        - "/mnt/c/Users/Admin/AppData/Roaming/npm"
-        - "/mnt/c/Users/Admin/AppData/Local/Programs/Python/Python312-32"
-        - "/snap/bin"
-      CMAKE_INSTALL_PREFIX: "/usr/local"
-      CMAKE_SYSTEM_PREFIX_PATH:
-        - "/usr/local"
-        - "/usr"
-        - "/"
-        - "/usr"
-        - "/usr/local"
-        - "/usr/X11R6"
-        - "/usr/pkg"
-        - "/opt"
-      CMAKE_SYSTEM_LIBRARY_PATH:
-        - "/usr/lib/X11"
-  -
-    kind: "try_compile-v1"
-    backtrace:
-      - "/usr/share/cmake-4.1/Modules/FindOpenMP.cmake:251 (try_compile)"
-      - "/usr/share/cmake-4.1/Modules/FindOpenMP.cmake:558 (_OPENMP_GET_FLAGS)"
-      - "CMakeLists.txt:26 (find_package)"
-    description: "Detecting CXX OpenMP compiler info"
-    directories:
-      source: "/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-oQIS8I"
-      binary: "/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-oQIS8I"
-    cmakeVariables:
-      CMAKE_CXX_FLAGS: ""
-      CMAKE_CXX_FLAGS_DEBUG: "-g"
-      CMAKE_EXE_LINKER_FLAGS: ""
-    buildResult:
-      variable: "OpenMP_COMPILE_RESULT_CXX_fopenmp"
-      cached: true
-      stdout: |
-        Change Dir: '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-oQIS8I'
-        
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_bc3c0/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_bc3c0.dir/build.make CMakeFiles/cmTC_bc3c0.dir/build
-        make[1]: Entering directory '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-oQIS8I'
-        Building CXX object CMakeFiles/cmTC_bc3c0.dir/OpenMPTryFlag.cpp.o
-        /usr/bin/g++   -fopenmp -std=gnu++17 -o CMakeFiles/cmTC_bc3c0.dir/OpenMPTryFlag.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-oQIS8I/OpenMPTryFlag.cpp
-        Linking CXX executable cmTC_bc3c0
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bc3c0.dir/link.txt --verbose=1
-        Using built-in specs.
-        COLLECT_GCC=/usr/bin/g++
-        COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper
-        OFFLOAD_TARGET_NAMES=nvptx-none:hsa
-        OFFLOAD_TARGET_DEFAULT=1
-        Target: x86_64-linux-gnu
-        Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++,gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-9QDOt0/gcc-9-9.4.0/debian/tmp-nvptx/usr,hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
-        Thread model: posix
-        gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) 
-        COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/
-        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
-        Reading specs from /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.spec
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_bc3c0' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
-         /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/cc8qjHJG.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_bc3c0 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_bc3c0.dir/OpenMPTryFlag.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadend.o
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_bc3c0' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
-        /usr/bin/g++  -fopenmp -v CMakeFiles/cmTC_bc3c0.dir/OpenMPTryFlag.cpp.o -o cmTC_bc3c0
-        make[1]: Leaving directory '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-oQIS8I'
-        
-      exitCode: 0
-  -
-    kind: "message-v1"
-    backtrace:
-      - "/usr/share/cmake-4.1/Modules/FindOpenMP.cmake:295 (message)"
-      - "/usr/share/cmake-4.1/Modules/FindOpenMP.cmake:558 (_OPENMP_GET_FLAGS)"
-      - "CMakeLists.txt:26 (find_package)"
-    message: |
-      Parsed CXX OpenMP implicit link information from above output:
-        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-oQIS8I']
-        ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_bc3c0/fast]
-        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_bc3c0.dir/build.make CMakeFiles/cmTC_bc3c0.dir/build]
-        ignore line: [make[1]: Entering directory '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-oQIS8I']
-        ignore line: [Building CXX object CMakeFiles/cmTC_bc3c0.dir/OpenMPTryFlag.cpp.o]
-        ignore line: [/usr/bin/g++   -fopenmp -std=gnu++17 -o CMakeFiles/cmTC_bc3c0.dir/OpenMPTryFlag.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-oQIS8I/OpenMPTryFlag.cpp]
-        ignore line: [Linking CXX executable cmTC_bc3c0]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bc3c0.dir/link.txt --verbose=1]
-        ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/usr/bin/g++]
-        ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper]
-        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:hsa]
-        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
-        ignore line: [Target: x86_64-linux-gnu]
-        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c ada c++ go brig d fortran objc obj-c++ gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-9QDOt0/gcc-9-9.4.0/debian/tmp-nvptx/usr hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu]
-        ignore line: [Thread model: posix]
-        ignore line: [gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) ]
-        ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/]
-        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/]
-        ignore line: [Reading specs from /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.spec]
-        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_bc3c0' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread']
-        link line: [ /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/cc8qjHJG.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_bc3c0 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_bc3c0.dir/OpenMPTryFlag.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/9/crtoffloadend.o]
-          arg [/usr/lib/gcc/x86_64-linux-gnu/9/collect2] ==> ignore
-          arg [-plugin] ==> ignore
-          arg [/usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so] ==> ignore
-          arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/cc8qjHJG.res] ==> ignore
-          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
-          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-          arg [-plugin-opt=-pass-through=-lpthread] ==> ignore
-          arg [-plugin-opt=-pass-through=-lc] ==> ignore
-          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
-          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-          arg [--build-id] ==> ignore
-          arg [--eh-frame-hdr] ==> ignore
-          arg [-m] ==> ignore
-          arg [elf_x86_64] ==> ignore
-          arg [--hash-style=gnu] ==> ignore
-          arg [--as-needed] ==> ignore
-          arg [-dynamic-linker] ==> ignore
-          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
-          arg [-pie] ==> ignore
-          arg [-znow] ==> ignore
-          arg [-zrelro] ==> ignore
-          arg [-o] ==> ignore
-          arg [cmTC_bc3c0] ==> ignore
-          arg [-L/usr/lib/gcc/x86_64-linux-gnu/9] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/9]
-          arg [-L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu]
-          arg [-L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib]
-          arg [-L/lib/x86_64-linux-gnu] ==> dir [/lib/x86_64-linux-gnu]
-          arg [-L/lib/../lib] ==> dir [/lib/../lib]
-          arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
-          arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
-          arg [-L/usr/lib/gcc/x86_64-linux-gnu/9/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../..]
-          arg [CMakeFiles/cmTC_bc3c0.dir/OpenMPTryFlag.cpp.o] ==> ignore
-          arg [-lstdc++] ==> lib [stdc++]
-          arg [-lm] ==> lib [m]
-          arg [-lgomp] ==> lib [gomp]
-          arg [-lgcc_s] ==> lib [gcc_s]
-          arg [-lgcc] ==> lib [gcc]
-          arg [-lpthread] ==> lib [pthread]
-          arg [-lc] ==> lib [c]
-          arg [-lgcc_s] ==> lib [gcc_s]
-          arg [-lgcc] ==> lib [gcc]
-        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/9] ==> [/usr/lib/gcc/x86_64-linux-gnu/9]
-        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
-        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib] ==> [/usr/lib]
-        collapse library dir [/lib/x86_64-linux-gnu] ==> [/lib/x86_64-linux-gnu]
-        collapse library dir [/lib/../lib] ==> [/lib]
-        collapse library dir [/usr/lib/x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
-        collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
-        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../..] ==> [/usr/lib]
-        implicit libs: [stdc++;m;gomp;gcc_s;gcc;pthread;c;gcc_s;gcc]
-        implicit objs: []
-        implicit dirs: [/usr/lib/gcc/x86_64-linux-gnu/9;/usr/lib/x86_64-linux-gnu;/usr/lib;/lib/x86_64-linux-gnu;/lib]
-        implicit fwks: []
-      
-      
-  -
-    kind: "try_compile-v1"
-    backtrace:
-      - "/usr/share/cmake-4.1/Modules/FindOpenMP.cmake:492 (try_compile)"
-      - "/usr/share/cmake-4.1/Modules/FindOpenMP.cmake:632 (_OPENMP_GET_SPEC_DATE)"
-      - "CMakeLists.txt:26 (find_package)"
-    description: "Detecting C OpenMP version"
-    directories:
-      source: "/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-UMbZyI"
-      binary: "/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-UMbZyI"
-    cmakeVariables:
-      CMAKE_C_FLAGS: ""
-      CMAKE_C_FLAGS_DEBUG: "-g"
-      CMAKE_EXE_LINKER_FLAGS: ""
-    buildResult:
-      variable: "OpenMP_SPECTEST_C_"
-      cached: true
-      stdout: |
-        Change Dir: '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-UMbZyI'
-        
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_072a6/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_072a6.dir/build.make CMakeFiles/cmTC_072a6.dir/build
-        make[1]: Entering directory '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-UMbZyI'
-        Building C object CMakeFiles/cmTC_072a6.dir/OpenMPCheckVersion.c.o
-        /usr/bin/gcc   -fopenmp -o CMakeFiles/cmTC_072a6.dir/OpenMPCheckVersion.c.o -c /mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-UMbZyI/OpenMPCheckVersion.c
-        Linking C executable cmTC_072a6
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_072a6.dir/link.txt --verbose=1
-        /usr/bin/gcc  -fopenmp CMakeFiles/cmTC_072a6.dir/OpenMPCheckVersion.c.o -o cmTC_072a6
-        make[1]: Leaving directory '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-UMbZyI'
-        
-      exitCode: 0
-  -
-    kind: "try_compile-v1"
-    backtrace:
-      - "/usr/share/cmake-4.1/Modules/FindOpenMP.cmake:492 (try_compile)"
-      - "/usr/share/cmake-4.1/Modules/FindOpenMP.cmake:632 (_OPENMP_GET_SPEC_DATE)"
-      - "CMakeLists.txt:26 (find_package)"
-    description: "Detecting CXX OpenMP version"
-    directories:
-      source: "/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-MDoLKH"
-      binary: "/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-MDoLKH"
-    cmakeVariables:
-      CMAKE_CXX_FLAGS: ""
-      CMAKE_CXX_FLAGS_DEBUG: "-g"
-      CMAKE_EXE_LINKER_FLAGS: ""
-    buildResult:
-      variable: "OpenMP_SPECTEST_CXX_"
-      cached: true
-      stdout: |
-        Change Dir: '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-MDoLKH'
-        
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_4d8f1/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_4d8f1.dir/build.make CMakeFiles/cmTC_4d8f1.dir/build
-        make[1]: Entering directory '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-MDoLKH'
-        Building CXX object CMakeFiles/cmTC_4d8f1.dir/OpenMPCheckVersion.cpp.o
-        /usr/bin/g++   -fopenmp -std=gnu++17 -o CMakeFiles/cmTC_4d8f1.dir/OpenMPCheckVersion.cpp.o -c /mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-MDoLKH/OpenMPCheckVersion.cpp
-        Linking CXX executable cmTC_4d8f1
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4d8f1.dir/link.txt --verbose=1
-        /usr/bin/g++  -fopenmp CMakeFiles/cmTC_4d8f1.dir/OpenMPCheckVersion.cpp.o -o cmTC_4d8f1
-        make[1]: Leaving directory '/mnt/d/khoa_luan/aco-dp/code/build/CMakeFiles/CMakeScratch/TryCompile-MDoLKH'
-        
-      exitCode: 0
 ...

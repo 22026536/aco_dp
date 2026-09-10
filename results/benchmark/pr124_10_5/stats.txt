@@ -1,17 +1,19 @@
-Instance:           pr124_10_5
-Instance path:      normalized_instances/tsplib/pr124_10_5.txt
-Num runs:           10
-Time limit (s):     60
-Date:               2026-05-06 00:37:51
+Instance:            pr124_10_5
+Instance path:       instances/tsplib6/pr124_10_5.txt
+Num runs:            10
+Time limit (s):      60
+Max iterations:      10000
+Date:                2026-06-12 22:07:35
 ---
-Valid runs:         10 / 10
-Feasible runs:      10
-Infeasible runs:    0
+Valid runs:          10 / 10
+Feasible runs:       10
+Infeasible runs:     0
+Error runs:          0
 ---
-Best cost:          1078927.300000
-Worst cost:         1079299.910000
-Avg cost:           1079082.135000
-Std dev cost:       167.644990
+Best cost:           1078927.300000
+Worst cost:          1084407.090000
+Avg cost:            1081115.236000
+Std dev cost:        2215.404102
 ---
-Avg time-to-best:   20.8178 s
-Best time-to-best:  7.3772 s
+Avg time-to-best:    17.7441 s
+Best time-to-best:   14.9427 s

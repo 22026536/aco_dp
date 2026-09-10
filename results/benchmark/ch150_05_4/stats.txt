@@ -1,17 +1,19 @@
-Instance:           ch150_05_4
-Instance path:      normalized_instances/tsplib/ch150_05_4.txt
-Num runs:           10
-Time limit (s):     60
-Date:               2026-04-27 19:32:24
+Instance:            ch150_05_4
+Instance path:       instances/tsplib2/ch150_05_4.txt
+Num runs:            10
+Time limit (s):      60
+Max iterations:      10000
+Date:                2026-06-11 22:06:14
 ---
-Valid runs:         10 / 10
-Feasible runs:      10
-Infeasible runs:    0
+Valid runs:          10 / 10
+Feasible runs:       10
+Infeasible runs:     0
+Error runs:          0
 ---
-Best cost:          380022.110000
-Worst cost:         380206.690000
-Avg cost:           380095.942000
-Std dev cost:       95.316702
+Best cost:           380022.110000
+Worst cost:          380206.690000
+Avg cost:            380169.774000
+Std dev cost:        77.825761
 ---
-Avg time-to-best:   14.0964 s
-Best time-to-best:  6.4883 s
+Avg time-to-best:    10.1615 s
+Best time-to-best:   31.8537 s

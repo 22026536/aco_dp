@@ -1,17 +1,19 @@
-Instance:           rat195_20_3
-Instance path:      normalized_instances/tsplib/rat195_20_3.txt
-Num runs:           10
-Time limit (s):     60
-Date:               2026-04-30 11:40:35
+Instance:            rat195_20_3
+Instance path:       instances/tsplib7/rat195_20_3.txt
+Num runs:            10
+Time limit (s):      60
+Max iterations:      10000
+Date:                2026-06-12 20:35:08
 ---
-Valid runs:         10 / 10
-Feasible runs:      10
-Infeasible runs:    0
+Valid runs:          10 / 10
+Feasible runs:       10
+Infeasible runs:     0
+Error runs:          0
 ---
-Best cost:          22143.820000
-Worst cost:         22650.060000
-Avg cost:           22386.822000
-Std dev cost:       143.083073
+Best cost:           22085.250000
+Worst cost:          22414.590000
+Avg cost:            22244.165000
+Std dev cost:        99.465135
 ---
-Avg time-to-best:   43.8472 s
-Best time-to-best:  57.0759 s
+Avg time-to-best:    49.3834 s
+Best time-to-best:   64.2991 s

@@ -1,17 +1,19 @@
-Instance:           lin105_15_2
-Instance path:      normalized_instances/tsplib/lin105_15_2.txt
-Num runs:           10
-Time limit (s):     90
-Date:               2026-04-20 12:31:54
+Instance:            lin105_15_2
+Instance path:       instances/tsplib5/lin105_15_2.txt
+Num runs:            10
+Time limit (s):      60
+Max iterations:      10000
+Date:                2026-06-12 16:34:36
 ---
-Valid runs:         10 / 10
-Feasible runs:      10
-Infeasible runs:    0
+Valid runs:          10 / 10
+Feasible runs:       10
+Infeasible runs:     0
+Error runs:          0
 ---
-Best cost:          84813.890000
-Worst cost:         84813.890000
-Avg cost:           84813.890000
-Std dev cost:       0.000000
+Best cost:           84813.890000
+Worst cost:          84813.890000
+Avg cost:            84813.890000
+Std dev cost:        0.000000
 ---
-Avg time-to-best:   3.7369 s
-Best time-to-best:  3.7073 s
+Avg time-to-best:    3.8080 s
+Best time-to-best:   3.9508 s

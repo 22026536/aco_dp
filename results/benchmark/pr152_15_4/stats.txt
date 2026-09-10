@@ -1,17 +1,19 @@
-Instance:           pr152_15_4
-Instance path:      normalized_instances/tsplib/pr152_15_4.txt
-Num runs:           10
-Time limit (s):     60
-Date:               2026-04-30 00:58:16
+Instance:            pr152_15_4
+Instance path:       instances/tsplib0/pr152_15_4.txt
+Num runs:            10
+Time limit (s):      60
+Max iterations:      10000
+Date:                2026-06-13 19:18:05
 ---
-Valid runs:         10 / 10
-Feasible runs:      10
-Infeasible runs:    0
+Valid runs:          10 / 10
+Feasible runs:       10
+Infeasible runs:     0
+Error runs:          0
 ---
-Best cost:          962231.920000
-Worst cost:         1015950.370000
-Avg cost:           988099.520000
-Std dev cost:       14549.325479
+Best cost:           962908.180000
+Worst cost:          995484.010000
+Avg cost:            981896.148000
+Std dev cost:        9815.128298
 ---
-Avg time-to-best:   34.1826 s
-Best time-to-best:  28.6758 s
+Avg time-to-best:    42.1923 s
+Best time-to-best:   50.7056 s

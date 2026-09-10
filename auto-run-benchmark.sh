@@ -77,9 +77,10 @@ if [ "$TOTAL" -eq 0 ]; then
     exit 1
 fi
 
-# ─── File log tổng hợp ───────────────────────────────────────────────────────
+# ─── File log tổng hợp (riêng theo tên thư mục instance) ─────────────────────
 mkdir -p "results/benchmark"
-GLOBAL_CSV="results/benchmark/_summary_all.csv"
+DATASET_NAME=$(basename "${INSTANCE_DIR%/}")
+GLOBAL_CSV="results/benchmark/_summary_${DATASET_NAME}.csv"
 
 if [ ! -f "$GLOBAL_CSV" ]; then
     echo "instance,n,feasible_runs,best_cost,avg_cost,std_cost,avg_time_to_best_s,time_limit_s,max_iter" \
@@ -125,6 +126,7 @@ echo -e "${BOLD}║  Thư mục  : ${INSTANCE_DIR}${RESET}"
 echo -e "${BOLD}║  Số lần   : ${NUM_RUNS}    Time limit: ${TIME_LIMIT_OVERRIDE:-tự động theo n}s${RESET}"
 echo -e "${BOLD}║  Max iter : ${MAX_ITER}${RESET}"
 echo -e "${BOLD}║  Tổng     : ${TOTAL} instance${RESET}"
+echo -e "${BOLD}║  Summary  : ${GLOBAL_CSV}${RESET}"
 echo -e "${BOLD}╚══════════════════════════════════════════════════════════╝${RESET}"
 echo ""
 

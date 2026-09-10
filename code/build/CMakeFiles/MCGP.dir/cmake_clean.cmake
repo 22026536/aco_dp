@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/mnt/d/khoa_luan/aco-dp/MCGP"
-  "/mnt/d/khoa_luan/aco-dp/MCGP.pdb"
+  "/mnt/d/aco_results/aco_dp/MCGP"
+  "/mnt/d/aco_results/aco_dp/MCGP.pdb"
   "CMakeFiles/MCGP.dir/src/aco/ACO.cpp.o"
   "CMakeFiles/MCGP.dir/src/aco/ACO.cpp.o.d"
   "CMakeFiles/MCGP.dir/src/aco/Input.cpp.o"

@@ -1,9 +1,9 @@
 Instance:            eil101_20_4
-Instance path:       normalized_instances/tsplib/eil101_20_4.txt
+Instance path:       instances/tsplib2/eil101_20_4.txt
 Num runs:            10
 Time limit (s):      60
 Max iterations:      10000
-Date:                2026-05-26 20:23:57
+Date:                2026-06-15 09:24:45
 ---
 Valid runs:          10 / 10
 Feasible runs:       10
@@ -11,9 +11,9 @@ Infeasible runs:     0
 Error runs:          0
 ---
 Best cost:           2116.070000
-Worst cost:          2146.770000
-Avg cost:            2123.122000
-Std dev cost:        9.348184
+Worst cost:          2151.840000
+Avg cost:            2131.287000
+Std dev cost:        11.687600
 ---
-Avg time-to-best:    32.0189 s
-Best time-to-best:   34.1873 s
+Avg time-to-best:    28.2907 s
+Best time-to-best:   5.5694 s

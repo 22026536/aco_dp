@@ -1,47 +1,38 @@
-[ITER 1] New best cost=60751.91 (feasible=YES, time 0.830821s)
-[ITER 2] New best cost=59955.59 (feasible=YES, time 1.62519s)
-[ITER 3] New best cost=59363.08 (feasible=YES, time 2.50263s)
-[ITER 4] New best cost=57729.74 (feasible=YES, time 3.14112s)
-[ITER 5] New best cost=57149.61 (feasible=YES, time 3.86844s)
-[ITER 6] New best cost=56577.15 (feasible=YES, time 4.47739s)
-[ITER 9] New best cost=54839.15 (feasible=YES, time 6.42054s)
-[ITER 10] bestGlobalCost=54839.15 (feasible=YES) bestThisIter=56028.97 feasibleAnts=9 noImprove=1 (elapsed 8.86273s)
-[ITER 11] New best cost=54050.21 (feasible=YES, time 9.62183s)
-[ITER 15] New best cost=53887.74 (feasible=YES, time 12.1635s)
-[ITER 16] New best cost=53050.16 (feasible=YES, time 12.7724s)
-[TS] New best cost=52900.21 (feasible=YES, time 15.3466s)
-[ITER 20] bestGlobalCost=52900.21 (feasible=YES) bestThisIter=52900.21 feasibleAnts=10 noImprove=1 (elapsed 16.3763s)
-[ITER 24] New best cost=52627.23 (feasible=YES, time 18.7064s)
-[ITER 30] bestGlobalCost=52627.23 (feasible=YES) bestThisIter=52627.23 feasibleAnts=13 noImprove=6 (elapsed 23.3614s)
-[ITER 34] New best cost=52443.43 (feasible=YES, time 25.1858s)
-[ITER 36] New best cost=52234.75 (feasible=YES, time 26.3232s)
-[ITER 40] bestGlobalCost=52234.75 (feasible=YES) bestThisIter=52234.75 feasibleAnts=10 noImprove=4 (elapsed 30.5067s)
-[ITER 43] New best cost=52026.44 (feasible=YES, time 32.1527s)
-[ITER 50] bestGlobalCost=52026.44 (feasible=YES) bestThisIter=52026.44 feasibleAnts=13 noImprove=7 (elapsed 37.1119s)
-[ITER 60] bestGlobalCost=52026.44 (feasible=YES) bestThisIter=52026.44 feasibleAnts=11 noImprove=17 (elapsed 44.0103s)
-[ITER 70] bestGlobalCost=52026.44 (feasible=YES) bestThisIter=52026.44 feasibleAnts=14 noImprove=27 (elapsed 50.8352s)
-[RESET] no improvement for30-> reset pheromones
-[ITER 80] bestGlobalCost=52026.44 (feasible=YES) bestThisIter=52026.44 feasibleAnts=11 noImprove=7 (elapsed 58.0685s)
-22 62 88 113 115 125 149 150 
-33 52 54 90 92 105 126 138 
-18 26 56 75 100 141 142 146 
-30 35 84 93 96 121 124 
-6 19 70 99 102 135 137 
-3 21 48 63 73 76 94 
-9 12 24 43 47 116 118 139 
-1 7 8 34 87 89 98 103 
-5 10 82 95 97 107 143 
-29 50 55 58 65 85 108 132 
-4 44 45 64 71 74 136 
-2 28 37 40 42 53 114 120 
-23 27 38 41 57 129 144 
-15 16 59 77 78 79 80 111 133 
-31 49 72 112 123 145 147 
-20 25 46 51 81 83 86 110 
-14 32 67 109 122 131 134 
-17 39 66 69 117 140 148 
+[ITER 1] New best cost=58429.36 (feasible=YES, time 1.03591s)
+[ITER 2] New best cost=55576.03 (feasible=YES, time 1.64509s)
+[ITER 10] bestGlobalCost=55576.03 (feasible=YES) bestThisIter=61374.51 feasibleAnts=10 noImprove=8 (elapsed 7.0198s)
+[ITER 15] New best cost=53986.12 (feasible=YES, time 13.4152s)
+[ITER 15] New best cost=53289.98 (feasible=YES, time 16.3356s)
+[ITER 20] New best cost=52912.69 (feasible=YES, time 26.8423s)
+[ITER 20] bestGlobalCost=52912.69 (feasible=YES) bestThisIter=52912.69 feasibleAnts=10 noImprove=0 (elapsed 26.8452s)
+[ITER 23] New best cost=52783.50 (feasible=YES, time 28.2038s)
+[ITER 24] New best cost=52100.48 (feasible=YES, time 28.5224s)
+[ITER 25] New best cost=51947.52 (feasible=YES, time 28.7738s)
+[ITER 27] New best cost=51836.48 (feasible=YES, time 29.5497s)
+[ITER 30] New best cost=51353.38 (feasible=YES, time 36.6044s)
+[ITER 30] bestGlobalCost=51353.38 (feasible=YES) bestThisIter=51836.48 feasibleAnts=8 noImprove=0 (elapsed 45.7706s)
+[ITER 40] bestGlobalCost=51353.38 (feasible=YES) bestThisIter=56997.76 feasibleAnts=9 noImprove=10 (elapsed 49.2129s)
+[ITER 45] New best cost=50747.92 (feasible=YES, time 63.884s)
+1 7 30 34 87 95 103 
+14 31 49 72 74 112 136 145 
+11 17 36 66 69 140 148 
+5 18 82 100 107 142 143 
+39 57 60 101 117 130 
+4 44 45 64 71 123 150 
+27 32 38 41 129 144 147 
+8 35 84 89 93 96 124 126 
 13 68 91 104 106 119 128 
-11 36 60 61 101 127 130 
-[SAVELOGS] evolution saved to results/logs/aco_logs/evolution/ch150_20_5.txt
-[SAVELOGS] best cost saved to results/logs/aco_logs/objectives/ch150_20_5.txt
-[SAVELOGS] best solution saved to results/logs/aco_logs/solutions/ch150_20_5.txt
+10 48 63 73 76 98 113 
+70 99 102 108 132 135 137 
+16 52 59 79 105 111 121 133 
+24 53 61 116 118 120 127 139 
+26 33 46 54 56 92 97 146 
+2 6 9 29 37 40 42 110 
+3 22 62 88 94 125 149 
+19 20 25 28 47 81 86 114 
+50 55 58 65 75 83 85 90 141 
+12 43 51 67 109 131 134 138 
+15 21 23 77 78 80 115 122 
+[SAVELOGS] evolution saved to results/logs/ch150_20_5/evolution/ch150_20_5
+[SAVELOGS] best cost saved to results/logs/ch150_20_5/objectives/ch150_20_5
+[SAVELOGS] best solution saved to results/logs/ch150_20_5/solutions/ch150_20_5

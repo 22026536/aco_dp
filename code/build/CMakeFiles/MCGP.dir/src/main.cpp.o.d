@@ -1,6 +1,7 @@
 CMakeFiles/MCGP.dir/src/main.cpp.o: \
- /mnt/d/khoa_luan/aco-dp/code/src/main.cpp /usr/include/stdc-predef.h \
- /mnt/d/khoa_luan/aco-dp/code/src/aco/Input.h /usr/include/c++/9/iostream \
+ /mnt/d/aco_results/aco_dp/code/src/main.cpp /usr/include/stdc-predef.h \
+ /mnt/d/aco_results/aco_dp/code/src/aco/Input.h \
+ /usr/include/c++/9/iostream \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/os_defines.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
@@ -176,7 +177,7 @@ CMakeFiles/MCGP.dir/src/main.cpp.o: \
  /usr/include/c++/9/tr1/poly_hermite.tcc \
  /usr/include/c++/9/tr1/poly_laguerre.tcc \
  /usr/include/c++/9/tr1/riemann_zeta.tcc \
- /mnt/d/khoa_luan/aco-dp/code/src/aco/ACO.h /usr/include/c++/9/iomanip \
+ /mnt/d/aco_results/aco_dp/code/src/aco/ACO.h /usr/include/c++/9/iomanip \
  /usr/include/c++/9/locale /usr/include/c++/9/bits/locale_facets_nonio.h \
  /usr/include/c++/9/ctime \
  /usr/include/x86_64-linux-gnu/c++/9/bits/time_members.h \

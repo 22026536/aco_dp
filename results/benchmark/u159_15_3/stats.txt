@@ -1,17 +1,19 @@
-Instance:           u159_15_3
-Instance path:      normalized_instances/tsplib/u159_15_3.txt
-Num runs:           10
-Time limit (s):     60
-Date:               2026-04-28 12:38:55
+Instance:            u159_15_3
+Instance path:       instances/tsplib0/u159_15_3.txt
+Num runs:            10
+Time limit (s):      60
+Max iterations:      10000
+Date:                2026-06-13 21:54:05
 ---
-Valid runs:         10 / 10
-Feasible runs:      10
-Infeasible runs:    0
+Valid runs:          10 / 10
+Feasible runs:       10
+Infeasible runs:     0
+Error runs:          0
 ---
-Best cost:          513644.940000
-Worst cost:         526676.760000
-Avg cost:           517779.388000
-Std dev cost:       3890.083506
+Best cost:           512790.520000
+Worst cost:          520295.530000
+Avg cost:            515318.938000
+Std dev cost:        2537.879493
 ---
-Avg time-to-best:   23.7606 s
-Best time-to-best:  32.9160 s
+Avg time-to-best:    25.6061 s
+Best time-to-best:   4.3092 s

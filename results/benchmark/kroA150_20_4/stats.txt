@@ -1,17 +1,19 @@
-Instance:           kroA150_20_4
-Instance path:      normalized_instances/tsplib/kroA150_20_4.txt
-Num runs:           10
-Time limit (s):     60
-Date:               2026-04-27 10:10:02
+Instance:            kroA150_20_4
+Instance path:       instances/tsplib4/kroA150_20_4.txt
+Num runs:            10
+Time limit (s):      60
+Max iterations:      10000
+Date:                2026-06-12 12:13:12
 ---
-Valid runs:         10 / 10
-Feasible runs:      10
-Infeasible runs:    0
+Valid runs:          10 / 10
+Feasible runs:       10
+Infeasible runs:     0
+Error runs:          0
 ---
-Best cost:          198848.740000
-Worst cost:         213289.840000
-Avg cost:           204034.002000
-Std dev cost:       3859.350366
+Best cost:           197541.070000
+Worst cost:          204943.030000
+Avg cost:            201099.144000
+Std dev cost:        2264.293616
 ---
-Avg time-to-best:   41.4965 s
-Best time-to-best:  58.6412 s
+Avg time-to-best:    40.0017 s
+Best time-to-best:   40.7555 s

@@ -1,17 +1,19 @@
-Instance:           pr107_10_5
-Instance path:      normalized_instances/tsplib/pr107_10_5.txt
-Num runs:           10
-Time limit (s):     60
-Date:               2026-04-25 21:54:24
+Instance:            pr107_10_5
+Instance path:       instances/tsplib6/pr107_10_5.txt
+Num runs:            10
+Time limit (s):      60
+Max iterations:      10000
+Date:                2026-06-12 19:23:29
 ---
-Valid runs:         10 / 10
-Feasible runs:      10
-Infeasible runs:    0
+Valid runs:          10 / 10
+Feasible runs:       10
+Infeasible runs:     0
+Error runs:          0
 ---
-Best cost:          651529.640000
-Worst cost:         674829.090000
-Avg cost:           658005.955000
-Std dev cost:       8806.818689
+Best cost:           606293.660000
+Worst cost:          664566.970000
+Avg cost:            638950.096000
+Std dev cost:        24537.607973
 ---
-Avg time-to-best:   32.0540 s
-Best time-to-best:  45.5090 s
+Avg time-to-best:    28.5375 s
+Best time-to-best:   34.2282 s
